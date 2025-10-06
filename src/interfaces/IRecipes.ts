@@ -11,24 +11,29 @@ export type RecipeAuthor = {
 }
 
 export interface IRecipe {
-    createdAt: {
-        seconds: number;
-        nanoseconds: number;
-    };
-    recipeIngredients: Ingredient[];
-    preparationTime: number;
-    prepSteps: string;
-    title: string;
-    specialTag: string[];
-    imageURL: string[];
-    servings: number;
-    category: string;
-    author: RecipeAuthor;
+  createdAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  recipeIngredients: Ingredient[];
+  preparationTime: number;
+  prepSteps: string;
+  title: string;
+  specialTag: string[];
+  imageURL: ImageURL[];
+  servings: number;
+  category: string;
+  author: RecipeAuthor;
 }
 
 export interface IDbRecipe {
-    id: string;
-    recipe: IRecipe; 
+  id: string;
+  recipe: IRecipe;
 }
+
+export type ImageURL = {
+  name: string;
+  url: string;
+};
 
 
