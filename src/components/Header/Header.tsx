@@ -1,13 +1,17 @@
+import { Avatar } from "@mui/material";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
 import Logo from "src/components/Header/Logo";
 
 const styles = {
   container: {
     display: "flex",
+    justifyContent: "space-between",
     alignItems: "center",
-    maxHeight: "3rem",
+    maxHeight: "fit-content",
+    padding: "1rem 2rem",
+    width: "100%",
+    boxSizing: "border-box",
   },
 };
 
@@ -16,7 +20,9 @@ const Header = () => {
   return (
     <Box sx={container}>
       <Logo />
-      <Typography>pepperstorm</Typography>
+      <Avatar sx={{ bgcolor: "red" }} alt="Tudor Bucur" src="/broken-image.jpg">
+        TB
+      </Avatar>
     </Box>
   );
 };

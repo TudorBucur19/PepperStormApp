@@ -20,7 +20,7 @@ function App({ toggleMode, mode }: IApp) {
 
   return (
     <>
-      <Button onClick={toggleMode}>Toggle mode</Button>
+      {/* <Button onClick={toggleMode}>Toggle mode</Button> */}
       <LandingPage />
     </>
   );

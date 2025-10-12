@@ -1,25 +1,34 @@
 import { FC } from "react";
-import { Box, ImageListItem } from "@mui/material";
+import Box from "@mui/material/Box";
+import ImageListItem from "@mui/material/ImageListItem";
+import Typography from "@mui/material/Typography";
 
-interface ILogo {
-  closeRecipe?: () => void;
-}
+import { ILogo } from "src/interfaces/components";
 
 const styles = {
+  logoContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+  },
   logo: {
     width: "5rem",
     height: "auto",
     cursor: "pointer",
   },
+  logoText: {
+    fontSize: "1.5rem",
+  },
 };
 
 const Logo: FC<ILogo> = ({ closeRecipe }) => {
-  const { logo } = styles;
+  const { logoContainer, logo, logoText } = styles;
   return (
-    <Box m={0}>
+    <Box sx={logoContainer}>
       <ImageListItem onClick={closeRecipe} sx={logo}>
         <img src="/assets/cat_logo_black.svg" alt="Cat logo" />
       </ImageListItem>
+      <Typography sx={logoText}>pepperstorm</Typography>
     </Box>
   );
 };

@@ -2,7 +2,7 @@ import { createTheme, ThemeOptions } from "@mui/material/styles";
 import { AppThemeMode } from "src/interfaces/general";
 
 const baseTokens = {
-  brandMain: "#0ea5e9", // customize
+  brandMain: "#337179", // customize
   brandContrast: "#ffffff",
   radius: 12, // global rounding
 };

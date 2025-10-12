@@ -1,61 +1,125 @@
-import { FC } from "react";
-
-import { IDbRecipe } from "src/interfaces/IRecipes";
-import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
-import { capitalizeString } from "src/utils/helperFunctions";
+import * as React from "react";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
+import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
-interface IPreviewItem {
-  recipe: IDbRecipe;
-}
+import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
+import { IPreviewItem } from "src/interfaces/components";
+import { formatMinutesRo } from "src/utils/uiFunctions";
 
-const PreviewItem: FC<IPreviewItem> = ({ recipe }) => {
-  const { recipe: recipeData } = recipe;
+const styles = {
+  previewItemContainer: {
+    cursor: "pointer",
+    transition: "transform 180ms, box-shadow 180ms",
+    "&:hover": {
+      transform: "translateY(-8px)",
+    },
+  },
+  cardImageContainer: {
+    position: "relative",
+    maxWidth: 300,
+  },
+  cardMedia: {
+    aspectRatio: "3 / 4",
+    transition: "transform 180ms",
+    "&:hover": {
+      transform: "scale(1.05)",
+    },
+  },
+  recipeCategory: {
+    position: "absolute",
+    top: 0,
+    transform: "translate(-50%, -50%)",
+    zIndex: 2,
+    border: "none",
+    borderRadius: "12px",
+    fontSize: "1rem",
+    fontWeight: "500",
+  },
+
+  cardDetails: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "0.5rem",
+    paddingY: "1rem",
+  },
+  recipeTitle: {
+    fontSize: { xs: "1rem", sm: "1.2rem" },
+    fontWeight: 700,
+    color: "#337179",
+    textTransform: "uppercase",
+    textAlign: "left",
+  },
+  recipeTags: {
+    display: "flex",
+    gap: "0.5rem",
+  },
+  cardChip: {
+    borderRadius: "8px",
+    border: "2px solid",
+    textTransform: "uppercase",
+  },
+};
+const RecipeCard: React.FC<IPreviewItem> = ({ recipe }) => {
+  const { imageURL, title, preparationTime, specialTag, category } =
+    recipe.recipe;
+  const {
+    previewItemContainer,
+    cardImageContainer,
+    recipeCategory,
+    cardMedia,
+    recipeTitle,
+    cardDetails,
+    cardChip,
+    recipeTags,
+  } = styles;
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        avatar={<Avatar aria-label="recipe">R</Avatar>}
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={recipeData.title}
-        subheader={"20-10-2023"}
-      />
-      <CardMedia
-        component="img"
-        height="194"
-        image={recipeData.imageURL[0]?.url || noPhotoPlaceholder}
-        alt="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+    <Box sx={previewItemContainer}>
+      <Box sx={cardImageContainer}>
+        <Chip
+          label={category}
+          variant="filled"
+          sx={{ ...cardChip, ...recipeCategory }}
+          color="primary"
+        />
+        <Card>
+          <CardMedia
+            component="img"
+            image={imageURL[0]?.url || noPhotoPlaceholder}
+            alt={title}
+            sx={cardMedia}
+          />
+        </Card>
+      </Box>
+      <Box sx={cardDetails}>
+        <Typography sx={recipeTitle}>{title}</Typography>
+        <Chip
+          label={formatMinutesRo(preparationTime)}
+          color="info"
+          variant="outlined"
+          icon={<AccessTimeIcon />}
+          sx={cardChip}
+        />
+        <Box sx={recipeTags}>
+          {specialTag &&
+            specialTag.map((tag) => (
+              <Chip
+                key={tag}
+                label={tag}
+                variant="outlined"
+                sx={cardChip}
+                color="success"
+              />
+            ))}
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
-export default PreviewItem;
+export default RecipeCard;
