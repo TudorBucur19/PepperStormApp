@@ -11,3 +11,7 @@ export interface IRecipesList {
 export interface IPreviewItem {
   recipe: IDbRecipe;
 }
+
+export interface IGenericContainer {
+  children: JSX.Element;
+}

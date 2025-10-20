@@ -3,11 +3,11 @@ import { Button } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-import LandingPage from "./pages/LandingPage";
 import { IApp } from "src/interfaces/general";
 import { useStore } from "src/store/rootStore";
 
 import "./App.css";
+import AppRoutes from "src/pages/AppRoutes";
 
 function App({ toggleMode, mode }: IApp) {
   const theme = useTheme();
@@ -18,12 +18,10 @@ function App({ toggleMode, mode }: IApp) {
     checkMobile(isMobile);
   }, [isMobile, checkMobile]);
 
-  return (
-    <>
-      {/* <Button onClick={toggleMode}>Toggle mode</Button> */}
-      <LandingPage />
-    </>
-  );
+  {
+    /* <Button onClick={toggleMode}>Toggle mode</Button> */
+  }
+  return <AppRoutes />;
 }
 
 export default App;

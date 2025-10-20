@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router";
 
 import App from "./App.tsx";
-import "./index.css";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { buildTheme } from "src/theme/theme.ts";
 import { AppThemeMode } from "src/interfaces/general.ts";
+
+import "./index.css";
 
 const Root = () => {
   const [mode, setMode] = React.useState<AppThemeMode>(
@@ -25,7 +27,9 @@ const Root = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App toggleMode={toggleMode} mode={mode} />
+      <BrowserRouter>
+        <App toggleMode={toggleMode} mode={mode} />
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
