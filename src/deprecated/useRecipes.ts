@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { IDbRecipe } from "src/interfaces/IRecipes";
-import { IExistingRecipes } from "src/interfaces/IStore";
+import { IDbRecipe } from "src/interfaces/recipes";
+import { IExistingRecipes } from "src/interfaces/store";
 
 const useRecipes = create<IExistingRecipes>()(
   devtools((set) => ({

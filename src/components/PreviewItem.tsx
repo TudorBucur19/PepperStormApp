@@ -5,16 +5,23 @@ import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { AccessTimeIcon } from "src/components/icons";
 
 import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
 import { IPreviewItem } from "src/interfaces/components";
 import { formatMinutesRo } from "src/utils/uiFunctions";
 
 import { styles } from "./styles/PreviewItem.styles";
+import { useStore } from "src/store/rootStore";
 
 const RecipeCard: React.FC<IPreviewItem> = ({ recipe }) => {
   const navigate = useNavigate();
+  const setDisplayedRecipe = useStore((s) => s.setDisplayedRecipe);
+
+  const handleClick = () => {
+    setDisplayedRecipe(recipe);
+    navigate(`retete/${recipe.id}`);
+  };
   const { imageURL, title, preparationTime, specialTag, category } =
     recipe.recipe;
   const {
@@ -30,10 +37,7 @@ const RecipeCard: React.FC<IPreviewItem> = ({ recipe }) => {
   } = styles;
 
   return (
-    <Box
-      sx={previewItemContainer}
-      onClick={() => navigate(`retete/${recipe.id}`)}
-    >
+    <Box sx={previewItemContainer} onClick={handleClick}>
       <Box sx={cardImageContainer}>
         <Chip
           label={category}

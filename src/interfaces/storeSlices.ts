@@ -1,4 +1,4 @@
-import { IDbRecipe } from "src/interfaces/IRecipes";
+import { IDbRecipe } from "src/interfaces/recipes";
 
 export type ScreenSlice = {
   screen: { isMobile: boolean };
@@ -8,6 +8,8 @@ export type ScreenSlice = {
 export type RecipesSlice = {
   recipes: IDbRecipe[];
   setExistingRecipes: (recipes: IDbRecipe[]) => void;
+  displayedRecipe: IDbRecipe | null;
+  setDisplayedRecipe: (recipe: IDbRecipe) => void;
 };
 
 export type RootState = ScreenSlice & RecipesSlice;

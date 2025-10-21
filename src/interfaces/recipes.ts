@@ -1,21 +1,21 @@
- export type Ingredient = {
-    ingredient: string;
-    quantity: string;
-    measure: string;
-}
+export type IIngredient = {
+  ingredient: string;
+  quantity: string;
+  measure: string;
+};
 
 export type RecipeAuthor = {
-    displayName: string;
-    photoURL: string;
-    userID: string;
-}
+  displayName: string;
+  photoURL: string;
+  userID: string;
+};
 
 export interface IRecipe {
   createdAt: {
     seconds: number;
     nanoseconds: number;
   };
-  recipeIngredients: Ingredient[];
+  recipeIngredients: IIngredient[];
   preparationTime: number;
   prepSteps: string;
   title: string;
@@ -35,5 +35,3 @@ export type ImageURL = {
   name: string;
   url: string;
 };
-
-

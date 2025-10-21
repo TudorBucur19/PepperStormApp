@@ -10,4 +10,6 @@ export const createRecipesSlice: StateCreator<
 > = (set) => ({
   recipes: [],
   setExistingRecipes: (recipes) => set({ recipes }, false),
+  displayedRecipe: null,
+  setDisplayedRecipe: (displayedRecipe) => set({ displayedRecipe }, false),
 });

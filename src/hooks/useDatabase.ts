@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 
 import { dataBase } from "src/api/firebase";
-import { IDbRecipe } from "src/interfaces/IRecipes";
+import { IDbRecipe } from "src/interfaces/recipes";
 import { useStore } from "src/store/rootStore";
 
 const useDatabase = (collectionName: string) => {
