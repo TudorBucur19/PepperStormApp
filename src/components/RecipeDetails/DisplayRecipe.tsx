@@ -1,9 +1,11 @@
 import { Box, Container } from "@mui/material";
+
 import { useStore } from "src/store/rootStore";
 import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
 import IngredientsList from "src/components/RecipeDetails/IngredientsList";
 import RecipeHeader from "src/components/RecipeDetails/RecipeHeader";
 import RecipeMethod from "src/components/RecipeDetails/RecipeMethod";
+
 import { recipeDisplayStyles } from "src/components/styles/DisplayRecipe.styles";
 
 const DisplayRecipe = () => {
@@ -40,7 +42,13 @@ const DisplayRecipe = () => {
         />
         <Box sx={detailsBox}>
           <RecipeHeader
-            {...{ title, preparationTime, servings, category, specialTag }}
+            {...{
+              title,
+              preparationTime,
+              servings,
+              category,
+              specialTag,
+            }}
           />
         </Box>
       </Box>

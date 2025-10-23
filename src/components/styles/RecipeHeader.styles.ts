@@ -3,14 +3,7 @@ export const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "1.5rem",
-  },
-  listContainer: {
-    maxWidth: "fit-content",
-    minWidth: { xs: "100%", sm: "70%" },
-    padding: "1.5rem",
-    borderRadius: "1rem",
-    backgroundColor: "#fff",
+    gap: "1rem",
   },
   titleText: {
     fontSize: "2rem",

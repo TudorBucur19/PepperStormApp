@@ -1,5 +1,8 @@
 import { FC } from "react";
-import { Box, Stack, Typography, Divider } from "@mui/material";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 
 import { IRecipHeader } from "src/interfaces/components";
 import IconTextProperty from "src/components/common/IconTextProperty";
@@ -11,20 +14,7 @@ import {
 import { formatMinutesRo } from "src/utils/uiFunctions";
 import ChipInfo from "src/components/common/ChipInfo";
 
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "1rem",
-  },
-  titleText: {
-    fontSize: "2rem",
-    color: "#337179",
-    fontWeight: 700,
-    textTransform: "uppercase",
-  },
-};
+import { styles } from "src/components/styles/RecipeHeader.styles";
 
 const RecipeHeader: FC<IRecipHeader> = ({
   title,
