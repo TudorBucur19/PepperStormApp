@@ -6,7 +6,7 @@ import DetailsForm from "src/components/RecipeForm/DetailsForm";
 import IngredientsSection from "src/components/RecipeForm/IngredientsSection";
 import PsButton from "src/components/common/PsButton";
 import { FormValues, recipeDetailsSchema } from "src/schemas/newRecipeSchemas";
-import { currentUserMock } from "src/hooks/userMock";
+import { currentUserMock } from "src/mocks/userMock";
 import useDatabase from "src/hooks/useDatabase";
 import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { LibraryAddOutlinedIcon } from "src/components/icons";

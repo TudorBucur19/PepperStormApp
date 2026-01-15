@@ -1,15 +1,14 @@
 import { useEffect } from "react";
-import { Button } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-import { IApp } from "src/types/general";
 import { useStore } from "src/store/rootStore";
-
-import "./App.css";
 import AppRoutes from "src/pages/AppRoutes";
 
-function App({ toggleMode, mode }: IApp) {
+import "./App.css";
+
+// function App({ toggleMode, mode }: IApp) {
+function App() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const checkMobile = useStore((state) => state.checkMobile);

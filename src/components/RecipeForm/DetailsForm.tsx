@@ -66,7 +66,10 @@ const DetailsForm = () => {
         fullWidth
         required
         onWheel={(e) => (e.target as HTMLInputElement).blur()} // prevent scroll-change
-        {...register("servings")}
+        {...register("servings", {
+          valueAsNumber: true,
+          setValueAs: (v) => (v === "" || v == null ? undefined : Number(v)),
+        })}
         error={!!errors.servings}
         helperText={
           typeof errors.servings?.message === "string"
@@ -81,7 +84,10 @@ const DetailsForm = () => {
         fullWidth
         required
         onWheel={(e) => (e.target as HTMLInputElement).blur()}
-        {...register("prepMinutes")}
+        {...register("prepMinutes", {
+          valueAsNumber: true,
+          setValueAs: (v) => (v === "" || v == null ? undefined : Number(v)),
+        })}
         error={!!errors.prepMinutes}
         helperText={
           typeof errors.prepMinutes?.message === "string"

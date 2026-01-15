@@ -46,15 +46,7 @@ export interface IIngredientsForm {
 }
 
 export type PsButtonVariant = "basic" | "text" | "contained" | "outlined";
-export type PsButtonColor =
-  | "transparent"
-  | "primary"
-  | "secondary"
-  | "secondaryDark"
-  | "secondaryLight"
-  | "secondaryWhite"
-  | "black"
-  | "transparentBlack";
+export type PsButtonColor = "transparent" | "primary" | "secondary";
 
 export interface IPsButton {
   children?: string | React.ReactNode;
@@ -71,7 +63,6 @@ export interface IPsButton {
   endIcon?: JSX.Element;
   type?: "button" | "submit" | "reset";
   sx?: SxProps<Theme>;
-  size?: "small" | "medium" | "large";
   className?: string;
 }
 

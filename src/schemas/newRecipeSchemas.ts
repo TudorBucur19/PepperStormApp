@@ -17,8 +17,8 @@ export const recipeDetailsSchema = z.object({
     .refine((value) => value !== "", {
       message: "Selectează o categorie",
     }),
-  servings: z.coerce.number().int().min(1, "Minim 1 porție"),
-  preparationTime: z.coerce.number().int().min(1, "Minim 1 minut"),
+  servings: z.number().int().min(1, "Minim 1 porție"),
+  preparationTime: z.number().int().min(1, "Minim 1 minut"),
   prepSteps: z.string().min(5, "Adaugă instrucțiuni"),
   spices: z.string().min(2, "Adaugă condimente").optional(),
   recipeIngredients: z
@@ -34,5 +34,3 @@ export const recipeDetailsSchema = z.object({
 });
 
 export type FormValues = z.infer<typeof recipeDetailsSchema>;
-export type RecipeFormInput = z.input<typeof recipeDetailsSchema>;
-export type RecipeFormOutput = z.output<typeof recipeDetailsSchema>;

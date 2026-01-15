@@ -6,14 +6,14 @@ const colors = (theme: Theme) => ({
   transparent: {
     background: "transparent",
     label: theme.palette.primary.main,
-    hover: "#F5F5F5",
+    hover: theme.palette.primary.contrastText,
     disabledBg: "",
     disabledLabel: "#1F1E1F",
   },
   primary: {
     background: theme.palette.primary.main,
-    label: theme.palette.primary.light,
-    hover: "#620032",
+    label: theme.palette.primary.contrastText,
+    hover: theme.palette.primary.light,
     disabledBg: "#E1DBDF",
     disabledLabel: "#737373",
   },
@@ -24,55 +24,22 @@ const colors = (theme: Theme) => ({
     disabledBg: "#E1DBDF",
     disabledLabel: "#737373",
   },
-  secondaryDark: {
-    background: "#3F582D",
-    label: "#FFFFFF",
-    hover: "#2D3E20  ",
-    disabledBg: "#E1DBDF",
-    disabledLabel: "#737373",
-  },
-  secondaryLight: {
-    background: "#647E4E",
-    label: "#FFFFFF",
-    hover: "#536E42",
-    disabledBg: "#E1DBDF",
-    disabledLabel: "#737373",
-  },
-  secondaryWhite: {
-    background: "#FFFFFF",
-    label: "#1F1E1F",
-    hover: "#F5F5F5",
-    disabledBg: "",
-    disabledLabel: "",
-  },
-  black: {
-    background: "#000000",
-    label: "#FFFFFF",
-    hover: "#000000",
-    disabledBg: "#E1DBDF",
-    disabledLabel: "#737373",
-  },
-  transparentBlack: {
-    background: "transparent",
-    label: theme.palette.primary.dark,
-    hover: "#F5F5F5",
-    disabledBg: "#E1DBDF",
-    disabledLabel: "#737373",
-  },
 });
 
 export const psButtonStyles = (
   color: PsButtonColor,
   isLoading: boolean,
   theme: Theme,
-  disabled: boolean
+  disabled: boolean,
+  fullWidth: boolean,
+  fitContentWidth: boolean
 ) => ({
   colors: colors(theme),
   buttonBase: {
     display: "flex",
     gap: "0.5rem",
-    width: "fit-content",
-    padding: "1.25rem 1rem 1.25rem 1rem",
+    width: fullWidth ? "100%" : "fit-content",
+    padding: fitContentWidth ? 0 : "1.25rem 1rem 1.25rem 1rem",
     borderRadius: "0.25rem",
     maxHeight: "3.5rem",
     fontSize: "1.125rem",
@@ -86,6 +53,7 @@ export const psButtonStyles = (
     cursor: isLoading || disabled ? "not-allowed" : "pointer",
     "&:hover": {
       backgroundColor: colors(theme)[color].hover,
+      borderColor: colors(theme)[color].hover,
     },
   },
   text: {},

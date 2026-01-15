@@ -10,7 +10,7 @@ const PsButton = ({
   children,
   onClick,
   variant = "contained",
-  color = "secondaryLight",
+  color = "primary",
   fullWidth = false,
   fitContentWidth = false,
   disabled = false,
@@ -22,11 +22,16 @@ const PsButton = ({
   type = "button",
   className = "",
   sx,
-  size = "medium",
-  testId,
 }: IPsButton) => {
   const theme = useTheme();
-  const allStyles = styles(color, isLoading, theme, disabled);
+  const allStyles = styles(
+    color,
+    isLoading,
+    theme,
+    disabled,
+    fullWidth,
+    fitContentWidth
+  );
   const { buttonBase, progressIcon } = allStyles;
 
   return (
@@ -34,8 +39,8 @@ const PsButton = ({
       sx={
         [
           buttonBase,
-          allStyles.colors[color][variant],
-          allStyles[variant],
+          (allStyles.colors[color] as Record<string, SxProps<Theme>>)[variant],
+          allStyles[variant as keyof typeof allStyles],
           sx,
         ].filter(Boolean) as SxProps<Theme>
       }

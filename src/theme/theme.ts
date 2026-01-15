@@ -9,8 +9,12 @@ const baseTokens = {
 
 const lightPalette: ThemeOptions["palette"] = {
   mode: "light",
-  primary: { main: baseTokens.brandMain, light: "#f8fbfc" },
-  secondary: { main: "#9c27b0" },
+  primary: {
+    main: baseTokens.brandMain,
+    light: "#337179D9",
+    contrastText: "#F2F3F4",
+  },
+  secondary: { main: "#2effcb" },
   background: { default: "#f1eaea", paper: "#fff" },
 };
 

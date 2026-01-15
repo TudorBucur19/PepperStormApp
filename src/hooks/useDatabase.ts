@@ -1,7 +1,6 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
 
 import { dataBase } from "src/api/firebase";
-import { recipesMock } from "src/hooks/recipesMock";
 import { IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
 

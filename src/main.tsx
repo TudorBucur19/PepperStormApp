@@ -10,7 +10,7 @@ import { AppThemeMode } from "src/types/general.ts";
 import "./index.css";
 
 const Root = () => {
-  const [mode, setMode] = React.useState<AppThemeMode>(
+  const [mode] = React.useState<AppThemeMode>(
     (localStorage.getItem("mode") as AppThemeMode) ||
       (window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
@@ -18,17 +18,18 @@ const Root = () => {
   );
   const theme = React.useMemo(() => buildTheme(mode), [mode]);
 
-  const toggleMode = () => {
-    const next = mode === "light" ? "dark" : "light";
-    localStorage.setItem("mode", next);
-    setMode(next);
-  };
+  // const toggleMode = () => {
+  //   const next = mode === "light" ? "dark" : "light";
+  //   localStorage.setItem("mode", next);
+  //   setMode(next);
+  // };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <App toggleMode={toggleMode} mode={mode} />
+        <App />
+        {/* <App toggleMode={toggleMode} mode={mode} /> */}
       </BrowserRouter>
     </ThemeProvider>
   );
