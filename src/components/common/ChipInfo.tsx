@@ -1,35 +1,9 @@
 import { Chip } from "@mui/material";
 
-interface IChipInfo {
-  label: string;
-  variant: "filled" | "outlined";
-  color: "primary" | "secondary" | "error" | "success" | "info" | "warning";
-  useCase: "specialTag" | "category" | "cardTop";
-}
+import { IChipInfo } from "src/types/components";
 
-const styles = {
-  cardChip: {
-    borderRadius: "8px",
-    border: "none",
-    textTransform: "uppercase",
-  },
-  recipeCategory: {
-    border: "none",
-    borderRadius: "12px",
-    fontSize: "1rem",
-    fontWeight: "500",
-  },
-  cardTop: {
-    position: "absolute",
-    top: 0,
-    transform: "translate(-50%, -50%)",
-    zIndex: 2,
-    border: "none",
-    borderRadius: "12px",
-    fontSize: "1rem",
-    fontWeight: "500",
-  },
-};
+import { chipInfoStyles as styles } from "../styles/commonComponents.styles";
+
 const ChipInfo = ({ label, variant, color, useCase }: IChipInfo) => {
   const { cardChip, recipeCategory, cardTop } = styles;
   return (

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { RootState } from "src/interfaces/storeSlices";
+import { RootState } from "src/types/storeSlices";
 import { createScreenSlice } from "src/store/slices/appSlice";
 import { createRecipesSlice } from "src/store/slices/recipesSlice";
 

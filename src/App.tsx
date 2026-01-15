@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-import { IApp } from "src/interfaces/general";
+import { IApp } from "src/types/general";
 import { useStore } from "src/store/rootStore";
 
 import "./App.css";

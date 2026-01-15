@@ -2,3 +2,6 @@ export { default as AccessTimeIcon } from "@mui/icons-material/AccessTime";
 export { default as PeopleOutlineIcon } from "@mui/icons-material/PeopleOutline";
 export { default as PermMediaOutlinedIcon } from "@mui/icons-material/PermMediaOutlined";
 export { default as DoneOutlineIcon } from "@mui/icons-material/DoneOutline";
+export { default as LibraryAddOutlinedIcon } from "@mui/icons-material/LibraryAddOutlined";
+export { default as AddPhotoAlternateOutlinedIcon } from "@mui/icons-material/AddPhotoAlternateOutlined";
+export { default as AddIcon } from "@mui/icons-material/Add";

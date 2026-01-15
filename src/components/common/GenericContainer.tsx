@@ -1,16 +1,10 @@
-import { FC } from "react";
 import Box from "@mui/material/Box";
 
-import { IGenericContainer } from "src/interfaces/components";
+import { IGenericContainer } from "src/types/components";
 
-const styles = {
-  container: {
-    maxWidth: "900px",
-    margin: "0 auto",
-  },
-};
+import { genericContainerStyles as styles } from "../styles/commonComponents.styles";
 
-const GenericContainer: FC<IGenericContainer> = ({ children }) => {
+const GenericContainer = ({ children }: IGenericContainer) => {
   return <Box sx={styles.container}>{children}</Box>;
 };
 

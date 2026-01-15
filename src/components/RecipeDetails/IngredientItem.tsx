@@ -1,12 +1,12 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import { Box, Checkbox } from "@mui/material";
 
 import { DoneOutlineIcon } from "src/components/icons";
-import { IIngredientItem } from "src/interfaces/components";
+import { IIngredientItem } from "src/types/components";
 
-import { styles } from "src/components/styles/IngredientItem.styles";
+import { ingredientItemStyles as styles } from "../styles/recipeDetails.styles";
 
-const IngredientItem: FC<IIngredientItem> = ({ ingredient, isLast }) => {
+const IngredientItem = ({ ingredient, isLast }: IIngredientItem) => {
   const [checked, setChecked] = useState(false);
 
   const handleToggle = () => setChecked((prev) => !prev);

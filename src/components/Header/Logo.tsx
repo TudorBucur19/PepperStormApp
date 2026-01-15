@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import ImageListItem from "@mui/material/ImageListItem";
 import Typography from "@mui/material/Typography";
 
-import { ILogo } from "src/interfaces/components";
+import { ILogo } from "src/types/components";
 
 const styles = {
   logoContainer: {

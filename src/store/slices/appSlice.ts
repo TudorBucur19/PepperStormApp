@@ -1,4 +1,4 @@
-import { RootState, ScreenSlice } from "src/interfaces/storeSlices";
+import { RootState, ScreenSlice } from "src/types/storeSlices";
 import { StateCreator } from "zustand";
 
 export const createScreenSlice: StateCreator<RootState, [], [], ScreenSlice> = (

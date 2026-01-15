@@ -1,11 +1,11 @@
-import { PsButtonColor } from "src/interfaces/components";
+import { PsButtonColor } from "src/types/components";
 import { Theme } from "@mui/material/styles";
 
 //the colors will be uptadet after the general theme will be developed
 const colors = (theme: Theme) => ({
   transparent: {
     background: "transparent",
-    label: "#1F1E1F",
+    label: theme.palette.primary.main,
     hover: "#F5F5F5",
     disabledBg: "",
     disabledLabel: "#1F1E1F",
@@ -61,7 +61,7 @@ const colors = (theme: Theme) => ({
   },
 });
 
-export const styles = (
+export const psButtonStyles = (
   color: PsButtonColor,
   isLoading: boolean,
   theme: Theme,
@@ -72,7 +72,7 @@ export const styles = (
     display: "flex",
     gap: "0.5rem",
     width: "fit-content",
-    padding: "1.25rem 1.5rem 1.25rem 1rem",
+    padding: "1.25rem 1rem 1.25rem 1rem",
     borderRadius: "0.25rem",
     maxHeight: "3.5rem",
     fontSize: "1.125rem",
@@ -91,7 +91,7 @@ export const styles = (
   text: {},
   contained: {},
   outlined: {
-    border: "1px solid #737373CC",
+    border: "2px solid " + colors(theme)[color].label,
   },
   progressIcon: {
     color: colors(theme)[color].label,

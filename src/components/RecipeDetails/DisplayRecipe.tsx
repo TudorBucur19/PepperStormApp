@@ -6,7 +6,7 @@ import IngredientsList from "src/components/RecipeDetails/IngredientsList";
 import RecipeHeader from "src/components/RecipeDetails/RecipeHeader";
 import RecipeMethod from "src/components/RecipeDetails/RecipeMethod";
 
-import { recipeDisplayStyles } from "src/components/styles/DisplayRecipe.styles";
+import { recipeDisplayStyles as styles } from "src/components/styles/recipeDetails.styles";
 
 const DisplayRecipe = () => {
   const displayedRecipe = useStore((state) => state.displayedRecipe);
@@ -29,7 +29,7 @@ const DisplayRecipe = () => {
     detailsBox,
     methodBox,
     ingredientsBox,
-  } = recipeDisplayStyles;
+  } = styles;
 
   return (
     <Container>

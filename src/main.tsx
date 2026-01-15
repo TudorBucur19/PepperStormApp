@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router";
 import App from "./App.tsx";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { buildTheme } from "src/theme/theme.ts";
-import { AppThemeMode } from "src/interfaces/general.ts";
+import { AppThemeMode } from "src/types/general.ts";
 
 import "./index.css";
 

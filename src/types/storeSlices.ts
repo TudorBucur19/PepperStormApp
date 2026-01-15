@@ -1,4 +1,4 @@
-import { IDbRecipe } from "src/interfaces/recipes";
+import { IDbRecipe } from "src/types/recipes";
 
 export type ScreenSlice = {
   screen: { isMobile: boolean };

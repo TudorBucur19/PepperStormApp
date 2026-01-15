@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-import { RecipesSlice, RootState } from "src/interfaces/storeSlices";
+import { RecipesSlice, RootState } from "src/types/storeSlices";
 
 export const createRecipesSlice: StateCreator<
   RootState,

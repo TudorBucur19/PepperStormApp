@@ -5,14 +5,14 @@ import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+
 import { AccessTimeIcon } from "src/components/icons";
-
 import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
-import { IPreviewItem } from "src/interfaces/components";
+import { IPreviewItem } from "src/types/components";
 import { formatMinutesRo } from "src/utils/uiFunctions";
-
-import { styles } from "./styles/PreviewItem.styles";
 import { useStore } from "src/store/rootStore";
+
+import { previewItemStyles as styles } from "src/components/styles/recipesList.styles";
 
 const RecipeCard: React.FC<IPreviewItem> = ({ recipe }) => {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { IScreenSizeState } from "src/interfaces/store";
+import { IScreenSizeState } from "src/types/store";
 
 const useScreenSize = create<IScreenSizeState>()(
   devtools(

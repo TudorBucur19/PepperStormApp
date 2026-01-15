@@ -1,10 +1,10 @@
 import { FC } from "react";
 import Box from "@mui/material/Box";
 
-import PreviewItem from "src/components/PreviewItem";
-import { IRecipesList } from "src/interfaces/components";
+import PreviewItem from "src/components/RecipesList/PreviewItem";
+import { IRecipesList } from "src/types/components";
 
-import { styles } from "./styles/RecipesList.styles";
+import { recipesListStyles as styles } from "src/components/styles/recipesList.styles";
 
 const RecipesList: FC<IRecipesList> = ({ allRecipes }) => {
   const { recipesContainer } = styles;

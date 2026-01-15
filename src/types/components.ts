@@ -1,5 +1,6 @@
 import { SxProps, Theme } from "@mui/material";
-import { IDbRecipe, IIngredient } from "src/interfaces/recipes";
+
+import { IDbRecipe, IIngredient } from "src/types/recipes";
 
 export interface ILogo {
   closeRecipe?: () => void;
@@ -36,6 +37,14 @@ export interface IIngredientItem {
   ingredient: IIngredient;
   isLast: boolean;
 }
+
+export interface IIngredientsForm {
+  index: number;
+  isEmptyForm: boolean;
+  append: (value: IIngredient) => void;
+  remove: (index: number) => void;
+}
+
 export type PsButtonVariant = "basic" | "text" | "contained" | "outlined";
 export type PsButtonColor =
   | "transparent"
@@ -64,4 +73,16 @@ export interface IPsButton {
   sx?: SxProps<Theme>;
   size?: "small" | "medium" | "large";
   className?: string;
+}
+
+export interface IChipInfo {
+  label: string;
+  variant: "filled" | "outlined";
+  color: "primary" | "secondary" | "error" | "success" | "info" | "warning";
+  useCase: "specialTag" | "category" | "cardTop";
+}
+
+export interface IIconTextProperty {
+  icon: React.ReactNode;
+  text: string;
 }

@@ -10,11 +10,13 @@ export type RecipeAuthor = {
   userID: string;
 };
 
+export type CreatedAtSeconds = {
+  seconds: number;
+  nanoseconds: number;
+};
+
 export interface IRecipe {
-  createdAt: {
-    seconds: number;
-    nanoseconds: number;
-  };
+  createdAt: Date | CreatedAtSeconds;
   recipeIngredients: IIngredient[];
   preparationTime: number;
   prepSteps: string;
@@ -24,6 +26,7 @@ export interface IRecipe {
   servings: number;
   category: string;
   author: RecipeAuthor;
+  spices?: string;
 }
 
 export interface IDbRecipe {

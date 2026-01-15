@@ -2,13 +2,13 @@ import { useEffect } from "react";
 
 import { dataBase } from "src/api/firebase";
 import useDatabase from "src/hooks/useDatabase";
-import { recipesCollectionName } from "src/constants/general";
+import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { useStore } from "src/store/rootStore";
-import RecipesList from "src/components/RecipesList";
+import RecipesList from "src/components/RecipesList/RecipesList";
 import GenericContainer from "src/components/common/GenericContainer";
 
 const AllRecipesPage = () => {
-  const { getCollectionData } = useDatabase(recipesCollectionName);
+  const { getCollectionData } = useDatabase(RECIPES_COLLECTION_NAME);
   const recipes = useStore((state) => state.recipes);
 
   useEffect(() => {

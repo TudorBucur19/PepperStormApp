@@ -1,5 +1,5 @@
 import { createTheme, ThemeOptions } from "@mui/material/styles";
-import { AppThemeMode } from "src/interfaces/general";
+import { AppThemeMode } from "src/types/general";
 
 const baseTokens = {
   brandMain: "#337179", // customize
@@ -9,9 +9,9 @@ const baseTokens = {
 
 const lightPalette: ThemeOptions["palette"] = {
   mode: "light",
-  primary: { main: baseTokens.brandMain },
+  primary: { main: baseTokens.brandMain, light: "#f8fbfc" },
   secondary: { main: "#9c27b0" },
-  background: { default: "#fafafa", paper: "#fff" },
+  background: { default: "#f1eaea", paper: "#fff" },
 };
 
 const darkPalette: ThemeOptions["palette"] = {

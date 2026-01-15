@@ -1,7 +1,8 @@
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 
 import { dataBase } from "src/api/firebase";
-import { IDbRecipe } from "src/interfaces/recipes";
+import { recipesMock } from "src/hooks/recipesMock";
+import { IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
 
 const useDatabase = (collectionName: string) => {
@@ -20,7 +21,12 @@ const useDatabase = (collectionName: string) => {
     setExisingRecipes(recipesList);
   };
 
-  return { getCollectionData };
+  const addDocumentToCollection = async (newDoc: IRecipe) => {
+    const collectionRef = collection(dataBase, collectionName);
+    await addDoc(collectionRef, { recipe: newDoc });
+  };
+
+  return { getCollectionData, addDocumentToCollection };
 };
 
 export default useDatabase;

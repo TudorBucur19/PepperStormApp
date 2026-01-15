@@ -1,10 +1,10 @@
-import { FC } from "react";
 import { Box, Typography } from "@mui/material";
 
-import { IRecipeMethod } from "src/interfaces/components";
-import { styles } from "src/components/styles/RecipeMethod.styles";
+import { IRecipeMethod } from "src/types/components";
 
-const RecipeMethod: FC<IRecipeMethod> = ({ prepSteps }) => {
+import { recipeMethodStyles as styles } from "../styles/recipeDetails.styles";
+
+const RecipeMethod = ({ prepSteps }: IRecipeMethod) => {
   const { container, titleText, methodText } = styles;
   return (
     <Box sx={container}>
