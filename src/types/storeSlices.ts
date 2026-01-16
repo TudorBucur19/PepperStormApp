@@ -1,4 +1,4 @@
-import { IDbRecipe } from "src/types/recipes";
+import { IDbRecipe, RecipeAuthor } from "src/types/recipes";
 
 export type ScreenSlice = {
   screen: { isMobile: boolean };
@@ -12,4 +12,9 @@ export type RecipesSlice = {
   setDisplayedRecipe: (recipe: IDbRecipe) => void;
 };
 
-export type RootState = ScreenSlice & RecipesSlice;
+export type LoggedUserSlice = {
+  loggedUser: RecipeAuthor | null;
+  setLoggedUser: (user: RecipeAuthor | null) => void;
+};
+
+export type RootState = ScreenSlice & RecipesSlice & LoggedUserSlice;

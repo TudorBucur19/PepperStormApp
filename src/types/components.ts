@@ -2,8 +2,8 @@ import { SxProps, Theme } from "@mui/material";
 
 import { IDbRecipe, IIngredient } from "src/types/recipes";
 
-export interface ILogo {
-  closeRecipe?: () => void;
+export interface ICatLogo {
+  onClick?: () => void;
 }
 
 export interface IRecipesList {

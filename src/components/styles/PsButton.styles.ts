@@ -53,7 +53,6 @@ export const psButtonStyles = (
     cursor: isLoading || disabled ? "not-allowed" : "pointer",
     "&:hover": {
       backgroundColor: colors(theme)[color].hover,
-      borderColor: colors(theme)[color].hover,
     },
   },
   text: {},

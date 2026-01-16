@@ -5,3 +5,5 @@ export { default as DoneOutlineIcon } from "@mui/icons-material/DoneOutline";
 export { default as LibraryAddOutlinedIcon } from "@mui/icons-material/LibraryAddOutlined";
 export { default as AddPhotoAlternateOutlinedIcon } from "@mui/icons-material/AddPhotoAlternateOutlined";
 export { default as AddIcon } from "@mui/icons-material/Add";
+export { default as SearchIcon } from "@mui/icons-material/Search";
+export { default as GoogleIcon } from "@mui/icons-material/Google";

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 
-import { dataBase } from "src/api/firebase";
 import useDatabase from "src/hooks/useDatabase";
 import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { useStore } from "src/store/rootStore";
@@ -13,7 +12,7 @@ const AllRecipesPage = () => {
 
   useEffect(() => {
     getCollectionData();
-  }, [dataBase]);
+  }, [getCollectionData]);
 
   return (
     <GenericContainer>

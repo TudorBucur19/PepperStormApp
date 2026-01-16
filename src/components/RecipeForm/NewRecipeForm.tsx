@@ -10,11 +10,13 @@ import { currentUserMock } from "src/mocks/userMock";
 import useDatabase from "src/hooks/useDatabase";
 import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { LibraryAddOutlinedIcon } from "src/components/icons";
+import { useStore } from "src/store/rootStore";
 
 import { newRecipeFormStyles as styles } from "src/components/styles/recipeForm.styles";
 
 const NewRecipeForm = () => {
   const { addDocumentToCollection } = useDatabase(RECIPES_COLLECTION_NAME);
+  const isMobile = useStore((state) => state.screen.isMobile);
   const methods = useForm<FormValues>({
     resolver: zodResolver(recipeDetailsSchema),
     defaultValues: {
@@ -61,6 +63,7 @@ const NewRecipeForm = () => {
             color="primary"
             variant="contained"
             startIcon={<LibraryAddOutlinedIcon />}
+            fullWidth={isMobile}
           >
             Salvează rețeta
           </PsButton>

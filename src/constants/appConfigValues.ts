@@ -1,7 +1,14 @@
-// export const RECIPES_COLLECTION_NAME = "recipes";
-// export const PHOTOS_COLLECTION_NAME = "images";
-export const RECIPES_COLLECTION_NAME = "recipesDEV";
-export const PHOTOS_COLLECTION_NAME = "testPhotos";
+export const RECIPES_COLLECTION_NAME = "recipes";
+export const PHOTOS_COLLECTION_NAME = "images";
+// export const RECIPES_COLLECTION_NAME = "recipesDEV";
+// export const PHOTOS_COLLECTION_NAME = "testPhotos";
+
+export const menuPages = [
+  { label: "Adauga rețetă", link: "/adaugareteta" },
+  { label: "Idei noi", link: "/ideinoi" },
+];
+
+export const userSettingsMenu = [{ label: "Deconectează-te", link: "" }];
 
 export const specialTags = ["Vegetarian", "Vegan", "Picant"];
 export const recipeCategories = [

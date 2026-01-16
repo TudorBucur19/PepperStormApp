@@ -14,8 +14,8 @@ const lightPalette: ThemeOptions["palette"] = {
     light: "#337179D9",
     contrastText: "#F2F3F4",
   },
-  secondary: { main: "#2effcb" },
-  background: { default: "#f1eaea", paper: "#fff" },
+  secondary: { main: "#49C5B1" },
+  background: { default: "#F2F3F4", paper: "#fff" },
 };
 
 const darkPalette: ThemeOptions["palette"] = {

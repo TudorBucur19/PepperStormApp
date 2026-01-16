@@ -3,6 +3,7 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import { dataBase } from "src/api/firebase";
 import { IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
+// import { recipesMock } from "src/mocks/recipesMock";
 
 const useDatabase = (collectionName: string) => {
   const setExisingRecipes = useStore((s) => s.setExistingRecipes);
@@ -18,6 +19,7 @@ const useDatabase = (collectionName: string) => {
     );
 
     setExisingRecipes(recipesList);
+    // setExisingRecipes(recipesMock);
   };
 
   const addDocumentToCollection = async (newDoc: IRecipe) => {
