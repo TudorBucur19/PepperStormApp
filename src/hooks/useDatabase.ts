@@ -1,4 +1,11 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  addDoc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
 import { dataBase } from "src/api/firebase";
 import { IDbRecipe, IRecipe } from "src/types/recipes";
@@ -15,7 +22,7 @@ const useDatabase = (collectionName: string) => {
         ({
           id: doc.id,
           ...doc.data(),
-        } as IDbRecipe)
+        }) as IDbRecipe,
     );
 
     setExisingRecipes(recipesList);
@@ -27,7 +34,38 @@ const useDatabase = (collectionName: string) => {
     await addDoc(collectionRef, { recipe: newDoc });
   };
 
-  return { getCollectionData, addDocumentToCollection };
+  const removeDocumentFromCollection = async (
+    collectionName: string,
+    documentId: string,
+  ) => {
+    try {
+      await deleteDoc(doc(dataBase, collectionName, documentId));
+      console.log("Document successfully deleted!");
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+      throw error;
+    }
+  };
+
+  const updateDocument = async (documentId: string, data: Partial<IRecipe>) => {
+    console.log("DATA", data);
+
+    try {
+      const docRef = doc(dataBase, collectionName, documentId);
+      await updateDoc(docRef, { recipe: { ...data } });
+      console.log("Document successfully updated!");
+    } catch (error) {
+      console.error("Error updating document: ", error);
+      throw error;
+    }
+  };
+
+  return {
+    getCollectionData,
+    addDocumentToCollection,
+    updateDocument,
+    removeDocumentFromCollection,
+  };
 };
 
 export default useDatabase;

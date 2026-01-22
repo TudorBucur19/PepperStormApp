@@ -15,29 +15,15 @@ import { Link } from "@mui/material";
 
 import { menuPages, userSettingsMenu } from "src/constants/appConfigValues";
 import CatLogo from "src/components/Header/CatLogo";
-import { useStore } from "src/store/rootStore";
 import useAuth from "src/hooks/useAuth";
 
-const styles = {
-  toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  link: {
-    color: "primary.main",
-    textDecoration: "none",
-    paddingX: "0.5rem",
-    cursor: "pointer",
-  },
-};
+import { appBarStyles as styles } from "src/components/styles/header.styles";
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
-  const { handleLogout } = useAuth();
-  const currentUser = useStore((state) => state.loggedUser);
+  const { handleLogout, loggedUser } = useAuth();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -151,8 +137,8 @@ function ResponsiveAppBar() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  alt={currentUser?.displayName || ""}
-                  src={currentUser?.photoURL || ""}
+                  alt={loggedUser?.displayName || ""}
+                  src={loggedUser?.photoURL || ""}
                 />
               </IconButton>
             </Tooltip>

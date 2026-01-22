@@ -7,3 +7,7 @@ export { default as AddPhotoAlternateOutlinedIcon } from "@mui/icons-material/Ad
 export { default as AddIcon } from "@mui/icons-material/Add";
 export { default as SearchIcon } from "@mui/icons-material/Search";
 export { default as GoogleIcon } from "@mui/icons-material/Google";
+export { default as DeleteOutlinedIcon } from "@mui/icons-material/DeleteOutlined";
+export { default as FavoriteIcon } from "@mui/icons-material/Favorite";
+export { default as FavoriteBorderIcon } from "@mui/icons-material/FavoriteBorder";
+export { default as EditNoteIcon } from "@mui/icons-material/EditNote";

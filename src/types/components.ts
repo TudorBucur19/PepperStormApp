@@ -1,6 +1,6 @@
 import { SxProps, Theme } from "@mui/material";
 
-import { IDbRecipe, IIngredient } from "src/types/recipes";
+import { IDbRecipe, IIngredient, RecipeAuthor } from "src/types/recipes";
 
 export interface ICatLogo {
   onClick?: () => void;
@@ -23,11 +23,13 @@ export interface IIngredientsList {
 }
 
 export interface IRecipHeader {
+  documentId: string;
   title: string;
   preparationTime: number | string;
   servings: number;
   category: string;
   specialTag: string[];
+  owner: RecipeAuthor;
 }
 
 export interface IRecipeMethod {
@@ -46,7 +48,7 @@ export interface IIngredientsForm {
 }
 
 export type PsButtonVariant = "basic" | "text" | "contained" | "outlined";
-export type PsButtonColor = "transparent" | "primary" | "secondary";
+export type PsButtonColor = "transparent" | "primary" | "secondary" | "danger";
 
 export interface IPsButton {
   children?: string | React.ReactNode;
@@ -76,4 +78,15 @@ export interface IChipInfo {
 export interface IIconTextProperty {
   icon: React.ReactNode;
   text: string;
+}
+
+export interface IImagePreview {
+  imageSrc: string;
+  title: string;
+  index: number;
+}
+
+export interface IOwnerSection {
+  owner: RecipeAuthor;
+  documentId: string;
 }

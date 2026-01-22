@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router";
 
@@ -10,12 +10,13 @@ import { AppThemeMode } from "src/types/general.ts";
 import "./index.css";
 
 const Root = () => {
-  const [mode] = React.useState<AppThemeMode>(
-    (localStorage.getItem("mode") as AppThemeMode) ||
-      (window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light")
-  );
+  const [mode] = useState<AppThemeMode>("light");
+  // const [mode] = React.useState<AppThemeMode>(
+  //   (localStorage.getItem("mode") as AppThemeMode) ||
+  //     (window.matchMedia("(prefers-color-scheme: dark)").matches
+  //       ? "dark"
+  //       : "light"),
+  // );
   const theme = React.useMemo(() => buildTheme(mode), [mode]);
 
   // const toggleMode = () => {

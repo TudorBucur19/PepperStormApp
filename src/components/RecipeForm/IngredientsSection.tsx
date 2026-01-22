@@ -10,7 +10,7 @@ const IngredientsSection = () => {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "ingredients",
+    name: "recipeIngredients",
   });
 
   return (

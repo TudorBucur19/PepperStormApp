@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Container, Box, Typography } from "@mui/material";
@@ -11,12 +12,27 @@ import useDatabase from "src/hooks/useDatabase";
 import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { LibraryAddOutlinedIcon } from "src/components/icons";
 import { useStore } from "src/store/rootStore";
+import { pickDirty } from "src/utils/helpers";
+import useAuth from "src/hooks/useAuth";
 
 import { newRecipeFormStyles as styles } from "src/components/styles/recipeForm.styles";
 
 const NewRecipeForm = () => {
-  const { addDocumentToCollection } = useDatabase(RECIPES_COLLECTION_NAME);
+  const setDisplayedRecipe = useStore((s) => s.setDisplayedRecipe);
   const isMobile = useStore((state) => state.screen.isMobile);
+  const displayedRecipe = useStore((state) => state.displayedRecipe);
+  const { addDocumentToCollection, updateDocument } = useDatabase(
+    RECIPES_COLLECTION_NAME,
+  );
+  const currentUser = useAuth().loggedUser;
+  const isEditMode = globalThis.location.pathname
+    .split("/")
+    .includes("modifica-reteta");
+  const submitLabel = isEditMode ? "Salvează modificările" : "Salvează rețeta";
+  const formTitle = isEditMode
+    ? `Modifică rețeta  ${displayedRecipe?.recipe.title || ""}`
+    : "Adaugă o rețetă nouă";
+
   const methods = useForm<FormValues>({
     resolver: zodResolver(recipeDetailsSchema),
     defaultValues: {
@@ -31,12 +47,69 @@ const NewRecipeForm = () => {
     },
     mode: "onBlur",
   });
+
+  useEffect(() => {
+    if (!displayedRecipe) return;
+    const {
+      title,
+      category,
+      servings,
+      preparationTime,
+      prepSteps,
+      spices,
+      specialTag,
+      recipeIngredients,
+      imageURL,
+    } = displayedRecipe.recipe;
+
+    methods.reset({
+      title: title ?? "",
+      category: category ?? "",
+      servings: servings ?? 1,
+      preparationTime: preparationTime ?? 1,
+      prepSteps: prepSteps ?? "",
+      spices: spices ?? "",
+      specialTag: specialTag ?? [],
+      recipeIngredients: recipeIngredients ?? [],
+      imageURL: imageURL ?? [],
+    });
+  }, [displayedRecipe, methods]);
+
+  useEffect(() => {
+    return () => {
+      setDisplayedRecipe(null);
+    };
+  }, []);
+
+  const dirtyFields = methods.formState.dirtyFields;
+  console.log("DIRTYF", dirtyFields);
+
+  console.log("FORM STATE", methods.getValues());
+  console.log("FORM STATE", methods.getValues());
+  console.log("REDUX STATE", displayedRecipe?.recipe);
+
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
     const payload = {
       ...data,
       createdAt: new Date(),
-      author: currentUserMock,
+      author: currentUser ?? currentUserMock, // fallback to a default RecipeAuthor object
     };
+    if (isEditMode) {
+      const updatedFields = pickDirty<FormValues>(
+        data,
+        dirtyFields as Partial<Record<keyof FormValues, boolean>>,
+      );
+      console.log("DIRTY IN UPDATE", updatedFields);
+      const payload = {
+        ...data,
+        createdAt: displayedRecipe?.recipe.createdAt || new Date(),
+        author: displayedRecipe?.recipe.author || currentUserMock,
+      };
+
+      await updateDocument(displayedRecipe?.id || "", payload);
+      return;
+    }
+
     await addDocumentToCollection(payload);
     console.log("Submitting:", payload);
     methods.reset();
@@ -45,7 +118,7 @@ const NewRecipeForm = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Adauga o reteta noua
+        {formTitle}
       </Typography>
       <FormProvider {...methods}>
         <Box
@@ -65,7 +138,7 @@ const NewRecipeForm = () => {
             startIcon={<LibraryAddOutlinedIcon />}
             fullWidth={isMobile}
           >
-            Salvează rețeta
+            {submitLabel}
           </PsButton>
         </Box>
       </FormProvider>

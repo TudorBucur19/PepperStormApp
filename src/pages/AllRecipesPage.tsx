@@ -12,7 +12,7 @@ const AllRecipesPage = () => {
 
   useEffect(() => {
     getCollectionData();
-  }, [getCollectionData]);
+  }, []);
 
   return (
     <GenericContainer>

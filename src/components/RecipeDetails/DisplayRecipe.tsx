@@ -19,6 +19,7 @@ const DisplayRecipe = () => {
     category = "",
     prepSteps = "",
     recipeIngredients = [],
+    author = { displayName: "", photoURL: "", userID: "" },
   } = displayedRecipe?.recipe ?? {};
 
   const {
@@ -48,6 +49,8 @@ const DisplayRecipe = () => {
               servings,
               category,
               specialTag,
+              owner: author,
+              documentId: displayedRecipe?.id || "",
             }}
           />
         </Box>

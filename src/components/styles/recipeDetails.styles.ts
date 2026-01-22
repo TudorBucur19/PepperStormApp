@@ -12,7 +12,7 @@ export const recipeDisplayStyles = {
     gap: 4,
     marginBottom: 4,
     borderRadius: "1rem",
-    padding: { xs: "2rem", sm: "2rem" },
+    padding: { xs: "2rem 0 0 0", sm: "2rem" },
   },
   topContainer: {},
   imageBox: {
@@ -21,7 +21,7 @@ export const recipeDisplayStyles = {
     aspectRatio: "3 / 4",
     borderRadius: { xs: 2, sm: 3 },
     objectFit: "cover",
-    padding: { xs: "0", sm: "1rem" },
+    padding: { xs: 0, sm: "1rem" },
   },
   detailsBox: {
     flex: 1,
@@ -123,5 +123,18 @@ export const recipeMethodStyles = {
     textAlign: "left",
     color: "#254a5d",
     fontSize: "1rem",
+  },
+};
+
+export const ownerSectionStyles = {
+  actionsContainer: {
+    display: "flex",
+    gap: 2,
+    alignItems: "center",
+  },
+  ownerLabel: {
+    fontSize: "1.2rem",
+    fontWeight: 500,
+    color: "primary.main",
   },
 };

@@ -1,5 +1,13 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
+
+import { reorderList } from "src/utils/helpers";
 
 type UploadedFileData = {
   url: string;
@@ -8,6 +16,10 @@ type UploadedFileData = {
   type: string;
   size: number;
 };
+// interface UseUploadFilesOptions {
+//   onImageUrlChange?: (url: string | null) => void;
+// }
+
 const useUploadFiles = (fileCollectionName: string) => {
   const storage = getStorage();
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
@@ -43,7 +55,38 @@ const useUploadFiles = (fileCollectionName: string) => {
     return Promise.all(uploads);
   };
 
-  return { handleFileChange, uploadedFilesData };
+  const deleteFileHandler = async (fileName: string) => {
+    const fileRef = ref(storage, `${fileCollectionName}/${fileName}`);
+    deleteObject(fileRef)
+      .then(() => {
+        console.log("Image was deleted");
+        const updatedFiles = uploadedFilesData.filter(
+          (file) => file.name !== fileName,
+        );
+        setUploadedFilesData(updatedFiles);
+        // Update form state for imageURL
+        // if (options && typeof options.onImageUrlChange === "function") {
+        //   const newMainUrl =
+        //     updatedFiles.length > 0 ? updatedFiles[0].url : null;
+        //   options.onImageUrlChange(newMainUrl);
+        // }
+      })
+      .catch((error) => {
+        console.error("Error deleting image:", error);
+      });
+  };
+
+  const changeMainImageHandler = (imageIndex: number) => {
+    const reorderedFiles = reorderList(uploadedFilesData, imageIndex);
+    setUploadedFilesData(reorderedFiles);
+  };
+
+  return {
+    handleFileChange,
+    uploadedFilesData,
+    deleteFileHandler,
+    changeMainImageHandler,
+  };
 };
 
 export default useUploadFiles;

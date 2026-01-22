@@ -30,7 +30,7 @@ const PsButton = ({
     theme,
     disabled,
     fullWidth,
-    fitContentWidth
+    fitContentWidth,
   );
   const { buttonBase, progressIcon } = allStyles;
 
@@ -50,6 +50,7 @@ const PsButton = ({
       aria-label={ariaLabel}
       className={className}
       type={type}
+      title={ariaLabel}
     >
       {isLoading && startIcon ? (
         <CircularProgress size={"1rem"} sx={progressIcon} />

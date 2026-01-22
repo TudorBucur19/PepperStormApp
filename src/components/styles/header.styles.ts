@@ -34,3 +34,17 @@ export const catLogoStyles = {
     color: "secondary.main",
   },
 };
+
+export const appBarStyles = {
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  link: {
+    color: "primary.main",
+    textDecoration: "none",
+    paddingX: "0.5rem",
+    cursor: "pointer",
+  },
+};

@@ -24,6 +24,13 @@ const colors = (theme: Theme) => ({
     disabledBg: "#E1DBDF",
     disabledLabel: "#737373",
   },
+  danger: {
+    background: theme.palette.error.main,
+    label: theme.palette.error.contrastText,
+    hover: theme.palette.error.light,
+    disabledBg: "#E1DBDF",
+    disabledLabel: "#737373",
+  },
 });
 
 export const psButtonStyles = (
@@ -32,7 +39,7 @@ export const psButtonStyles = (
   theme: Theme,
   disabled: boolean,
   fullWidth: boolean,
-  fitContentWidth: boolean
+  fitContentWidth: boolean,
 ) => ({
   colors: colors(theme),
   buttonBase: {
@@ -59,6 +66,10 @@ export const psButtonStyles = (
   contained: {},
   outlined: {
     border: "2px solid " + colors(theme)[color].label,
+  },
+  basic: {
+    padding: "0.5rem",
+    border: "none",
   },
   progressIcon: {
     color: colors(theme)[color].label,

@@ -84,20 +84,20 @@ const DetailsForm = () => {
         fullWidth
         required
         onWheel={(e) => (e.target as HTMLInputElement).blur()}
-        {...register("prepMinutes", {
+        {...register("preparationTime", {
           valueAsNumber: true,
           setValueAs: (v) => (v === "" || v == null ? undefined : Number(v)),
         })}
-        error={!!errors.prepMinutes}
+        error={!!errors.preparationTime}
         helperText={
-          typeof errors.prepMinutes?.message === "string"
-            ? errors.prepMinutes.message
+          typeof errors.preparationTime?.message === "string"
+            ? errors.preparationTime.message
             : undefined
         }
       />
       {/* Extracted handler to avoid deep nesting */}
       <Controller
-        name="specialTags"
+        name="specialTag"
         control={control}
         defaultValue={[]}
         render={({ field }) => {

@@ -21,7 +21,7 @@ const lightPalette: ThemeOptions["palette"] = {
 const darkPalette: ThemeOptions["palette"] = {
   mode: "dark",
   primary: { main: baseTokens.brandMain },
-  secondary: { main: "#ce93d8" },
+  secondary: { main: "#49C5B1" },
   background: { default: "#0b0b0b", paper: "#121212" },
 };
 

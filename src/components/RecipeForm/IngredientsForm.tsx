@@ -7,10 +7,10 @@ import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import PsButton from "src/components/common/PsButton";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 import { IIngredientsForm } from "src/types/components";
 import { measures } from "src/constants/appConfigValues";
+import { DeleteOutlinedIcon } from "src/components/icons";
 
 import { ingredientsFormStyles as styles } from "src/components/styles/recipeForm.styles";
 
@@ -87,7 +87,7 @@ const IngredientsForm = ({ index, remove }: IIngredientsForm) => {
       <Box sx={styles.buttonsContainer}>
         <PsButton
           variant="outlined"
-          color="transparent"
+          color="danger"
           startIcon={<DeleteOutlinedIcon />}
           onClick={() => remove(index)}
         />

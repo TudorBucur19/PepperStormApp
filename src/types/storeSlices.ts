@@ -9,7 +9,7 @@ export type RecipesSlice = {
   recipes: IDbRecipe[];
   setExistingRecipes: (recipes: IDbRecipe[]) => void;
   displayedRecipe: IDbRecipe | null;
-  setDisplayedRecipe: (recipe: IDbRecipe) => void;
+  setDisplayedRecipe: (recipe: IDbRecipe | null) => void;
 };
 
 export type LoggedUserSlice = {

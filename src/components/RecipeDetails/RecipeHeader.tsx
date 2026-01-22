@@ -12,15 +12,18 @@ import {
 } from "src/components/icons";
 import { formatMinutesRo } from "src/utils/uiFunctions";
 import ChipInfo from "src/components/common/ChipInfo";
+import OwnerSection from "src/components/RecipeDetails/OwnerSection";
 
 import { recipeHeaderStyles as styles } from "../styles/recipeDetails.styles";
 
 const RecipeHeader = ({
+  documentId,
   title,
   preparationTime,
   servings,
   category,
   specialTag,
+  owner,
 }: IRecipHeader) => {
   const { container, titleText } = styles;
   return (
@@ -62,6 +65,7 @@ const RecipeHeader = ({
             />
           ))}
       </Box>
+      <OwnerSection owner={owner} documentId={documentId} />
     </Box>
   );
 };

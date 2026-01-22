@@ -4,7 +4,7 @@ export const PHOTOS_COLLECTION_NAME = "images";
 // export const PHOTOS_COLLECTION_NAME = "testPhotos";
 
 export const menuPages = [
-  { label: "Adauga rețetă", link: "/adaugareteta" },
+  { label: "Adauga rețetă", link: "/adauga-reteta" },
   { label: "Idei noi", link: "/ideinoi" },
 ];
 

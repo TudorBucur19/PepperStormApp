@@ -17,6 +17,7 @@ const useAuth = () => {
 
   const logout = async () => {
     await signOut(auth);
+    sessionStorage.removeItem("loggedUser");
   };
 
   const handleGoogleLogin = async () => {
@@ -27,7 +28,7 @@ const useAuth = () => {
         photoURL: user.photoURL ?? "",
         userID: user.uid,
       };
-      setLoggedUser(currentUser);
+      sessionStorage.setItem("loggedUser", JSON.stringify(currentUser));
       navigate("/");
     } catch (error) {
       console.error("Error during Google login:", error);
@@ -44,7 +45,15 @@ const useAuth = () => {
     }
   };
 
-  return { signInWithGooglePopup, logout, handleGoogleLogin, handleLogout };
+  const loggedUser = JSON.parse(sessionStorage.getItem("loggedUser") || "null");
+
+  return {
+    signInWithGooglePopup,
+    logout,
+    handleGoogleLogin,
+    handleLogout,
+    loggedUser,
+  };
 };
 
 export default useAuth;
