@@ -29,3 +29,19 @@ export const genericContainerStyles = {
     paddingTop: "2rem",
   },
 };
+
+export const searchInputStyles = {
+  inputContainer: {
+    width: "100%",
+    p: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+  },
+  input: {
+    ml: 1,
+    flex: 1,
+  },
+  icon: {
+    padding: "0.625rem",
+  },
+};

@@ -10,6 +10,7 @@ import { recipeDisplayStyles as styles } from "src/components/styles/recipeDetai
 
 const DisplayRecipe = () => {
   const displayedRecipe = useStore((state) => state.displayedRecipe);
+
   const {
     imageURL = [],
     title = "",

@@ -27,3 +27,11 @@ export const newRecipeFormStyles = {
     paddingY: "1rem",
   },
 };
+
+export const fileUploadFieldStyles = {
+  imagesContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 2,
+  },
+};

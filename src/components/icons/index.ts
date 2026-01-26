@@ -11,3 +11,5 @@ export { default as DeleteOutlinedIcon } from "@mui/icons-material/DeleteOutline
 export { default as FavoriteIcon } from "@mui/icons-material/Favorite";
 export { default as FavoriteBorderIcon } from "@mui/icons-material/FavoriteBorder";
 export { default as EditNoteIcon } from "@mui/icons-material/EditNote";
+export { default as MenuIcon } from "@mui/icons-material/Menu";
+export { default as HighlightOffIcon } from "@mui/icons-material/HighlightOff";

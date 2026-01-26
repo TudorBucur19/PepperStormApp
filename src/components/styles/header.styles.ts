@@ -4,10 +4,7 @@ export const headerStyles = {
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    gap: "1rem",
-    maxHeight: "fit-content",
-    padding: "1rem 2rem",
-    width: "100%",
+    gap: "0.5rem",
     boxSizing: "border-box",
   },
   headerContainer: {

@@ -10,7 +10,7 @@ export const reorderList = <T>(list: T[], elementIndex: number) => {
   return editableList;
 };
 
-export const pickDirty = <T extends Record<string, unknown>>(
+export const pickDirtyFields = <T extends Record<string, unknown>>(
   values: T,
   dirty: Partial<Record<keyof T, boolean | Partial<Record<string, unknown>>>>,
 ): Partial<T> => {

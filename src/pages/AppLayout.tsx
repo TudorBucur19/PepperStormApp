@@ -1,12 +1,14 @@
 import { Outlet } from "react-router";
 import Box from "@mui/material/Box";
 
-import ResponsiveAppBar from "src/components/Header/AppBar";
+import Header from "src/components/Header/Header";
+
+import { appLayoutStyles as styles } from "src/pages/styles/pages.styles";
 
 const AppLayout = () => {
   return (
-    <Box>
-      <ResponsiveAppBar />
+    <Box sx={styles.container}>
+      <Header />
       <Outlet />
     </Box>
   );

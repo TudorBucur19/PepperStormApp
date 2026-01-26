@@ -27,7 +27,9 @@ const DetailsForm = () => {
         label="Titlu"
         fullWidth
         required
-        {...register("title")}
+        {...register("title", {
+          setValueAs: (v) => (typeof v === "string" ? v.toLowerCase() : v),
+        })}
         error={!!errors.title}
         helperText={
           typeof errors.title?.message === "string"

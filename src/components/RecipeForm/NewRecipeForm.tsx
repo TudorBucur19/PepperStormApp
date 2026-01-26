@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Container, Box, Typography } from "@mui/material";
@@ -12,12 +13,14 @@ import useDatabase from "src/hooks/useDatabase";
 import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { LibraryAddOutlinedIcon } from "src/components/icons";
 import { useStore } from "src/store/rootStore";
-import { pickDirty } from "src/utils/helpers";
+import { pickDirtyFields } from "src/utils/helpers";
 import useAuth from "src/hooks/useAuth";
+import { URLS } from "src/constants/urls";
 
 import { newRecipeFormStyles as styles } from "src/components/styles/recipeForm.styles";
 
 const NewRecipeForm = () => {
+  const navigate = useNavigate();
   const setDisplayedRecipe = useStore((s) => s.setDisplayedRecipe);
   const isMobile = useStore((state) => state.screen.isMobile);
   const displayedRecipe = useStore((state) => state.displayedRecipe);
@@ -95,7 +98,7 @@ const NewRecipeForm = () => {
       author: currentUser ?? currentUserMock, // fallback to a default RecipeAuthor object
     };
     if (isEditMode) {
-      const updatedFields = pickDirty<FormValues>(
+      const updatedFields = pickDirtyFields<FormValues>(
         data,
         dirtyFields as Partial<Record<keyof FormValues, boolean>>,
       );
@@ -107,12 +110,14 @@ const NewRecipeForm = () => {
       };
 
       await updateDocument(displayedRecipe?.id || "", payload);
+      navigate(`${URLS.RECIPE_DETAILS(displayedRecipe?.id || "")}`);
       return;
     }
 
     await addDocumentToCollection(payload);
     console.log("Submitting:", payload);
     methods.reset();
+    navigate(URLS.HOME);
   };
 
   return (

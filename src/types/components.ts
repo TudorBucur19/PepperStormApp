@@ -80,10 +80,11 @@ export interface IIconTextProperty {
   text: string;
 }
 
-export interface IImagePreview {
+export interface IImagePreview<T> {
   imageSrc: string;
   title: string;
   index: number;
+  files: T;
 }
 
 export interface IOwnerSection {

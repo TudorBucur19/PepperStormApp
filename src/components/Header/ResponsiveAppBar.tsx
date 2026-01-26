@@ -6,7 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
@@ -16,10 +16,11 @@ import { Link } from "@mui/material";
 import { menuPages, userSettingsMenu } from "src/constants/appConfigValues";
 import CatLogo from "src/components/Header/CatLogo";
 import useAuth from "src/hooks/useAuth";
+import { MenuIcon } from "src/components/icons";
 
 import { appBarStyles as styles } from "src/components/styles/header.styles";
 
-function ResponsiveAppBar() {
+const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
@@ -174,5 +175,5 @@ function ResponsiveAppBar() {
       </Container>
     </AppBar>
   );
-}
+};
 export default ResponsiveAppBar;

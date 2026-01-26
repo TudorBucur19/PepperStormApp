@@ -1,29 +1,60 @@
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
-import { SearchIcon } from "src/components/icons";
+import { HighlightOffIcon, SearchIcon } from "src/components/icons";
+import { Container } from "@mui/material";
+import { useRef } from "react";
+import useDatabase from "src/hooks/useDatabase";
+import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 
-const searchInputStyles = {
-  container: {
-    p: "2px 4px",
-    display: "flex",
-    alignItems: "center",
-    width: "100%",
-  },
-};
+import { searchInputStyles as styles } from "../styles/commonComponents.styles";
 
 const SearchInput = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { searchByTitle } = useDatabase(RECIPES_COLLECTION_NAME);
+  const handleSearch = () => {
+    if (inputRef.current) {
+      const query = inputRef.current.value;
+      console.log("QUERY", inputRef);
+
+      console.log("Searching for:", query);
+      searchByTitle(query);
+    }
+  };
+  const clearSearch = () => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+    searchByTitle("");
+  };
+
   return (
-    <Paper component="form" sx={searchInputStyles.container}>
-      <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Search recipe"
-        inputProps={{ "aria-label": "search recipe" }}
-      />
-    </Paper>
+    <Container component="form" maxWidth="xl">
+      <Paper variant="outlined" sx={styles.inputContainer}>
+        <IconButton
+          type="button"
+          sx={styles.icon}
+          aria-label="search"
+          onClick={handleSearch}
+        >
+          <SearchIcon />
+        </IconButton>
+        <InputBase
+          inputRef={inputRef}
+          sx={styles.input}
+          placeholder="Caută o rețetă"
+          inputProps={{ "aria-label": "căutare rețetă" }}
+        />
+        <IconButton
+          type="button"
+          sx={styles.icon}
+          aria-label="clear search input"
+          onClick={clearSearch}
+        >
+          <HighlightOffIcon />
+        </IconButton>
+      </Paper>
+    </Container>
   );
 };
 

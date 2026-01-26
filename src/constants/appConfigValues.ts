@@ -1,11 +1,13 @@
-export const RECIPES_COLLECTION_NAME = "recipes";
-export const PHOTOS_COLLECTION_NAME = "images";
-// export const RECIPES_COLLECTION_NAME = "recipesDEV";
-// export const PHOTOS_COLLECTION_NAME = "testPhotos";
+import { URLS } from "src/constants/urls";
+// export const RECIPES_COLLECTION_NAME = "recipes";
+// export const PHOTOS_COLLECTION_NAME = "images";
+export const RECIPES_COLLECTION_NAME = "recipesDEV";
+export const PHOTOS_COLLECTION_NAME = "testPhotsupaos";
 
 export const menuPages = [
-  { label: "Adauga rețetă", link: "/adauga-reteta" },
-  { label: "Idei noi", link: "/ideinoi" },
+  { label: "Acasă", link: URLS.HOME },
+  { label: "Adaugă rețetă", link: URLS.ADD_RECIPE },
+  { label: "Idei", link: URLS.IDEEAS },
 ];
 
 export const userSettingsMenu = [{ label: "Deconectează-te", link: "" }];
