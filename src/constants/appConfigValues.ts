@@ -1,8 +1,8 @@
 import { URLS } from "src/constants/urls";
-// export const RECIPES_COLLECTION_NAME = "recipes";
-// export const PHOTOS_COLLECTION_NAME = "images";
-export const RECIPES_COLLECTION_NAME = "recipesDEV";
-export const PHOTOS_COLLECTION_NAME = "testPhotsupaos";
+export const RECIPES_COLLECTION_NAME = "recipes";
+export const PHOTOS_COLLECTION_NAME = "images";
+// export const RECIPES_COLLECTION_NAME = "recipesDEV";
+// export const PHOTOS_COLLECTION_NAME = "testPhotsupaos";
 
 export const menuPages = [
   { label: "Acasă", link: URLS.HOME },

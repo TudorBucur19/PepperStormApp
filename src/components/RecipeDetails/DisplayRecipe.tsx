@@ -5,6 +5,7 @@ import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
 import IngredientsList from "src/components/RecipeDetails/IngredientsList";
 import RecipeHeader from "src/components/RecipeDetails/RecipeHeader";
 import RecipeMethod from "src/components/RecipeDetails/RecipeMethod";
+import ImageCarousel from "src/components/common/ImageCarousel";
 
 import { recipeDisplayStyles as styles } from "src/components/styles/recipeDetails.styles";
 
@@ -27,21 +28,26 @@ const DisplayRecipe = () => {
     halfPageContainer,
     topContainer,
     bottomContainer,
-    imageBox,
     detailsBox,
     methodBox,
     ingredientsBox,
+    imageBox,
   } = styles;
 
   return (
     <Container>
       <Box sx={{ ...halfPageContainer, ...topContainer }}>
-        <Box
-          component="img"
-          src={imageURL[0]?.url || noPhotoPlaceholder}
-          alt="imagine coperta reteta"
-          sx={imageBox}
-        />
+        {imageURL.length > 1 ? (
+          <ImageCarousel images={imageURL} />
+        ) : (
+          <Box
+            component="img"
+            src={imageURL.length ? imageURL[0].url : noPhotoPlaceholder}
+            alt=""
+            sx={imageBox}
+          />
+        )}
+
         <Box sx={detailsBox}>
           <RecipeHeader
             {...{

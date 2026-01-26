@@ -12,23 +12,23 @@ import {
 import { dataBase } from "src/api/firebase";
 import { IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
-import { recipesMock } from "src/mocks/recipesMock";
+// import { recipesMock } from "src/mocks/recipesMock";
 
 const useDatabase = (collectionName: string) => {
   const setExisingRecipes = useStore((s) => s.setExistingRecipes);
   const getCollectionData = async () => {
-    // const recipesCollection = collection(dataBase, collectionName);
-    // const recipesSnapshot = await getDocs(recipesCollection);
-    // const recipesList = recipesSnapshot.docs.map(
-    //   (doc) =>
-    //     ({
-    //       id: doc.id,
-    //       ...doc.data(),
-    //     }) as IDbRecipe,
-    // );
+    const recipesCollection = collection(dataBase, collectionName);
+    const recipesSnapshot = await getDocs(recipesCollection);
+    const recipesList = recipesSnapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        }) as IDbRecipe,
+    );
 
-    // setExisingRecipes(recipesList);
-    setExisingRecipes(recipesMock);
+    setExisingRecipes(recipesList);
+    // setExisingRecipes(recipesMock);
   };
 
   const addDocumentToCollection = async (newDoc: IRecipe) => {

@@ -72,7 +72,7 @@ const NewRecipeForm = () => {
       preparationTime: preparationTime ?? 1,
       prepSteps: prepSteps ?? "",
       spices: spices ?? "",
-      specialTag: specialTag ?? [],
+      specialTag: specialTag || [],
       recipeIngredients: recipeIngredients ?? [],
       imageURL: imageURL ?? [],
     });

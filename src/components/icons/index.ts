@@ -13,3 +13,5 @@ export { default as FavoriteBorderIcon } from "@mui/icons-material/FavoriteBorde
 export { default as EditNoteIcon } from "@mui/icons-material/EditNote";
 export { default as MenuIcon } from "@mui/icons-material/Menu";
 export { default as HighlightOffIcon } from "@mui/icons-material/HighlightOff";
+export { default as KeyboardArrowLeft } from "@mui/icons-material/KeyboardArrowLeft";
+export { default as KeyboardArrowRight } from "@mui/icons-material/KeyboardArrowRight";

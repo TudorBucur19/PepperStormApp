@@ -1,6 +1,11 @@
 import { SxProps, Theme } from "@mui/material";
 
-import { IDbRecipe, IIngredient, RecipeAuthor } from "src/types/recipes";
+import {
+  IDbRecipe,
+  IIngredient,
+  ImageURL,
+  RecipeAuthor,
+} from "src/types/recipes";
 
 export interface ICatLogo {
   onClick?: () => void;
@@ -90,4 +95,8 @@ export interface IImagePreview<T> {
 export interface IOwnerSection {
   owner: RecipeAuthor;
   documentId: string;
+}
+
+export interface IImageCarousel {
+  images: ImageURL[];
 }
