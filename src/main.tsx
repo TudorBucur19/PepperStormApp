@@ -6,6 +6,7 @@ import App from "./App.tsx";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { buildTheme } from "src/theme/theme.ts";
 import { AppThemeMode } from "src/types/general.ts";
+import { AuthProvider } from "src/hooks/AuthContext.tsx";
 
 import "./index.css";
 
@@ -26,13 +27,14 @@ const Root = () => {
   // };
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <App />
-        {/* <App toggleMode={toggleMode} mode={mode} /> */}
-      </BrowserRouter>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 

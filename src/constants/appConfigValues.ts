@@ -4,13 +4,22 @@ export const PHOTOS_COLLECTION_NAME = "images";
 // export const RECIPES_COLLECTION_NAME = "recipesDEV";
 // export const PHOTOS_COLLECTION_NAME = "testPhotsupaos";
 
+export const APP_NAME = "PepperStorm";
+export const authMenuLabels = {
+  login: "Conectează-te",
+  logout: "Deconectează-te",
+};
+
 export const menuPages = [
   { label: "Acasă", link: URLS.HOME },
   { label: "Adaugă rețetă", link: URLS.ADD_RECIPE },
   { label: "Idei", link: URLS.IDEEAS },
 ];
 
-export const userSettingsMenu = [{ label: "Deconectează-te", link: "" }];
+export const userSettingsMenu = (isLoggedIn: boolean) => [
+  { label: authMenuLabels.logout, active: isLoggedIn },
+  { label: authMenuLabels.login, active: !isLoggedIn },
+];
 
 export const specialTags = ["Vegetarian", "Vegan", "Picant"];
 export const recipeCategories = [

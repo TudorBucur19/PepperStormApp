@@ -7,6 +7,7 @@ export const ingredientsFormStyles = {
   quantityContainer: {
     display: "flex",
     gap: "1rem",
+    flex: 1,
   },
   buttonsContainer: {
     display: "flex",

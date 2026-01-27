@@ -4,28 +4,18 @@ import Typography from "@mui/material/Typography";
 import PsButton from "src/components/common/PsButton";
 import CatLogo from "src/components/Header/CatLogo";
 import { GoogleIcon } from "src/components/icons";
-import useAuth from "src/hooks/useAuth";
+import { useAuthContext } from "src/hooks/AuthContext";
 
-const styles = {
-  dialogContainer: {
-    maxWidth: 400,
-    margin: { xs: "6rem 1rem", sm: "6rem auto" },
-    p: 4,
-    display: "flex",
-    flexDirection: "column",
-    gap: 2,
-    alignItems: "center",
-  },
-};
+import { loginDialogStyles as styles } from "src/components/styles/authentication.styles";
 
 const LoginDialog = () => {
-  const { handleGoogleLogin } = useAuth();
+  const { handleGoogleLogin } = useAuthContext();
 
   return (
     <Paper sx={styles.dialogContainer}>
       <CatLogo />
       <Typography>
-        Bine ai venit! Pentru a continua trebuie să te autentifici.
+        Pentru a adăuga, modifica sau șterge rețete trebuie să te autentifici.
       </Typography>
       <PsButton
         variant="outlined"

@@ -7,38 +7,48 @@ import { DeleteOutlinedIcon, EditNoteIcon } from "src/components/icons";
 import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import useDatabase from "src/hooks/useDatabase";
 import { IOwnerSection } from "src/types/components";
+import { useAuthContext } from "src/hooks/AuthContext";
 
 import { ownerSectionStyles as styles } from "src/components/styles/recipeDetails.styles";
 
 const OwnerSection = ({ owner, documentId }: IOwnerSection) => {
   const { removeDocumentFromCollection } = useDatabase(RECIPES_COLLECTION_NAME);
+  const { loggedUser } = useAuthContext();
   const navigate = useNavigate();
   const editRecipeHandler = () => {
     navigate(`/modifica-reteta/${documentId}`);
   };
+  const isAdmin = loggedUser?.userID === "tOkQZxEnP6htFGgp6KXEHTBySBR2";
+  const isOwnerLoggedInUser = loggedUser?.userID === owner.userID;
+  const haveFullAccess = isAdmin || isOwnerLoggedInUser;
+
   return (
     <Box sx={styles.actionsContainer}>
-      <Typography
-        sx={styles.ownerLabel}
-      >{`By ${owner.displayName}`}</Typography>
-      <PsButton
-        variant="outlined"
-        color="transparent"
-        ariaLabel="Modifică rețeta"
-        onClick={editRecipeHandler}
-      >
-        <EditNoteIcon />
-      </PsButton>
-      <PsButton
-        variant="contained"
-        color="danger"
-        ariaLabel="Șterge rețeta"
-        onClick={() =>
-          removeDocumentFromCollection(RECIPES_COLLECTION_NAME, documentId)
-        }
-      >
-        <DeleteOutlinedIcon />
-      </PsButton>
+      <Typography sx={styles.ownerLabel}>
+        {`By ${owner.displayName}`}
+      </Typography>
+      {haveFullAccess && (
+        <>
+          <PsButton
+            variant="outlined"
+            color="transparent"
+            ariaLabel="Modifică rețeta"
+            onClick={editRecipeHandler}
+          >
+            <EditNoteIcon />
+          </PsButton>
+          <PsButton
+            variant="contained"
+            color="danger"
+            ariaLabel="Șterge rețeta"
+            onClick={() =>
+              removeDocumentFromCollection(RECIPES_COLLECTION_NAME, documentId)
+            }
+          >
+            <DeleteOutlinedIcon />
+          </PsButton>
+        </>
+      )}
     </Box>
   );
 };

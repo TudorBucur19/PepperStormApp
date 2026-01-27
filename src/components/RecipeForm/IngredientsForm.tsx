@@ -25,23 +25,24 @@ const IngredientsForm = ({ index, remove }: IIngredientsForm) => {
       Array.isArray(errors.ingredients) &&
       errors.ingredients[index]) ||
     {};
-  console.log("ERRORS", errors);
 
   return (
     <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
       <Box sx={styles.formContainer}>
-        <TextField
-          label="Ingredient"
-          fullWidth
-          required
-          {...register(`recipeIngredients.${index}.ingredient`)}
-          error={!!fieldErrors.ingredient}
-          helperText={
-            typeof fieldErrors.ingredient?.message === "string"
-              ? fieldErrors.ingredient.message
-              : undefined
-          }
-        />
+        <Box>
+          <TextField
+            label="Ingredient"
+            fullWidth
+            required
+            {...register(`recipeIngredients.${index}.ingredient`)}
+            error={!!fieldErrors.ingredient}
+            helperText={
+              typeof fieldErrors.ingredient?.message === "string"
+                ? fieldErrors.ingredient.message
+                : undefined
+            }
+          />
+        </Box>
         <Box sx={styles.quantityContainer}>
           <TextField
             label="Cantitate"

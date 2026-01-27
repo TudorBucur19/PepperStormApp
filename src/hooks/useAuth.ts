@@ -1,14 +1,18 @@
-import { signInWithPopup, signOut } from "firebase/auth";
+import {
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { auth, googleProvider } from "src/api/firebase";
-import { useStore } from "src/store/rootStore";
+import { LoggedInUser } from "src/types/auth";
 
 const useAuth = () => {
   const navigate = useNavigate();
-  const { setLoggedUser } = useStore((state) => ({
-    setLoggedUser: state.setLoggedUser,
-  }));
+  const [loggedUser, setLoggedUser] = useState<LoggedInUser | null>(null);
 
   const signInWithGooglePopup = async () => {
     const result = await signInWithPopup(auth, googleProvider);
@@ -17,18 +21,13 @@ const useAuth = () => {
 
   const logout = async () => {
     await signOut(auth);
-    sessionStorage.removeItem("loggedUser");
   };
 
   const handleGoogleLogin = async () => {
     try {
-      const user = await signInWithGooglePopup();
-      const currentUser = {
-        displayName: user.displayName ?? "",
-        photoURL: user.photoURL ?? "",
-        userID: user.uid,
-      };
-      sessionStorage.setItem("loggedUser", JSON.stringify(currentUser));
+      const userCredential = await signInWithGooglePopup();
+      const mappedUser = mapFirebaseUser(userCredential);
+      setLoggedUser(mappedUser);
       navigate("/");
     } catch (error) {
       console.error("Error during Google login:", error);
@@ -45,7 +44,26 @@ const useAuth = () => {
     }
   };
 
-  const loggedUser = JSON.parse(sessionStorage.getItem("loggedUser") || "null");
+  const mapFirebaseUser = (firebaseUser: User | null): LoggedInUser | null => {
+    if (!firebaseUser) return null;
+    return {
+      userID: firebaseUser.uid,
+      displayName: firebaseUser.displayName,
+      email: firebaseUser.email,
+      photoURL: firebaseUser.photoURL,
+    };
+  };
+
+  // listen to firebase auth state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      const loggedUser = mapFirebaseUser(firebaseUser);
+
+      setLoggedUser(loggedUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return {
     signInWithGooglePopup,

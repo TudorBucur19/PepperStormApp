@@ -45,3 +45,21 @@ export const searchInputStyles = {
     padding: "0.625rem",
   },
 };
+
+export const errorFallbackStyles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 4,
+    marginY: 6,
+  },
+};
+
+export const loadingPlaceholderStyles = {
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    margin: "auto",
+  },
+};

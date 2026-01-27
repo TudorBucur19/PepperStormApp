@@ -100,3 +100,8 @@ export interface IOwnerSection {
 export interface IImageCarousel {
   images: ImageURL[];
 }
+
+export interface IErrorFallback {
+  errorMessage?: string;
+  title?: string;
+}

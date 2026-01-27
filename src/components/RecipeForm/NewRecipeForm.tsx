@@ -14,7 +14,7 @@ import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { LibraryAddOutlinedIcon } from "src/components/icons";
 import { useStore } from "src/store/rootStore";
 import { pickDirtyFields } from "src/utils/helpers";
-import useAuth from "src/hooks/useAuth";
+import { useAuthContext } from "src/hooks/AuthContext";
 import { URLS } from "src/constants/urls";
 
 import { newRecipeFormStyles as styles } from "src/components/styles/recipeForm.styles";
@@ -27,7 +27,7 @@ const NewRecipeForm = () => {
   const { addDocumentToCollection, updateDocument } = useDatabase(
     RECIPES_COLLECTION_NAME,
   );
-  const currentUser = useAuth().loggedUser;
+  const { loggedUser: currentUser } = useAuthContext();
   const isEditMode = globalThis.location.pathname
     .split("/")
     .includes("modifica-reteta");
@@ -82,20 +82,20 @@ const NewRecipeForm = () => {
     return () => {
       setDisplayedRecipe(null);
     };
-  }, []);
+  }, [setDisplayedRecipe]);
 
   const dirtyFields = methods.formState.dirtyFields;
-  console.log("DIRTYF", dirtyFields);
-
-  console.log("FORM STATE", methods.getValues());
-  console.log("FORM STATE", methods.getValues());
-  console.log("REDUX STATE", displayedRecipe?.recipe);
 
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+    const updatedAuthor = {
+      userID: currentUser?.userID || "",
+      displayName: currentUser?.displayName || "",
+      photoURL: currentUser?.photoURL || "",
+    };
     const payload = {
       ...data,
       createdAt: new Date(),
-      author: currentUser ?? currentUserMock, // fallback to a default RecipeAuthor object
+      author: updatedAuthor,
     };
     if (isEditMode) {
       const updatedFields = pickDirtyFields<FormValues>(

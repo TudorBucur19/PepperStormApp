@@ -21,7 +21,7 @@ const DetailsForm = () => {
   } = useFormContext();
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} width={{ xs: "100%", md: "50%" }}>
       <Typography variant="h5">Detaliile rețetei</Typography>
       <TextField
         label="Titlu"
@@ -134,7 +134,7 @@ const DetailsForm = () => {
       <TextField
         label="Instrucțiuni"
         multiline
-        rows={4}
+        minRows={4}
         fullWidth
         required
         {...register("prepSteps")}
@@ -144,6 +144,11 @@ const DetailsForm = () => {
             ? errors.prepSteps.message
             : undefined
         }
+        sx={{
+          "& .MuiInputBase-inputMultiline": {
+            resize: "vertical",
+          },
+        }}
       />
 
       <TextField

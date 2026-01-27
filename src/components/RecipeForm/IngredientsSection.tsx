@@ -14,7 +14,7 @@ const IngredientsSection = () => {
   });
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} width={{ xs: "100%", md: "50%" }}>
       <Typography variant="h5">Ingrediente</Typography>
       {fields.map((field, index) => (
         <IngredientsForm

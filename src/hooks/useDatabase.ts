@@ -3,6 +3,7 @@ import {
   doc,
   addDoc,
   getDocs,
+  getDoc,
   updateDoc,
   deleteDoc,
   query,
@@ -29,6 +30,21 @@ const useDatabase = (collectionName: string) => {
 
     setExisingRecipes(recipesList);
     // setExisingRecipes(recipesMock);
+  };
+
+  const getRecipeById = async (id: string) => {
+    try {
+      const docRef = doc(dataBase, collectionName, id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() } as IDbRecipe;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching recipe by id:", error);
+      throw error;
+    }
   };
 
   const addDocumentToCollection = async (newDoc: IRecipe) => {
@@ -87,6 +103,7 @@ const useDatabase = (collectionName: string) => {
     updateDocument,
     removeDocumentFromCollection,
     searchByTitle,
+    getRecipeById,
   };
 };
 

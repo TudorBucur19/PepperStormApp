@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+
 import NewRecipeForm from "src/components/RecipeForm/NewRecipeForm";
-import useAuth from "src/hooks/useAuth";
+import { useAuthContext } from "src/hooks/AuthContext";
 
 const NewRecipePage = () => {
-  const { loggedUser } = useAuth();
+  const { loggedUser } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,6 +13,7 @@ const NewRecipePage = () => {
       navigate("/login");
     }
   }, [loggedUser, navigate]);
+
   return <NewRecipeForm />;
 };
 

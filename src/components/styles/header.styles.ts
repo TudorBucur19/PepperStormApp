@@ -28,6 +28,7 @@ export const catLogoStyles = {
   },
   logoText: {
     fontSize: "1.5rem",
+    fontFamily: "'Lobster', sans-serif",
     color: "secondary.main",
   },
 };

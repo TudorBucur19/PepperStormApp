@@ -13,10 +13,14 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "@mui/material";
 
-import { menuPages, userSettingsMenu } from "src/constants/appConfigValues";
+import {
+  authMenuLabels,
+  menuPages,
+  userSettingsMenu,
+} from "src/constants/appConfigValues";
 import CatLogo from "src/components/Header/CatLogo";
-import useAuth from "src/hooks/useAuth";
 import { MenuIcon } from "src/components/icons";
+import { useAuthContext } from "src/hooks/AuthContext";
 
 import { appBarStyles as styles } from "src/components/styles/header.styles";
 
@@ -24,8 +28,7 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
-  const { handleLogout, loggedUser } = useAuth();
-
+  const { loggedUser, handleLogout } = useAuthContext();
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -40,8 +43,12 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = (setting: string) => {
     setAnchorElUser(null);
-    if (setting === "Deconectează-te") {
+    if (setting === authMenuLabels.logout) {
       handleLogout();
+      return;
+    }
+    if (setting === authMenuLabels.login) {
+      navigate("/login");
     }
   };
 
@@ -159,16 +166,19 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {userSettingsMenu.map((setting) => (
-                <MenuItem
-                  key={setting.label}
-                  onClick={() => handleCloseUserMenu(setting.label)}
-                >
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting.label}
-                  </Typography>
-                </MenuItem>
-              ))}
+              {userSettingsMenu(!!loggedUser).map(
+                (setting) =>
+                  setting.active && (
+                    <MenuItem
+                      key={setting.label}
+                      onClick={() => handleCloseUserMenu(setting.label)}
+                    >
+                      <Typography sx={{ textAlign: "center" }}>
+                        {setting.label}
+                      </Typography>
+                    </MenuItem>
+                  ),
+              )}
             </Menu>
           </Box>
         </Toolbar>

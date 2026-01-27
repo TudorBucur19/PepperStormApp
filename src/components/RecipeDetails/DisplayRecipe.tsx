@@ -1,16 +1,50 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { Box, Container } from "@mui/material";
 
-import { useStore } from "src/store/rootStore";
 import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
 import IngredientsList from "src/components/RecipeDetails/IngredientsList";
 import RecipeHeader from "src/components/RecipeDetails/RecipeHeader";
 import RecipeMethod from "src/components/RecipeDetails/RecipeMethod";
 import ImageCarousel from "src/components/common/ImageCarousel";
+import useDatabase from "src/hooks/useDatabase";
+import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
+import LoadingPlaceholder from "src/components/common/LoadingPlaceholder";
+import ErrorFallback from "src/components/common/ErrorFallback";
+import { IDbRecipe } from "src/types/recipes";
 
 import { recipeDisplayStyles as styles } from "src/components/styles/recipeDetails.styles";
 
 const DisplayRecipe = () => {
-  const displayedRecipe = useStore((state) => state.displayedRecipe);
+  const { getRecipeById } = useDatabase(RECIPES_COLLECTION_NAME);
+  const { id } = useParams();
+  const [displayedRecipe, setDisplayedRecipe] = useState<IDbRecipe | null>(
+    null,
+  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const recipe = await getRecipeById(id || "");
+        setDisplayedRecipe(recipe);
+      } catch (err) {
+        console.error("Error fetching recipe:", err);
+        setError("Eroare la încărcarea rețetei.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRecipe();
+  }, []);
+
+  if (loading) return <LoadingPlaceholder />;
+  if (error) return <ErrorFallback errorMessage={error} />;
+  if (!displayedRecipe)
+    return <ErrorFallback errorMessage="Rețeta nu a fost găsită." />;
 
   const {
     imageURL = [],
