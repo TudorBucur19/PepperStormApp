@@ -10,8 +10,8 @@ import { catLogoStyles as styles } from "src/components/styles/header.styles";
 const CatLogo = ({ onClick }: ICatLogo) => {
   const { logoContainer, logo, logoText } = styles;
   return (
-    <Box sx={logoContainer}>
-      <ImageListItem onClick={onClick} sx={logo}>
+    <Box sx={logoContainer} onClick={onClick}>
+      <ImageListItem sx={logo}>
         <CatLogoIcon />
       </ImageListItem>
       <Typography sx={logoText}>pepperstorm</Typography>

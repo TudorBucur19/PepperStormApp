@@ -10,13 +10,22 @@ import { IOwnerSection } from "src/types/components";
 import { useAuthContext } from "src/hooks/AuthContext";
 
 import { ownerSectionStyles as styles } from "src/components/styles/recipeDetails.styles";
+import { useStore } from "src/store/rootStore";
+import DialogBox from "src/components/common/DialogBox";
+import { URLS } from "src/constants/urls";
 
 const OwnerSection = ({ owner, documentId }: IOwnerSection) => {
   const { removeDocumentFromCollection } = useDatabase(RECIPES_COLLECTION_NAME);
   const { loggedUser } = useAuthContext();
+  const setModalOpen = useStore((state) => state.setModalOpen);
   const navigate = useNavigate();
   const editRecipeHandler = () => {
-    navigate(`/modifica-reteta/${documentId}`);
+    navigate(URLS.EDIT_RECIPE(documentId));
+  };
+  const deleteRecipeHandler = () => {
+    removeDocumentFromCollection(RECIPES_COLLECTION_NAME, documentId);
+    setModalOpen(false);
+    navigate(URLS.HOME);
   };
   const isAdmin = loggedUser?.userID === "tOkQZxEnP6htFGgp6KXEHTBySBR2";
   const isOwnerLoggedInUser = loggedUser?.userID === owner.userID;
@@ -41,14 +50,19 @@ const OwnerSection = ({ owner, documentId }: IOwnerSection) => {
             variant="contained"
             color="danger"
             ariaLabel="Șterge rețeta"
-            onClick={() =>
-              removeDocumentFromCollection(RECIPES_COLLECTION_NAME, documentId)
-            }
+            onClick={() => setModalOpen(true)}
           >
             <DeleteOutlinedIcon />
           </PsButton>
         </>
       )}
+      <DialogBox
+        title="Confirmare ștergere"
+        description="Ești sigur că vrei să ștergi această rețetă?"
+        confirmLabel="Șterge"
+        cancelLabel="Anulează"
+        confirmAction={deleteRecipeHandler}
+      />
     </Box>
   );
 };

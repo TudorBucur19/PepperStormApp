@@ -5,6 +5,7 @@ import {
   IIngredient,
   ImageURL,
   RecipeAuthor,
+  RecipeComplexity,
 } from "src/types/recipes";
 
 export interface ICatLogo {
@@ -35,10 +36,12 @@ export interface IRecipHeader {
   category: string;
   specialTag: string[];
   owner: RecipeAuthor;
+  complexity: RecipeComplexity;
 }
 
 export interface IRecipeMethod {
   prepSteps: string;
+  spices: string;
 }
 export interface IIngredientItem {
   ingredient: IIngredient;
@@ -83,6 +86,7 @@ export interface IChipInfo {
 export interface IIconTextProperty {
   icon: React.ReactNode;
   text: string;
+  textStyle?: SxProps<Theme>;
 }
 
 export interface IImagePreview<T> {
@@ -104,4 +108,12 @@ export interface IImageCarousel {
 export interface IErrorFallback {
   errorMessage?: string;
   title?: string;
+}
+
+export interface IDialogBox {
+  title: string;
+  description: string;
+  confirmLabel: string;
+  cancelLabel: string;
+  confirmAction?: () => void;
 }

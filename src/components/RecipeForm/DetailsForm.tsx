@@ -10,7 +10,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
 
-import { recipeCategories, specialTags } from "src/constants/appConfigValues";
+import {
+  complexityLevels,
+  recipeCategories,
+  specialTags,
+} from "src/constants/appConfigValues";
 import FileUploadField from "src/components/RecipeForm/FileUploadField";
 
 const DetailsForm = () => {
@@ -162,6 +166,31 @@ const DetailsForm = () => {
             : undefined
         }
       />
+      <FormControl fullWidth>
+        <InputLabel id="complexity-select-label">Dificultate</InputLabel>
+        <Controller
+          name="complexity"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <Select
+              labelId="complexity-select-label"
+              id="complexity-select"
+              label="Dificultate"
+              fullWidth
+              required
+              error={!!errors.complexity}
+              {...field}
+            >
+              {Object.entries(complexityLevels).map(([key, label]) => (
+                <MenuItem key={key} value={key}>
+                  {label}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        />
+      </FormControl>
       <FileUploadField />
     </Stack>
   );

@@ -50,7 +50,7 @@ export const ingredientItemStyles = {
     alignItems: "center",
     width: "100%",
     textAlign: "left",
-    color: "#254a5d",
+    color: "primary.dark",
     fontSize: "1rem",
     borderBottom: "0.3px solid #254a5d4d",
     paddingY: "0.8rem",
@@ -118,10 +118,22 @@ export const recipeMethodStyles = {
     fontWeight: 700,
     textTransform: "uppercase",
   },
+  methodContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+    alignItems: "flex-start",
+    width: "100%",
+  },
+  spicesText: {
+    fontSize: "1.2rem",
+    color: "primary.main",
+    fontWeight: 500,
+  },
   methodText: {
     whiteSpace: "pre-line",
     textAlign: "left",
-    color: "#254a5d",
+    color: "primary.dark",
     fontSize: "1rem",
   },
 };

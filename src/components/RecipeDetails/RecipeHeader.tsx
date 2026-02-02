@@ -8,11 +8,14 @@ import IconTextProperty from "src/components/common/IconTextProperty";
 import {
   AccessTimeIcon,
   PeopleOutlineIcon,
-  PermMediaOutlinedIcon,
+  SignalCellular1BarIcon,
+  SignalCellular2BarIcon,
+  SignalCellular4BarIcon,
 } from "src/components/icons";
 import { formatMinutesRo } from "src/utils/uiFunctions";
 import ChipInfo from "src/components/common/ChipInfo";
 import OwnerSection from "src/components/RecipeDetails/OwnerSection";
+import { complexityLevels } from "src/constants/appConfigValues";
 
 import { recipeHeaderStyles as styles } from "../styles/recipeDetails.styles";
 
@@ -24,8 +27,17 @@ const RecipeHeader = ({
   category,
   specialTag,
   owner,
+  complexity = "medium",
 }: IRecipHeader) => {
   const { container, titleText } = styles;
+  const headerIconsColor = "secondary";
+
+  const recipeComplexityIcon = {
+    easy: <SignalCellular1BarIcon color={headerIconsColor} />,
+    medium: <SignalCellular2BarIcon color={headerIconsColor} />,
+    hard: <SignalCellular4BarIcon color={headerIconsColor} />,
+  };
+
   return (
     <Box sx={container}>
       <Typography variant="h4" component="h1" sx={titleText}>
@@ -43,14 +55,17 @@ const RecipeHeader = ({
         spacing={2}
       >
         <IconTextProperty
-          icon={<AccessTimeIcon />}
+          icon={<AccessTimeIcon color={headerIconsColor} />}
           text={formatMinutesRo(Number(preparationTime))}
         />
         <IconTextProperty
-          icon={<PeopleOutlineIcon />}
+          icon={<PeopleOutlineIcon color={headerIconsColor} />}
           text={`${servings} porții`}
         />
-        <IconTextProperty icon={<PermMediaOutlinedIcon />} text="Imagini" />
+        <IconTextProperty
+          icon={recipeComplexityIcon[complexity]}
+          text={complexityLevels[complexity]}
+        />
       </Stack>
       <Box display="flex" gap={2}>
         {specialTag &&
@@ -65,6 +80,7 @@ const RecipeHeader = ({
             />
           ))}
       </Box>
+      <Divider orientation="horizontal" flexItem />
       <OwnerSection owner={owner} documentId={documentId} />
     </Box>
   );

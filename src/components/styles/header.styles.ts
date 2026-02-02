@@ -30,6 +30,7 @@ export const catLogoStyles = {
     fontSize: "1.5rem",
     fontFamily: "'Lobster', sans-serif",
     color: "secondary.main",
+    cursor: "pointer",
   },
 };
 

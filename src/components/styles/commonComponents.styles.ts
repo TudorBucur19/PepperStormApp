@@ -63,3 +63,18 @@ export const loadingPlaceholderStyles = {
     margin: "auto",
   },
 };
+
+export const iconsTextPropertyStyles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "1rem",
+  },
+  text: {
+    color: "primary.main",
+    fontSize: "1rem",
+    fontWeight: 500,
+    textTransform: "uppercase",
+  },
+};

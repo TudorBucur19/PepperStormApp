@@ -14,9 +14,7 @@ const SearchInput = () => {
   const { searchByTitle } = useDatabase(RECIPES_COLLECTION_NAME);
   const handleSearch = () => {
     if (inputRef.current) {
-      const query = inputRef.current.value;
-      console.log("QUERY", inputRef);
-
+      const query = inputRef.current.value.toLowerCase();
       console.log("Searching for:", query);
       searchByTitle(query);
     }
@@ -34,10 +32,10 @@ const SearchInput = () => {
         <IconButton
           type="button"
           sx={styles.icon}
-          aria-label="search"
-          onClick={handleSearch}
+          aria-label="clear search input"
+          onClick={clearSearch}
         >
-          <SearchIcon />
+          <HighlightOffIcon />
         </IconButton>
         <InputBase
           inputRef={inputRef}
@@ -48,10 +46,10 @@ const SearchInput = () => {
         <IconButton
           type="button"
           sx={styles.icon}
-          aria-label="clear search input"
-          onClick={clearSearch}
+          aria-label="search"
+          onClick={handleSearch}
         >
-          <HighlightOffIcon />
+          <SearchIcon />
         </IconButton>
       </Paper>
     </Container>

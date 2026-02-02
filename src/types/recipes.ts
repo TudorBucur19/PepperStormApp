@@ -27,6 +27,7 @@ export interface IRecipe {
   category: string;
   author: RecipeAuthor;
   spices?: string;
+  complexity?: RecipeComplexity;
 }
 
 export interface IDbRecipe {
@@ -38,3 +39,5 @@ export type ImageURL = {
   name: string;
   url: string;
 };
+
+export type RecipeComplexity = "easy" | "medium" | "hard";

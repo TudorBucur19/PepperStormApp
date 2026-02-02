@@ -14,6 +14,7 @@ import ErrorFallback from "src/components/common/ErrorFallback";
 import { IDbRecipe } from "src/types/recipes";
 
 import { recipeDisplayStyles as styles } from "src/components/styles/recipeDetails.styles";
+// import { useStore } from "src/store/rootStore";
 
 const DisplayRecipe = () => {
   const { getRecipeById } = useDatabase(RECIPES_COLLECTION_NAME);
@@ -23,6 +24,8 @@ const DisplayRecipe = () => {
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // const displayedRecipe = useStore((s) => s.displayedRecipe);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -56,6 +59,8 @@ const DisplayRecipe = () => {
     prepSteps = "",
     recipeIngredients = [],
     author = { displayName: "", photoURL: "", userID: "" },
+    spices = "",
+    complexity = "medium",
   } = displayedRecipe?.recipe ?? {};
 
   const {
@@ -91,6 +96,7 @@ const DisplayRecipe = () => {
               category,
               specialTag,
               owner: author,
+              complexity,
               documentId: displayedRecipe?.id || "",
             }}
           />
@@ -101,7 +107,7 @@ const DisplayRecipe = () => {
           <IngredientsList ingredients={recipeIngredients} />
         </Box>
         <Box sx={methodBox}>
-          <RecipeMethod {...{ prepSteps }} />
+          <RecipeMethod {...{ prepSteps, spices }} />
         </Box>
       </Box>
     </Container>

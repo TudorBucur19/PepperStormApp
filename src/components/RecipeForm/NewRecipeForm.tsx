@@ -47,6 +47,7 @@ const NewRecipeForm = () => {
       recipeIngredients: [],
       specialTag: [],
       imageURL: [],
+      complexity: "medium",
     },
     mode: "onBlur",
   });
@@ -63,6 +64,7 @@ const NewRecipeForm = () => {
       specialTag,
       recipeIngredients,
       imageURL,
+      complexity,
     } = displayedRecipe.recipe;
 
     methods.reset({
@@ -75,6 +77,7 @@ const NewRecipeForm = () => {
       specialTag: specialTag || [],
       recipeIngredients: recipeIngredients ?? [],
       imageURL: imageURL ?? [],
+      complexity: complexity || "medium",
     });
   }, [displayedRecipe, methods]);
 

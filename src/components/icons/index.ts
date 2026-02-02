@@ -15,3 +15,7 @@ export { default as MenuIcon } from "@mui/icons-material/Menu";
 export { default as HighlightOffIcon } from "@mui/icons-material/HighlightOff";
 export { default as KeyboardArrowLeft } from "@mui/icons-material/KeyboardArrowLeft";
 export { default as KeyboardArrowRight } from "@mui/icons-material/KeyboardArrowRight";
+export { default as SignalCellular1BarIcon } from "@mui/icons-material/SignalCellular1Bar";
+export { default as SignalCellular2BarIcon } from "@mui/icons-material/SignalCellular2Bar";
+export { default as SignalCellular4BarIcon } from "@mui/icons-material/SignalCellular4Bar";
+export { default as RemoveIcon } from "@mui/icons-material/Remove";

@@ -20,7 +20,7 @@ export const recipeDetailsSchema = z.object({
   servings: z.number().int().min(1, "Minim 1 porție"),
   preparationTime: z.number().int().min(1, "Minim 1 minut"),
   prepSteps: z.string().min(5, "Adaugă instrucțiuni"),
-  spices: z.string().min(2, "Adaugă condimente").optional(),
+  spices: z.string().optional(),
   recipeIngredients: z
     .array(ingredientSchema)
     .min(1, "Adaugă cel puțin un ingredient"),
@@ -29,8 +29,9 @@ export const recipeDetailsSchema = z.object({
     z.object({
       name: z.string(),
       url: z.string(),
-    })
+    }),
   ),
+  complexity: z.enum(["easy", "medium", "hard"]),
 });
 
 export type FormValues = z.infer<typeof recipeDetailsSchema>;

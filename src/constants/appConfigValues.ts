@@ -46,3 +46,9 @@ export const measures = [
   "lingurițe",
   "linguri",
 ];
+
+export const complexityLevels = {
+  easy: "ușor",
+  medium: "mediu",
+  hard: "complex",
+};

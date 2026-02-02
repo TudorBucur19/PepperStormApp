@@ -12,6 +12,7 @@ const lightPalette: ThemeOptions["palette"] = {
   primary: {
     main: baseTokens.brandMain,
     light: "#337179D9",
+    dark: "#254a5d",
     contrastText: "#F2F3F4",
   },
   secondary: { main: "#49C5B1" },
