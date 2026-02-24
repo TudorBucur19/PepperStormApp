@@ -14,17 +14,25 @@ const DialogBox = ({
   confirmLabel,
   cancelLabel,
   confirmAction,
+  open,
+  onClose,
 }: IDialogBox) => {
-  const open = useStore((state) => state.modal.isOpen);
+  const globalOpen = useStore((state) => state.modal.isOpen);
   const setModalOpen = useStore((state) => state.setModalOpen);
 
+  const isOpen = open ?? globalOpen;
+
   const handleClose = () => {
+    if (onClose) {
+      onClose();
+      return;
+    }
     setModalOpen(false);
   };
 
   return (
     <Dialog
-      open={open}
+      open={isOpen}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"

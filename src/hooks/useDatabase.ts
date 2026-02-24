@@ -8,18 +8,24 @@ import {
   deleteDoc,
   query,
   where,
+  getCountFromServer,
+  orderBy,
 } from "firebase/firestore";
 
 import { dataBase } from "src/api/firebase";
 import { IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
+import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
 // import { recipesMock } from "src/mocks/recipesMock";
+// import { ideasMock } from "src/mocks/ideasMock";
 
 const useDatabase = (collectionName: string) => {
   const setExisingRecipes = useStore((s) => s.setExistingRecipes);
+  const setExisingIdeas = useStore((s) => s.setExistingIdeas);
   const getCollectionData = async () => {
     const recipesCollection = collection(dataBase, collectionName);
-    const recipesSnapshot = await getDocs(recipesCollection);
+    const q = query(recipesCollection, orderBy("recipe.title", "asc"));
+    const recipesSnapshot = await getDocs(q);
     const recipesList = recipesSnapshot.docs.map(
       (doc) =>
         ({
@@ -27,9 +33,24 @@ const useDatabase = (collectionName: string) => {
           ...doc.data(),
         }) as IDbRecipe,
     );
-
     setExisingRecipes(recipesList);
     // setExisingRecipes(recipesMock);
+  };
+
+  const getIdeasCollectionData = async () => {
+    const ideasCollection = collection(dataBase, collectionName);
+    const q = query(ideasCollection, orderBy("idea.title", "asc"));
+    const ideasSnapshot = await getDocs(q);
+    const ideasList = ideasSnapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        }) as IDBRecipeIdea,
+    );
+
+    setExisingIdeas(ideasList);
+    // setExisingIdeas(ideasMock);
   };
 
   const getRecipeById = async (id: string) => {
@@ -50,6 +71,11 @@ const useDatabase = (collectionName: string) => {
   const addDocumentToCollection = async (newDoc: IRecipe) => {
     const collectionRef = collection(dataBase, collectionName);
     await addDoc(collectionRef, { recipe: newDoc });
+  };
+
+  const addIdeaToCollection = async (newDoc: IRecipeIdea) => {
+    const collectionRef = collection(dataBase, collectionName);
+    await addDoc(collectionRef, { idea: newDoc });
   };
 
   const removeDocumentFromCollection = async (
@@ -97,6 +123,12 @@ const useDatabase = (collectionName: string) => {
     setExisingRecipes(recipesList);
   };
 
+  const getTotalPosts = async () => {
+    const collectionRef = collection(dataBase, collectionName);
+    const snapshot = await getCountFromServer(collectionRef);
+    return snapshot.data().count;
+  };
+
   return {
     getCollectionData,
     addDocumentToCollection,
@@ -104,6 +136,9 @@ const useDatabase = (collectionName: string) => {
     removeDocumentFromCollection,
     searchByTitle,
     getRecipeById,
+    getTotalPosts,
+    addIdeaToCollection,
+    getIdeasCollectionData,
   };
 };
 

@@ -1,8 +1,12 @@
 import { URLS } from "src/constants/urls";
 export const RECIPES_COLLECTION_NAME = "recipes";
 export const PHOTOS_COLLECTION_NAME = "images";
+export const IDEAS_COLLECTION_NAME = "recipesIdeas";
+export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotos";
 // export const RECIPES_COLLECTION_NAME = "recipesDEV";
-// export const PHOTOS_COLLECTION_NAME = "testPhotsupaos";
+// export const PHOTOS_COLLECTION_NAME = "testPhotos";
+// export const IDEAS_COLLECTION_NAME = "recipesIdeasDEV";
+// export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotosDEV";
 
 export const APP_NAME = "PepperStorm";
 export const authMenuLabels = {
@@ -13,7 +17,7 @@ export const authMenuLabels = {
 export const menuPages = [
   { label: "Acasă", link: URLS.HOME },
   { label: "Adaugă rețetă", link: URLS.ADD_RECIPE },
-  { label: "Idei", link: URLS.IDEEAS },
+  { label: "Idei", link: URLS.IDEAS },
 ];
 
 export const userSettingsMenu = (isLoggedIn: boolean) => [

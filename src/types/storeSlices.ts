@@ -1,3 +1,4 @@
+import { IDBRecipeIdea } from "src/types/ideas";
 import { IDbRecipe, RecipeAuthor } from "src/types/recipes";
 
 export type ScreenSlice = {
@@ -22,4 +23,9 @@ export type LoggedUserSlice = {
   setLoggedUser: (user: RecipeAuthor | null) => void;
 };
 
-export type RootState = ScreenSlice & ModalSlice & RecipesSlice;
+export type IdeasSlice = {
+  ideas: IDBRecipeIdea[];
+  setExistingIdeas: (ideas: IDBRecipeIdea[]) => void;
+};
+
+export type RootState = ScreenSlice & ModalSlice & RecipesSlice & IdeasSlice;

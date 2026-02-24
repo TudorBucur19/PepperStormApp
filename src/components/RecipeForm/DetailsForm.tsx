@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 
 import {
   complexityLevels,
+  PHOTOS_COLLECTION_NAME,
   recipeCategories,
   specialTags,
 } from "src/constants/appConfigValues";
@@ -191,7 +192,10 @@ const DetailsForm = () => {
           )}
         />
       </FormControl>
-      <FileUploadField />
+      <FileUploadField
+        fileCollectionName={PHOTOS_COLLECTION_NAME}
+        formFieldName="imageURL"
+      />
     </Stack>
   );
 };

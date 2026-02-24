@@ -32,7 +32,6 @@ const colors = (theme: Theme) => ({
     disabledLabel: "#737373",
   },
 });
-
 export const psButtonStyles = (
   color: PsButtonColor,
   isLoading: boolean,
@@ -62,7 +61,17 @@ export const psButtonStyles = (
       backgroundColor: colors(theme)[color].hover,
     },
   },
-  text: {},
+  text: {
+    padding: 0,
+    backgroundColor: "transparent",
+    color: disabled
+      ? colors(theme)[color].disabledLabel
+      : colors(theme)[color].label,
+    "&:hover": {
+      backgroundColor: "transparent",
+      color: colors(theme)[color].hover,
+    },
+  },
   contained: {},
   outlined: {
     border: "2px solid " + colors(theme)[color].label,

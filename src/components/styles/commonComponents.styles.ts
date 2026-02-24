@@ -78,3 +78,14 @@ export const iconsTextPropertyStyles = {
     textTransform: "uppercase",
   },
 };
+
+export const pageTitleStyles = (size: "small" | "medium" | "large") => ({
+  title: {
+    fontSize:
+      size === "small" ? "1.5rem" : size === "medium" ? "2rem" : "2.5rem",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    marginBottom: "1rem",
+    color: "#337179",
+  },
+});

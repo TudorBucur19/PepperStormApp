@@ -1,21 +1,26 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { Box, Button, Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 import useUploadFiles from "src/hooks/useUploadFiles";
-import { PHOTOS_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { AddPhotoAlternateOutlinedIcon } from "src/components/icons";
 import ImagePreview from "src/components/common/ImagePreview";
 import { ImageURL } from "src/types/recipes";
+import { IFileUploadField } from "src/types/components";
 
 import { fileUploadFieldStyles as styles } from "src/components/styles/recipeForm.styles";
 
-const FileUploadField = () => {
+const FileUploadField = ({
+  fileCollectionName,
+  formFieldName,
+  allowMultiple = true,
+}: IFileUploadField) => {
   const { setValue, watch } = useFormContext();
-  const filesData = watch("imageURL") || [];
-  const { handleFileChange, uploadedFilesData } = useUploadFiles(
-    PHOTOS_COLLECTION_NAME,
-  );
+  const filesData = watch(formFieldName) || [];
+  const { handleFileChange, uploadedFilesData } =
+    useUploadFiles(fileCollectionName);
 
   useEffect(() => {
     if (uploadedFilesData && uploadedFilesData.length > 0) {
@@ -24,7 +29,7 @@ const FileUploadField = () => {
         url: file.url,
       }));
       const newFilesData = [...filesData, ...urlData];
-      setValue("imageURL", newFilesData);
+      setValue(formFieldName, newFilesData);
     }
   }, [uploadedFilesData]);
 
@@ -37,7 +42,7 @@ const FileUploadField = () => {
           hidden
           type="file"
           accept="image/*"
-          multiple
+          multiple={allowMultiple}
           onChange={(e) => handleFileChange(e)} // FileList
         />
       </Button>
@@ -50,6 +55,8 @@ const FileUploadField = () => {
               title={file.name}
               index={index}
               files={files}
+              collectionName={fileCollectionName}
+              showFavIcon={allowMultiple}
             />
           ))}
       </Box>

@@ -1,9 +1,10 @@
+import { useRef } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
+import Container from "@mui/material/Container";
+
 import { HighlightOffIcon, SearchIcon } from "src/components/icons";
-import { Container } from "@mui/material";
-import { useRef } from "react";
 import useDatabase from "src/hooks/useDatabase";
 import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 
@@ -38,6 +39,7 @@ const SearchInput = () => {
           <HighlightOffIcon />
         </IconButton>
         <InputBase
+          name="searchRecipe"
           inputRef={inputRef}
           sx={styles.input}
           placeholder="Caută o rețetă"

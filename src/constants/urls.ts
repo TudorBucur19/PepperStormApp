@@ -4,5 +4,5 @@ export const URLS = {
   RECIPE_DETAILS: (id: string) => `/retete/${id}`,
   EDIT_RECIPE: (id: string) => `/modifica-reteta/${id}`,
   LOGIN: "/login",
-  IDEEAS: "/listadeidei",
+  IDEAS: "/listadeidei",
 };

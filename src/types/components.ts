@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { IDBRecipeIdea } from "src/types/ideas";
 
 import {
   IDbRecipe,
@@ -94,6 +95,8 @@ export interface IImagePreview<T> {
   title: string;
   index: number;
   files: T;
+  collectionName: string;
+  showFavIcon?: boolean;
 }
 
 export interface IOwnerSection {
@@ -116,4 +119,25 @@ export interface IDialogBox {
   confirmLabel: string;
   cancelLabel: string;
   confirmAction?: () => void;
+  open?: boolean;
+  onClose?: () => void;
+}
+
+export interface IIdeaItem {
+  ideaItem: IDBRecipeIdea;
+}
+
+export interface IIdeasList {
+  ideas: IDBRecipeIdea[];
+}
+
+export interface IFileUploadField {
+  fileCollectionName: string;
+  formFieldName: string;
+  allowMultiple?: boolean;
+}
+
+export interface IPageTitle {
+  children: string;
+  size?: "small" | "medium" | "large";
 }

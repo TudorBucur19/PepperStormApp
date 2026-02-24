@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useNavigate } from "react-router";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,7 +13,7 @@ import { useStore } from "src/store/rootStore";
 
 import { previewItemStyles as styles } from "src/components/styles/recipesList.styles";
 
-const RecipeCard: React.FC<IPreviewItem> = ({ recipe }) => {
+const RecipeCard = ({ recipe }: IPreviewItem) => {
   const navigate = useNavigate();
   const setDisplayedRecipe = useStore((s) => s.setDisplayedRecipe);
 

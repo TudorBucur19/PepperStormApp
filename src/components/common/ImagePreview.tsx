@@ -11,7 +11,6 @@ import {
   FavoriteIcon,
 } from "src/components/icons";
 import useUploadFiles from "src/hooks/useUploadFiles";
-import { PHOTOS_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { IImagePreview } from "src/types/components";
 import { ImageURL } from "src/types/recipes";
 
@@ -20,11 +19,12 @@ const ImagePreview = ({
   title,
   index,
   files,
+  collectionName,
+  showFavIcon = false,
 }: IImagePreview<ImageURL[]>) => {
   const { setValue } = useFormContext();
-  const { deleteFileHandler, changeMainImageHandler } = useUploadFiles(
-    PHOTOS_COLLECTION_NAME,
-  );
+  const { deleteFileHandler, changeMainImageHandler } =
+    useUploadFiles(collectionName);
   const onDeleteFile = (fileTitle: string) => {
     deleteFileHandler(fileTitle);
     const updatedFiles = files.filter((file) => file.name !== fileTitle);
@@ -39,19 +39,21 @@ const ImagePreview = ({
         <CardMedia component="img" height="140" image={imageSrc} alt={title} />
       </CardActionArea>
       <CardActions>
+        {showFavIcon && (
+          <PsButton
+            variant="basic"
+            color="transparent"
+            onClick={() => changeMainImageHandler(index)}
+          >
+            {favIcon}
+          </PsButton>
+        )}
         <PsButton
           variant="basic"
           color="transparent"
           onClick={() => onDeleteFile(title)}
         >
           <DeleteOutlinedIcon color="error" />
-        </PsButton>
-        <PsButton
-          variant="basic"
-          color="transparent"
-          onClick={() => changeMainImageHandler(index)}
-        >
-          {favIcon}
         </PsButton>
       </CardActions>
     </Card>
