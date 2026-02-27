@@ -7,4 +7,8 @@ export const createIdeasSlice: StateCreator<RootState, [], [], IdeasSlice> = (
 ) => ({
   ideas: [],
   setExistingIdeas: (ideas) => set({ ideas }, false),
+  removeIdea: (id: string) =>
+    set((state) => ({
+      ideas: state.ideas.filter((idea) => idea.id !== id),
+    })),
 });

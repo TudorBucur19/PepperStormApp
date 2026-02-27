@@ -12,9 +12,9 @@ import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
 import LoadingPlaceholder from "src/components/common/LoadingPlaceholder";
 import ErrorFallback from "src/components/common/ErrorFallback";
 import { IDbRecipe } from "src/types/recipes";
+import { useStore } from "src/store/rootStore";
 
 import { recipeDisplayStyles as styles } from "src/components/styles/recipeDetails.styles";
-// import { useStore } from "src/store/rootStore";
 
 const DisplayRecipe = () => {
   const { getRecipeById } = useDatabase(RECIPES_COLLECTION_NAME);
@@ -22,14 +22,13 @@ const DisplayRecipe = () => {
   const [displayedRecipe, setDisplayedRecipe] = useState<IDbRecipe | null>(
     null,
   );
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // const displayedRecipe = useStore((s) => s.displayedRecipe);
+  const { isLoading } = useStore((state) => state.apiCallStatus);
+  const setApiCallStatus = useStore((state) => state.setApiCallStatus);
 
   useEffect(() => {
     const fetchRecipe = async () => {
-      setLoading(true);
+      setApiCallStatus(true);
       setError(null);
       try {
         const recipe = await getRecipeById(id || "");
@@ -38,13 +37,13 @@ const DisplayRecipe = () => {
         console.error("Error fetching recipe:", err);
         setError("Eroare la încărcarea rețetei.");
       } finally {
-        setLoading(false);
+        setApiCallStatus(false);
       }
     };
     fetchRecipe();
   }, []);
 
-  if (loading) return <LoadingPlaceholder />;
+  if (isLoading) return <LoadingPlaceholder />;
   if (error) return <ErrorFallback errorMessage={error} />;
   if (!displayedRecipe)
     return <ErrorFallback errorMessage="Rețeta nu a fost găsită." />;
@@ -97,6 +96,7 @@ const DisplayRecipe = () => {
               specialTag,
               owner: author,
               complexity,
+              imageURL,
               documentId: displayedRecipe?.id || "",
             }}
           />

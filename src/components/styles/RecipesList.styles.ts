@@ -6,7 +6,8 @@ export const recipesListStyles = {
       md: "repeat(3, 1fr)",
       lg: "repeat(4, 1fr)",
     },
-    gap: { xs: "1.2rem", sm: "1.6rem", md: "2rem" },
+    columnGap: { xs: "1.2rem", sm: "1.6rem", md: "2rem" },
+    rowGap: { xs: "2rem", sm: "2rem", md: "3rem" },
     padding: "1rem",
   },
 };

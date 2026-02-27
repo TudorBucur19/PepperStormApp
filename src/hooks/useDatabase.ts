@@ -22,6 +22,7 @@ import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
 const useDatabase = (collectionName: string) => {
   const setExisingRecipes = useStore((s) => s.setExistingRecipes);
   const setExisingIdeas = useStore((s) => s.setExistingIdeas);
+
   const getCollectionData = async () => {
     const recipesCollection = collection(dataBase, collectionName);
     const q = query(recipesCollection, orderBy("recipe.title", "asc"));

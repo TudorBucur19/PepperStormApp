@@ -3,6 +3,8 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 import FileUploadField from "src/components/RecipeForm/FileUploadField";
 import { IDEAS_PHOTOS_COLLECTION_NAME } from "src/constants/appConfigValues";
@@ -48,6 +50,10 @@ const IdeaFormFields = () => {
             resize: "vertical",
           },
         }}
+      />
+      <FormControlLabel
+        control={<Checkbox {...register("campingFriendly")} />}
+        label="Camping friendly"
       />
       <FileUploadField
         fileCollectionName={IDEAS_PHOTOS_COLLECTION_NAME}

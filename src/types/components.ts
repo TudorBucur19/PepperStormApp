@@ -1,6 +1,6 @@
 import { SxProps, Theme } from "@mui/material";
-import { IDBRecipeIdea } from "src/types/ideas";
 
+import { IDBRecipeIdea } from "src/types/ideas";
 import {
   IDbRecipe,
   IIngredient,
@@ -11,10 +11,6 @@ import {
 
 export interface ICatLogo {
   onClick?: () => void;
-}
-
-export interface IRecipesList {
-  allRecipes: IDbRecipe[];
 }
 
 export interface IPreviewItem {
@@ -38,6 +34,7 @@ export interface IRecipHeader {
   specialTag: string[];
   owner: RecipeAuthor;
   complexity: RecipeComplexity;
+  imageURL: ImageURL[];
 }
 
 export interface IRecipeMethod {
@@ -102,6 +99,7 @@ export interface IImagePreview<T> {
 export interface IOwnerSection {
   owner: RecipeAuthor;
   documentId: string;
+  imageURL: ImageURL[];
 }
 
 export interface IImageCarousel {
@@ -135,6 +133,7 @@ export interface IFileUploadField {
   fileCollectionName: string;
   formFieldName: string;
   allowMultiple?: boolean;
+  onUploadingChange?: (isUploading: boolean) => void;
 }
 
 export interface IPageTitle {

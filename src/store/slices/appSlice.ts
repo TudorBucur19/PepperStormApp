@@ -1,6 +1,11 @@
 import { StateCreator } from "zustand";
 
-import { ModalSlice, RootState, ScreenSlice } from "src/types/storeSlices";
+import {
+  ApiStatusSlice,
+  ModalSlice,
+  RootState,
+  ScreenSlice,
+} from "src/types/storeSlices";
 
 export const createScreenSlice: StateCreator<RootState, [], [], ScreenSlice> = (
   set,
@@ -14,4 +19,23 @@ export const createModalSlice: StateCreator<RootState, [], [], ModalSlice> = (
 ) => ({
   modal: { isOpen: false },
   setModalOpen: (isOpen) => set({ modal: { isOpen } }, false),
+});
+
+export const createApiStatusSlice: StateCreator<
+  RootState,
+  [],
+  [],
+  ApiStatusSlice
+> = (set) => ({
+  apiCallStatus: { isLoading: false, responseStatusOK: true },
+  setApiCallStatus: (isLoading, responseStatusOK) =>
+    set(
+      {
+        apiCallStatus: {
+          isLoading,
+          responseStatusOK: responseStatusOK ?? true,
+        },
+      },
+      false,
+    ),
 });

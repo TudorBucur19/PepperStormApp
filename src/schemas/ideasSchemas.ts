@@ -3,6 +3,7 @@ import { z } from "zod";
 export const newIdeaSchema = z.object({
   title: z.string().min(1, "Titlul este obligatoriu"),
   description: z.string().optional(),
+  campingFriendly: z.boolean(),
   imageURL: z.array(
     z.object({
       name: z.string(),

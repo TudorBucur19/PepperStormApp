@@ -11,6 +11,11 @@ export type ModalSlice = {
   setModalOpen: (isOpen: boolean) => void;
 };
 
+export type ApiStatusSlice = {
+  apiCallStatus: { isLoading: boolean; responseStatusOK: boolean };
+  setApiCallStatus: (isLoading: boolean, responseStatusOK?: boolean) => void;
+};
+
 export type RecipesSlice = {
   recipes: IDbRecipe[];
   setExistingRecipes: (recipes: IDbRecipe[]) => void;
@@ -26,6 +31,11 @@ export type LoggedUserSlice = {
 export type IdeasSlice = {
   ideas: IDBRecipeIdea[];
   setExistingIdeas: (ideas: IDBRecipeIdea[]) => void;
+  removeIdea: (id: string) => void;
 };
 
-export type RootState = ScreenSlice & ModalSlice & RecipesSlice & IdeasSlice;
+export type RootState = ScreenSlice &
+  ModalSlice &
+  RecipesSlice &
+  IdeasSlice &
+  ApiStatusSlice;

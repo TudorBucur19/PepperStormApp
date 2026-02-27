@@ -25,6 +25,7 @@ const ImagePreview = ({
   const { setValue } = useFormContext();
   const { deleteFileHandler, changeMainImageHandler } =
     useUploadFiles(collectionName);
+
   const onDeleteFile = (fileTitle: string) => {
     deleteFileHandler(fileTitle);
     const updatedFiles = files.filter((file) => file.name !== fileTitle);
@@ -33,6 +34,7 @@ const ImagePreview = ({
     setValue("imageURL", updatedFiles);
   };
   const favIcon = index === 0 ? <FavoriteIcon /> : <FavoriteBorderIcon />;
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -52,6 +54,7 @@ const ImagePreview = ({
           variant="basic"
           color="transparent"
           onClick={() => onDeleteFile(title)}
+          sx={{ marginLeft: "auto" }}
         >
           <DeleteOutlinedIcon color="error" />
         </PsButton>

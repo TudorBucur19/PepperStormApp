@@ -11,17 +11,28 @@ import { IIdeaItem } from "src/types/components";
 import PsButton from "src/components/common/PsButton";
 import { DeleteOutlinedIcon } from "src/components/icons";
 import DialogBox from "src/components/common/DialogBox";
-import { IDEAS_COLLECTION_NAME } from "src/constants/appConfigValues";
+import {
+  IDEAS_COLLECTION_NAME,
+  IDEAS_PHOTOS_COLLECTION_NAME,
+} from "src/constants/appConfigValues";
 import useDatabase from "src/hooks/useDatabase";
+import TentIcon from "src/components/icons/TentIcon";
+import { useStore } from "src/store/rootStore";
+import useUploadFiles from "src/hooks/useUploadFiles";
 
 import { ideaItemStyles as styles } from "src/components/styles/ideas.styles";
 
 const IdeaItem = ({ ideaItem }: IIdeaItem) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const removeIdea = useStore((state) => state.removeIdea);
   const { removeDocumentFromCollection } = useDatabase(IDEAS_COLLECTION_NAME);
+  const { deleteFileHandler } = useUploadFiles(IDEAS_PHOTOS_COLLECTION_NAME);
   const idea = ideaItem.idea;
+
   const deleteIdeaHandler = async (docId: string) => {
     await removeDocumentFromCollection(IDEAS_COLLECTION_NAME, docId);
+    removeIdea(docId); //efficiently updates the UI after an item is deleted from the database
+    deleteFileHandler(idea.imageURL[0].name); //delete the associated image from storage
     setIsDeleteDialogOpen(false);
   };
 
@@ -40,12 +51,14 @@ const IdeaItem = ({ ideaItem }: IIdeaItem) => {
             <Typography sx={styles.description}>{idea.description}</Typography>
           </CardContent>
           <CardActions sx={styles.actions}>
+            {idea.campingFriendly && <TentIcon />}
             <PsButton
               variant="basic"
               color="transparent"
               startIcon={<DeleteOutlinedIcon />}
               onClick={() => setIsDeleteDialogOpen(true)}
-              sx={{ color: "error.main" }}
+              sx={{ color: "error.main", marginLeft: "auto" }}
+              ariaLabel="Șterge ideea"
             />
           </CardActions>
         </Box>

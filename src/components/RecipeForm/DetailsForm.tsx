@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 
 import {
   complexityLevels,
-  PHOTOS_COLLECTION_NAME,
+  RECIPES_PHOTOS_COLLECTION_NAME,
   recipeCategories,
   specialTags,
 } from "src/constants/appConfigValues";
@@ -193,7 +193,7 @@ const DetailsForm = () => {
         />
       </FormControl>
       <FileUploadField
-        fileCollectionName={PHOTOS_COLLECTION_NAME}
+        fileCollectionName={RECIPES_PHOTOS_COLLECTION_NAME}
         formFieldName="imageURL"
       />
     </Stack>

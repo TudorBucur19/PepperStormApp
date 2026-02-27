@@ -9,19 +9,25 @@ import { IDEAS_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { useAuthContext } from "src/hooks/AuthContext";
 import useDatabase from "src/hooks/useDatabase";
 import { newIdeaSchema, NewIdeaValues } from "src/schemas/ideasSchemas";
+import { useStore } from "src/store/rootStore";
 
 const NewIdeaForm = () => {
-  const { addIdeaToCollection } = useDatabase(IDEAS_COLLECTION_NAME);
+  const { addIdeaToCollection, getIdeasCollectionData } = useDatabase(
+    IDEAS_COLLECTION_NAME,
+  );
   const { loggedUser: currentUser } = useAuthContext();
+  const isLoading = useStore((state) => state.apiCallStatus.isLoading);
   const methods = useForm<NewIdeaValues>({
     resolver: zodResolver(newIdeaSchema),
     defaultValues: {
       title: "",
       description: "",
+      campingFriendly: false,
       imageURL: [],
     },
     mode: "onBlur",
   });
+  const isSubmitting = methods.formState.isSubmitting;
 
   const onSubmit: SubmitHandler<NewIdeaValues> = async (
     data: NewIdeaValues,
@@ -39,6 +45,7 @@ const NewIdeaForm = () => {
     };
     console.log("Submitting:", payload);
     await addIdeaToCollection(payload);
+    await getIdeasCollectionData();
     methods.reset();
   };
 
@@ -56,6 +63,8 @@ const NewIdeaForm = () => {
           type="submit"
           color="primary"
           variant="contained"
+          disabled={isSubmitting || isLoading}
+          isLoading={isSubmitting}
           startIcon={<LibraryAddOutlinedIcon />}
         >
           Adaugă în lista de idei

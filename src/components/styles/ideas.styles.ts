@@ -1,7 +1,6 @@
 export const ideaItemStyles = {
   container: {
     display: "flex",
-    // flexDirection: { xs: "column", sm: "row" },
     justifyContent: "space-between",
     alignItems: "stretch",
     width: "100%",
@@ -11,7 +10,6 @@ export const ideaItemStyles = {
   cardMedia: {
     aspectRatio: "1 / 1",
     width: { xs: "50%", sm: "8rem" },
-    // width: { xs: "100%", sm: "8rem" },
     objectFit: "cover",
     flexShrink: 0,
     transition: "transform 180ms",
@@ -39,7 +37,7 @@ export const ideaItemStyles = {
   },
   actions: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
   },
 };
 

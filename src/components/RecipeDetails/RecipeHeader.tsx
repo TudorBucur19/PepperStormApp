@@ -27,6 +27,7 @@ const RecipeHeader = ({
   category,
   specialTag,
   owner,
+  imageURL,
   complexity = "medium",
 }: IRecipHeader) => {
   const { container, titleText } = styles;
@@ -81,7 +82,7 @@ const RecipeHeader = ({
           ))}
       </Box>
       <Divider orientation="horizontal" flexItem />
-      <OwnerSection owner={owner} documentId={documentId} />
+      <OwnerSection owner={owner} documentId={documentId} imageURL={imageURL} />
     </Box>
   );
 };
