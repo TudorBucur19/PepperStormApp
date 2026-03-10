@@ -15,4 +15,10 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  "no-restricted-imports": [
+    "error",
+    {
+      "patterns": [{ "regex": "^@mui/[^/]+$" }]
+    }
+  ]
 }

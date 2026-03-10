@@ -11,7 +11,6 @@ import {
 import useDatabase from "src/hooks/useDatabase";
 import { IOwnerSection } from "src/types/components";
 import { useAuthContext } from "src/hooks/AuthContext";
-
 import { useStore } from "src/store/rootStore";
 import DialogBox from "src/components/common/DialogBox";
 import { URLS } from "src/constants/urls";
@@ -22,7 +21,7 @@ import { ownerSectionStyles as styles } from "src/components/styles/recipeDetail
 const OwnerSection = ({ owner, documentId, imageURL }: IOwnerSection) => {
   const { removeDocumentFromCollection } = useDatabase(RECIPES_COLLECTION_NAME);
   const { deleteFileHandler } = useUploadFiles(RECIPES_PHOTOS_COLLECTION_NAME);
-  const { loggedUser } = useAuthContext();
+  const { checkOwnership } = useAuthContext();
   const setModalOpen = useStore((state) => state.setModalOpen);
   const navigate = useNavigate();
   const editRecipeHandler = () => {
@@ -38,9 +37,7 @@ const OwnerSection = ({ owner, documentId, imageURL }: IOwnerSection) => {
     setModalOpen(false);
     navigate(URLS.HOME);
   };
-  const isAdmin = loggedUser?.userID === "tOkQZxEnP6htFGgp6KXEHTBySBR2";
-  const isOwnerLoggedInUser = loggedUser?.userID === owner.userID;
-  const haveFullAccess = isAdmin || isOwnerLoggedInUser;
+  const haveFullAccess = checkOwnership(owner.userID);
 
   return (
     <Box sx={styles.actionsContainer}>

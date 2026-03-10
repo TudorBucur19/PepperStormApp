@@ -45,7 +45,7 @@ export const psButtonStyles = (
     display: "flex",
     gap: "0.5rem",
     width: fullWidth ? "100%" : "fit-content",
-    padding: fitContentWidth ? 0 : "1.25rem 1rem 1.25rem 1rem",
+    padding: fitContentWidth ? 0 : "1rem 1rem 1rem 1rem",
     borderRadius: "0.25rem",
     maxHeight: "3.5rem",
     fontSize: "1.125rem",

@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
 import { IIdeaItem } from "src/types/components";
 import PsButton from "src/components/common/PsButton";
-import { DeleteOutlinedIcon } from "src/components/icons";
+import { DeleteOutlinedIcon, EditNoteIcon } from "src/components/icons";
 import DialogBox from "src/components/common/DialogBox";
 import {
   IDEAS_COLLECTION_NAME,
@@ -19,15 +19,21 @@ import useDatabase from "src/hooks/useDatabase";
 import TentIcon from "src/components/icons/TentIcon";
 import { useStore } from "src/store/rootStore";
 import useUploadFiles from "src/hooks/useUploadFiles";
+import { useAuthContext } from "src/hooks/AuthContext";
 
-import { ideaItemStyles as styles } from "src/components/styles/ideas.styles";
+import { ideaItemStyles } from "src/components/styles/ideas.styles";
 
 const IdeaItem = ({ ideaItem }: IIdeaItem) => {
+  const { checkOwnership } = useAuthContext();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const removeIdea = useStore((state) => state.removeIdea);
+  const isEditingIdea = useStore((state) => state.editingIdea);
+  const setEditingIdea = useStore((state) => state.setEditingIdea);
   const { removeDocumentFromCollection } = useDatabase(IDEAS_COLLECTION_NAME);
   const { deleteFileHandler } = useUploadFiles(IDEAS_PHOTOS_COLLECTION_NAME);
   const idea = ideaItem.idea;
+  const isOwner = checkOwnership(idea.author.userID);
+  const isEditMode = isEditingIdea?.id === ideaItem.id;
 
   const deleteIdeaHandler = async (docId: string) => {
     await removeDocumentFromCollection(IDEAS_COLLECTION_NAME, docId);
@@ -36,31 +42,58 @@ const IdeaItem = ({ ideaItem }: IIdeaItem) => {
     setIsDeleteDialogOpen(false);
   };
 
+  const {
+    container,
+    cardMedia,
+    cardBody,
+    details,
+    titleContainer,
+    campingIcon,
+    title,
+    description,
+    actions,
+  } = ideaItemStyles(isEditMode);
+
   return (
     <>
-      <Card sx={styles.container}>
+      <Card sx={container} raised={isEditMode}>
         <CardMedia
           component="img"
           image={idea.imageURL[0]?.url || noPhotoPlaceholder}
           alt={idea.title}
-          sx={styles.cardMedia}
+          sx={cardMedia}
         />
-        <Box sx={styles.cardBody}>
-          <CardContent sx={styles.details}>
-            <Typography sx={styles.title}>{idea.title}</Typography>
-            <Typography sx={styles.description}>{idea.description}</Typography>
+        <Box sx={cardBody}>
+          <CardContent sx={details}>
+            <Box sx={titleContainer}>
+              {idea.campingFriendly && (
+                <Box sx={campingIcon}>
+                  <TentIcon />
+                </Box>
+              )}
+              <Typography sx={title}>{idea.title}</Typography>
+            </Box>
+            <Typography sx={description}>{idea.description}</Typography>
           </CardContent>
-          <CardActions sx={styles.actions}>
-            {idea.campingFriendly && <TentIcon />}
-            <PsButton
-              variant="basic"
-              color="transparent"
-              startIcon={<DeleteOutlinedIcon />}
-              onClick={() => setIsDeleteDialogOpen(true)}
-              sx={{ color: "error.main", marginLeft: "auto" }}
-              ariaLabel="Șterge ideea"
-            />
-          </CardActions>
+          {isOwner && (
+            <CardActions sx={actions}>
+              <PsButton
+                variant="basic"
+                color="transparent"
+                startIcon={<EditNoteIcon />}
+                onClick={() => setEditingIdea(ideaItem)}
+                ariaLabel="Editează ideea"
+              />
+              <PsButton
+                variant="basic"
+                color="transparent"
+                startIcon={<DeleteOutlinedIcon />}
+                onClick={() => setIsDeleteDialogOpen(true)}
+                sx={{ color: "error.main" }}
+                ariaLabel="Șterge ideea"
+              />
+            </CardActions>
+          )}
         </Box>
       </Card>
       <DialogBox

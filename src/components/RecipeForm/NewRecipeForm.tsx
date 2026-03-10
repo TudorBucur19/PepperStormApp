@@ -18,6 +18,7 @@ import { pickDirtyFields } from "src/utils/helpers";
 import { useAuthContext } from "src/hooks/AuthContext";
 import { URLS } from "src/constants/urls";
 import PageTitle from "src/components/common/PageTitle";
+import { IRecipe } from "src/types/recipes";
 
 import { newRecipeFormStyles as styles } from "src/components/styles/recipeForm.styles";
 
@@ -114,7 +115,7 @@ const NewRecipeForm = () => {
         author: displayedRecipe?.recipe.author || currentUserMock,
       };
 
-      await updateDocument(displayedRecipe?.id || "", payload);
+      await updateDocument<IRecipe>(displayedRecipe?.id || "", payload);
       navigate(`${URLS.RECIPE_DETAILS(displayedRecipe?.id || "")}`);
       return;
     }

@@ -13,6 +13,10 @@ import {
 } from "firebase/firestore";
 
 import { dataBase } from "src/api/firebase";
+import {
+  DB_DOC_ROOT_KEYS,
+  IDEAS_COLLECTION_NAME,
+} from "src/constants/appConfigValues";
 import { IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
 import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
@@ -20,6 +24,11 @@ import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
 // import { ideasMock } from "src/mocks/ideasMock";
 
 const useDatabase = (collectionName: string) => {
+  const documentRootKey =
+    collectionName === IDEAS_COLLECTION_NAME
+      ? DB_DOC_ROOT_KEYS.IDEA
+      : DB_DOC_ROOT_KEYS.RECIPE;
+
   const setExisingRecipes = useStore((s) => s.setExistingRecipes);
   const setExisingIdeas = useStore((s) => s.setExistingIdeas);
 
@@ -92,12 +101,22 @@ const useDatabase = (collectionName: string) => {
     }
   };
 
-  const updateDocument = async (documentId: string, data: Partial<IRecipe>) => {
-    console.log("DATA", data);
+  const updateDocument = async <T>(documentId: string, data: Partial<T>) => {
+    const nestedUpdates = Object.entries(data).reduce<Record<string, any>>(
+      (acc, [key, value]) => {
+        acc[`${documentRootKey}.${key}`] = value;
+        return acc;
+      },
+      {},
+    );
+
+    if (!Object.keys(nestedUpdates).length) {
+      return;
+    }
 
     try {
       const docRef = doc(dataBase, collectionName, documentId);
-      await updateDoc(docRef, { recipe: { ...data } });
+      await updateDoc(docRef, nestedUpdates);
       console.log("Document successfully updated!");
     } catch (error) {
       console.error("Error updating document: ", error);

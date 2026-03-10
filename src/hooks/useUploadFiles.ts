@@ -7,7 +7,6 @@ import {
   deleteObject,
 } from "firebase/storage";
 
-import { reorderList } from "src/utils/helpers";
 import { useStore } from "src/store/rootStore";
 import { UploadedFileData } from "src/types/dataBase";
 
@@ -70,16 +69,10 @@ const useUploadFiles = (fileCollectionName: string) => {
       });
   };
 
-  const changeMainImageHandler = (imageIndex: number) => {
-    const reorderedFiles = reorderList(uploadedFilesData, imageIndex);
-    setUploadedFilesData(reorderedFiles);
-  };
-
   return {
     handleFileChange,
     uploadedFilesData,
     deleteFileHandler,
-    changeMainImageHandler,
   };
 };
 

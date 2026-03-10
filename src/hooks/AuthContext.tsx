@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useNavigate } from "react-router";
 import {
   onAuthStateChanged,
@@ -10,12 +17,7 @@ import {
 import { auth, googleProvider } from "src/api/firebase";
 import { LoggedInUser } from "src/types/auth";
 import { URLS } from "src/constants/urls";
-
-interface AuthContextType {
-  loggedUser: LoggedInUser | null;
-  handleGoogleLogin: () => Promise<void>;
-  handleLogout: () => Promise<void>;
-}
+import { AuthContextType } from "src/types/context";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -42,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => unsubscribe();
   }, []);
 
-  const handleGoogleLogin = React.useCallback(async () => {
+  const handleGoogleLogin = useCallback(async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       setLoggedUser(mapFirebaseUser(result.user));
@@ -52,7 +54,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, []);
 
-  const handleLogout = React.useCallback(async () => {
+  const handleLogout = useCallback(async () => {
     try {
       await signOut(auth);
       setLoggedUser(null);
@@ -61,9 +63,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, []);
 
-  const contextValue = React.useMemo(
-    () => ({ loggedUser, handleGoogleLogin, handleLogout }),
-    [loggedUser, handleGoogleLogin, handleLogout],
+  const isAdmin = loggedUser?.userID === "tOkQZxEnP6htFGgp6KXEHTBySBR2";
+  const checkOwnership = useCallback(
+    (ownerUserID: string) => {
+      return loggedUser?.userID === ownerUserID || isAdmin;
+    },
+    [loggedUser, isAdmin],
+  );
+
+  const contextValue = useMemo(
+    () => ({
+      loggedUser,
+      handleGoogleLogin,
+      handleLogout,
+      isAdmin,
+      checkOwnership,
+    }),
+    [loggedUser, handleGoogleLogin, handleLogout, isAdmin, checkOwnership],
   );
 
   return (

@@ -93,6 +93,7 @@ export interface IImagePreview<T> {
   index: number;
   files: T;
   collectionName: string;
+  fieldName?: string;
   showFavIcon?: boolean;
 }
 

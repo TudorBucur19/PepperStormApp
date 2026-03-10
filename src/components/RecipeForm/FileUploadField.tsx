@@ -35,7 +35,11 @@ const FileUploadField = ({
 
   return (
     <Stack spacing={1}>
-      <Button variant="outlined" component="label">
+      <Button
+        variant="outlined"
+        component="label"
+        disabled={allowMultiple ? false : filesData.length >= 1}
+      >
         <AddPhotoAlternateOutlinedIcon />
         Adaugă imagini
         <input

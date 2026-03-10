@@ -4,6 +4,7 @@ import { devtools } from "zustand/middleware";
 import { RootState } from "src/types/storeSlices";
 import {
   createApiStatusSlice,
+  createEditingIdeaSlice,
   createModalSlice,
   createScreenSlice,
 } from "src/store/slices/appSlice";
@@ -19,6 +20,7 @@ export const useStore = create<RootState>()(
       ...createModalSlice(set, get, store),
       ...createApiStatusSlice(set, get, store),
       ...createIdeasSlice(set, get, store),
+      ...createEditingIdeaSlice(set, get, store),
     }),
     { name: "RootStore" },
     // )

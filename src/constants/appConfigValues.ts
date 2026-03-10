@@ -8,6 +8,11 @@ export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotos";
 // export const IDEAS_COLLECTION_NAME = "recipesIdeasDEV";
 // export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotosDEV";
 
+export const DB_DOC_ROOT_KEYS = {
+  RECIPE: "recipe",
+  IDEA: "idea",
+};
+
 export const APP_NAME = "PepperStorm";
 export const authMenuLabels = {
   login: "Conectează-te",

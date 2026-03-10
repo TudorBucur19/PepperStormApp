@@ -2,6 +2,7 @@ import { StateCreator } from "zustand";
 
 import {
   ApiStatusSlice,
+  EditingIdeaSlice,
   ModalSlice,
   RootState,
   ScreenSlice,
@@ -38,4 +39,14 @@ export const createApiStatusSlice: StateCreator<
       },
       false,
     ),
+});
+
+export const createEditingIdeaSlice: StateCreator<
+  RootState,
+  [],
+  [],
+  EditingIdeaSlice
+> = (set) => ({
+  editingIdea: null,
+  setEditingIdea: (idea) => set({ editingIdea: idea }, false),
 });

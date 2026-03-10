@@ -1,4 +1,4 @@
-import { IDBRecipeIdea } from "src/types/ideas";
+import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
 import { IDbRecipe, RecipeAuthor } from "src/types/recipes";
 
 export type ScreenSlice = {
@@ -34,8 +34,14 @@ export type IdeasSlice = {
   removeIdea: (id: string) => void;
 };
 
+export type EditingIdeaSlice = {
+  editingIdea: { id: string; idea: IRecipeIdea } | null;
+  setEditingIdea: (idea: { id: string; idea: IRecipeIdea } | null) => void;
+};
+
 export type RootState = ScreenSlice &
   ModalSlice &
   RecipesSlice &
   IdeasSlice &
+  EditingIdeaSlice &
   ApiStatusSlice;

@@ -13,6 +13,7 @@ import {
 import useUploadFiles from "src/hooks/useUploadFiles";
 import { IImagePreview } from "src/types/components";
 import { ImageURL } from "src/types/recipes";
+import { reorderList } from "src/utils/helpers";
 
 const ImagePreview = ({
   imageSrc,
@@ -20,19 +21,25 @@ const ImagePreview = ({
   index,
   files,
   collectionName,
+  fieldName = "imageURL",
   showFavIcon = false,
 }: IImagePreview<ImageURL[]>) => {
   const { setValue } = useFormContext();
-  const { deleteFileHandler, changeMainImageHandler } =
-    useUploadFiles(collectionName);
+  const { deleteFileHandler } = useUploadFiles(collectionName);
 
   const onDeleteFile = (fileTitle: string) => {
     deleteFileHandler(fileTitle);
     const updatedFiles = files.filter((file) => file.name !== fileTitle);
     console.log("FILTERED FILE", updatedFiles);
 
-    setValue("imageURL", updatedFiles);
+    setValue(fieldName, updatedFiles);
   };
+
+  const onChangeMainImage = (imageIndex: number) => {
+    const reorderedFiles = reorderList<ImageURL>(files, imageIndex);
+    setValue(fieldName, reorderedFiles);
+  };
+
   const favIcon = index === 0 ? <FavoriteIcon /> : <FavoriteBorderIcon />;
 
   return (
@@ -45,7 +52,7 @@ const ImagePreview = ({
           <PsButton
             variant="basic"
             color="transparent"
-            onClick={() => changeMainImageHandler(index)}
+            onClick={() => onChangeMainImage(index)}
           >
             {favIcon}
           </PsButton>
