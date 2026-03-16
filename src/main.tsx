@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router";
+import { registerSW } from "virtual:pwa-register";
 
 import App from "./App.tsx";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -10,6 +11,7 @@ import { AuthProvider } from "src/hooks/AuthContext.tsx";
 
 import "./index.css";
 
+registerSW({ immediate: true });
 const Root = () => {
   const [mode] = useState<AppThemeMode>("light");
   // const [mode] = React.useState<AppThemeMode>(
