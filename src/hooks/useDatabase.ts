@@ -21,11 +21,11 @@ import {
 import { IDBAppSettings, IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
 import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
-import { recipesMock } from "src/mocks/recipesMock";
-import { ideasMock } from "src/mocks/ideasMock";
+// import { recipesMock } from "src/mocks/recipesMock";
+// import { ideasMock } from "src/mocks/ideasMock";
 
 const useDatabase = (collectionName: string) => {
-  const isDevMode = false;
+  // const isDevMode = false;
 
   const documentRootKey =
     collectionName === IDEAS_COLLECTION_NAME
@@ -37,10 +37,10 @@ const useDatabase = (collectionName: string) => {
   const setAppSettings = useStore((s) => s.setAppSettings);
 
   const getCollectionData = async () => {
-    if (isDevMode) {
-      setExisingRecipes(recipesMock);
-      return;
-    }
+    // if (isDevMode) {
+    //   setExisingRecipes(recipesMock);
+    //   return;
+    // }
     const recipesCollection = collection(dataBase, collectionName);
     const q = query(recipesCollection, orderBy("recipe.title", "asc"));
     const recipesSnapshot = await getDocs(q);
@@ -55,10 +55,10 @@ const useDatabase = (collectionName: string) => {
   };
 
   const getIdeasCollectionData = async () => {
-    if (isDevMode) {
-      setExisingIdeas(ideasMock);
-      return;
-    }
+    // if (isDevMode) {
+    //   setExisingIdeas(ideasMock);
+    //   return;
+    // }
     const ideasCollection = collection(dataBase, collectionName);
     const q = query(ideasCollection, orderBy("idea.title", "asc"));
     const ideasSnapshot = await getDocs(q);
