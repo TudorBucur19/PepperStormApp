@@ -11,7 +11,11 @@ import PsButton from "src/components/common/PsButton";
 import { FormValues, recipeDetailsSchema } from "src/schemas/newRecipeSchemas";
 import { currentUserMock } from "src/mocks/userMock";
 import useDatabase from "src/hooks/useDatabase";
-import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
+import {
+  APP_SETTINGS,
+  RECIPES_COLLECTION_NAME,
+  SETTINGS_COLLECTION_NAME,
+} from "src/constants/appConfigValues";
 import { LibraryAddOutlinedIcon } from "src/components/icons";
 import { useStore } from "src/store/rootStore";
 import { pickDirtyFields } from "src/utils/helpers";
@@ -27,8 +31,12 @@ const NewRecipeForm = () => {
   const setDisplayedRecipe = useStore((s) => s.setDisplayedRecipe);
   const isMobile = useStore((state) => state.screen.isMobile);
   const displayedRecipe = useStore((state) => state.displayedRecipe);
+  const defaultCategories = useStore((s) => s.appSettings.categories);
   const { addDocumentToCollection, updateDocument } = useDatabase(
     RECIPES_COLLECTION_NAME,
+  );
+  const { updateSettingsCollectionData } = useDatabase(
+    SETTINGS_COLLECTION_NAME,
   );
   const { loggedUser: currentUser } = useAuthContext();
   const isEditMode = globalThis.location.pathname
@@ -93,16 +101,26 @@ const NewRecipeForm = () => {
   const dirtyFields = methods.formState.dirtyFields;
 
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+    const recipeCategory = data.category;
     const updatedAuthor = {
       userID: currentUser?.userID || "",
       displayName: currentUser?.displayName || "",
       photoURL: currentUser?.photoURL || "",
     };
+
     const payload = {
       ...data,
       createdAt: new Date(),
       author: updatedAuthor,
     };
+
+    if (recipeCategory && !defaultCategories.includes(recipeCategory)) {
+      await updateSettingsCollectionData(
+        APP_SETTINGS.CATEGORIES,
+        data.category,
+      );
+    }
+
     if (isEditMode) {
       const updatedFields = pickDirtyFields<FormValues>(
         data,

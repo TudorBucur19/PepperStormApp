@@ -1,7 +1,6 @@
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import PsButton from "src/components/common/PsButton";
@@ -10,7 +9,7 @@ import { IDialogBox } from "src/types/components";
 
 const DialogBox = ({
   title,
-  description,
+  children,
   confirmLabel,
   cancelLabel,
   confirmAction,
@@ -38,11 +37,7 @@ const DialogBox = ({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {description}
-        </DialogContentText>
-      </DialogContent>
+      <DialogContent>{children}</DialogContent>
       <DialogActions>
         <PsButton variant="text" color="transparent" onClick={handleClose}>
           {cancelLabel}

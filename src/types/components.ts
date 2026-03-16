@@ -75,7 +75,7 @@ export interface IPsButton {
 }
 
 export interface IChipInfo {
-  label: string;
+  label: string | JSX.Element;
   variant: "filled" | "outlined";
   color: "primary" | "secondary" | "error" | "success" | "info" | "warning";
   useCase: "specialTag" | "category" | "cardTop";
@@ -114,7 +114,7 @@ export interface IErrorFallback {
 
 export interface IDialogBox {
   title: string;
-  description: string;
+  children: string | JSX.Element;
   confirmLabel: string;
   cancelLabel: string;
   confirmAction?: () => void;

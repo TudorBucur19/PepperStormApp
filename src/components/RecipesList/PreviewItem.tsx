@@ -10,6 +10,7 @@ import noPhotoPlaceholder from "src/assets/noPhotoPlaceholder.png";
 import { IPreviewItem } from "src/types/components";
 import { formatMinutesRo } from "src/utils/uiFunctions";
 import { useStore } from "src/store/rootStore";
+import TentIcon from "src/components/icons/TentIcon";
 
 import { previewItemStyles as styles } from "src/components/styles/recipesList.styles";
 
@@ -67,10 +68,16 @@ const RecipeCard = ({ recipe }: IPreviewItem) => {
             specialTag.map((tag) => (
               <Chip
                 key={tag}
-                label={tag}
+                label={
+                  tag.toLowerCase() === "camping friendly" ? (
+                    <TentIcon fill="#fff" />
+                  ) : (
+                    tag
+                  )
+                }
                 variant="filled"
                 sx={{ ...cardChip, ...specialTagChip }}
-                color={tag === "Picant" ? "error" : "success"}
+                color={tag.toLowerCase() === "picant" ? "error" : "success"}
               />
             ))}
         </Box>

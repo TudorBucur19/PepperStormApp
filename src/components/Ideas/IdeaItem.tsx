@@ -100,11 +100,12 @@ const IdeaItem = ({ ideaItem }: IIdeaItem) => {
         open={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
         title="Confirmare ștergere"
-        description="Ești sigur că vrei să ștergi această idee?"
         confirmLabel="Șterge"
         cancelLabel="Anulează"
         confirmAction={() => deleteIdeaHandler(ideaItem.id)}
-      />
+      >
+        Ești sigur că vrei să ștergi această idee?
+      </DialogBox>
     </>
   );
 };

@@ -58,6 +58,7 @@ export const previewItemStyles = {
   },
   recipeTags: {
     display: "flex",
+    flexWrap: "wrap",
     gap: "0.5rem",
   },
   cardChip: {

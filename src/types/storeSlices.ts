@@ -39,9 +39,21 @@ export type EditingIdeaSlice = {
   setEditingIdea: (idea: { id: string; idea: IRecipeIdea } | null) => void;
 };
 
+export type AppSettings = {
+  categories: string[];
+  specialTags: string[];
+  measures: string[];
+};
+
+export type SettingsSlice = {
+  appSettings: AppSettings;
+  setAppSettings: (settings: AppSettings | ((prev: AppSettings) => AppSettings)) => void;
+};
+
 export type RootState = ScreenSlice &
   ModalSlice &
   RecipesSlice &
   IdeasSlice &
   EditingIdeaSlice &
-  ApiStatusSlice;
+  ApiStatusSlice &
+  SettingsSlice;

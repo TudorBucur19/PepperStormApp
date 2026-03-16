@@ -66,11 +66,12 @@ const OwnerSection = ({ owner, documentId, imageURL }: IOwnerSection) => {
       )}
       <DialogBox
         title="Confirmare ștergere"
-        description="Ești sigur că vrei să ștergi această rețetă?"
         confirmLabel="Șterge"
         cancelLabel="Anulează"
         confirmAction={deleteRecipeHandler}
-      />
+      >
+        Ești sigur că vrei să ștergi această rețetă?
+      </DialogBox>
     </Box>
   );
 };

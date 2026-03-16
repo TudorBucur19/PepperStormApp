@@ -6,15 +6,16 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import PsButton from "src/components/common/PsButton";
 
+import PsButton from "src/components/common/PsButton";
 import { IIngredientsForm } from "src/types/components";
-import { measures } from "src/constants/appConfigValues";
 import { DeleteOutlinedIcon } from "src/components/icons";
+import { useStore } from "src/store/rootStore";
 
 import { ingredientsFormStyles as styles } from "src/components/styles/recipeForm.styles";
 
 const IngredientsForm = ({ index, remove }: IIngredientsForm) => {
+  const defaultMeasures = useStore((s) => s.appSettings.measures);
   const {
     control,
     register,
@@ -74,7 +75,7 @@ const IngredientsForm = ({ index, remove }: IIngredientsForm) => {
                   error={!!errors.measure}
                   {...field}
                 >
-                  {measures.map((measure) => (
+                  {defaultMeasures.map((measure) => (
                     <MenuItem key={measure} value={measure}>
                       {measure}
                     </MenuItem>

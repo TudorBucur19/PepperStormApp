@@ -35,6 +35,12 @@ export interface IDbRecipe {
   recipe: IRecipe;
 }
 
+export interface IDBAppSettings {
+  categories: string[];
+  specialTags: string[];
+  measures: string[];
+}
+
 export type ImageURL = {
   name: string;
   url: string;

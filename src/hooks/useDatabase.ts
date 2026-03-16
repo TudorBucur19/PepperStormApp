@@ -10,6 +10,7 @@ import {
   where,
   getCountFromServer,
   orderBy,
+  arrayUnion,
 } from "firebase/firestore";
 
 import { dataBase } from "src/api/firebase";
@@ -17,13 +18,15 @@ import {
   DB_DOC_ROOT_KEYS,
   IDEAS_COLLECTION_NAME,
 } from "src/constants/appConfigValues";
-import { IDbRecipe, IRecipe } from "src/types/recipes";
+import { IDBAppSettings, IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
 import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
-// import { recipesMock } from "src/mocks/recipesMock";
-// import { ideasMock } from "src/mocks/ideasMock";
+import { recipesMock } from "src/mocks/recipesMock";
+import { ideasMock } from "src/mocks/ideasMock";
 
 const useDatabase = (collectionName: string) => {
+  const isDevMode = false;
+
   const documentRootKey =
     collectionName === IDEAS_COLLECTION_NAME
       ? DB_DOC_ROOT_KEYS.IDEA
@@ -31,8 +34,13 @@ const useDatabase = (collectionName: string) => {
 
   const setExisingRecipes = useStore((s) => s.setExistingRecipes);
   const setExisingIdeas = useStore((s) => s.setExistingIdeas);
+  const setAppSettings = useStore((s) => s.setAppSettings);
 
   const getCollectionData = async () => {
+    if (isDevMode) {
+      setExisingRecipes(recipesMock);
+      return;
+    }
     const recipesCollection = collection(dataBase, collectionName);
     const q = query(recipesCollection, orderBy("recipe.title", "asc"));
     const recipesSnapshot = await getDocs(q);
@@ -44,10 +52,13 @@ const useDatabase = (collectionName: string) => {
         }) as IDbRecipe,
     );
     setExisingRecipes(recipesList);
-    // setExisingRecipes(recipesMock);
   };
 
   const getIdeasCollectionData = async () => {
+    if (isDevMode) {
+      setExisingIdeas(ideasMock);
+      return;
+    }
     const ideasCollection = collection(dataBase, collectionName);
     const q = query(ideasCollection, orderBy("idea.title", "asc"));
     const ideasSnapshot = await getDocs(q);
@@ -60,7 +71,32 @@ const useDatabase = (collectionName: string) => {
     );
 
     setExisingIdeas(ideasList);
-    // setExisingIdeas(ideasMock);
+  };
+
+  const getSettingsCollectionData = async () => {
+    const docRef = collection(dataBase, collectionName);
+    const docSnap = await getDocs(docRef);
+    const settings = docSnap.docs
+      .map((doc) => ({
+        [doc.id]: doc.data().values,
+      }))
+      .reduce((acc, curr) => ({ ...acc, ...curr }), {}) as IDBAppSettings;
+    console.log("SETTINGS FROM DB", settings);
+    setAppSettings(settings);
+  };
+
+  const updateSettingsCollectionData = async (
+    settingKey: string,
+    value: string,
+  ) => {
+    const docRef = doc(dataBase, collectionName, settingKey);
+    try {
+      await updateDoc(docRef, { values: arrayUnion(value) });
+      console.log("Settings successfully updated!");
+    } catch (error) {
+      console.error("Error updating settings: ", error);
+      throw error;
+    }
   };
 
   const getRecipeById = async (id: string) => {
@@ -159,6 +195,8 @@ const useDatabase = (collectionName: string) => {
     getTotalPosts,
     addIdeaToCollection,
     getIdeasCollectionData,
+    getSettingsCollectionData,
+    updateSettingsCollectionData,
   };
 };
 

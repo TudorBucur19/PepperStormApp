@@ -1,12 +1,22 @@
 import { URLS } from "src/constants/urls";
+//----------------------------------------------//
 export const RECIPES_COLLECTION_NAME = "recipes";
 export const RECIPES_PHOTOS_COLLECTION_NAME = "images";
 export const IDEAS_COLLECTION_NAME = "recipesIdeas";
 export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotos";
+//----------------------------------------------//
 // export const RECIPES_COLLECTION_NAME = "recipesDEV";
 // export const RECIPES_PHOTOS_COLLECTION_NAME = "testPhotos";
 // export const IDEAS_COLLECTION_NAME = "recipesIdeasDEV";
 // export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotosDEV";
+
+export const SETTINGS_COLLECTION_NAME = "appSettings";
+
+export const APP_SETTINGS = {
+  CATEGORIES: "categories",
+  MEASURES: "measures",
+  SPECIAL_TAGS: "specialTags",
+};
 
 export const DB_DOC_ROOT_KEYS = {
   RECIPE: "recipe",
@@ -30,6 +40,13 @@ export const userSettingsMenu = (isLoggedIn: boolean) => [
   { label: authMenuLabels.login, active: !isLoggedIn },
 ];
 
+export const complexityLevels = {
+  easy: "ușor",
+  medium: "mediu",
+  hard: "complex",
+};
+
+// moved to appSettings in db, keep here as default values for backup
 export const specialTags = ["Vegetarian", "Vegan", "Picant"];
 export const recipeCategories = [
   "salate",
@@ -42,9 +59,10 @@ export const recipeCategories = [
   "fel principal",
   "aperitiv",
   "international",
+  "thai",
   "indian",
   "oriental",
-  "Categorie nouă",
+  "patiserie",
 ];
 export const measures = [
   "buc",
@@ -55,9 +73,3 @@ export const measures = [
   "lingurițe",
   "linguri",
 ];
-
-export const complexityLevels = {
-  easy: "ușor",
-  medium: "mediu",
-  hard: "complex",
-};

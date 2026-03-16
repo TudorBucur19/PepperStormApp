@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -13,17 +14,68 @@ import Typography from "@mui/material/Typography";
 import {
   complexityLevels,
   RECIPES_PHOTOS_COLLECTION_NAME,
-  recipeCategories,
-  specialTags,
+  SETTINGS_COLLECTION_NAME,
 } from "src/constants/appConfigValues";
 import FileUploadField from "src/components/RecipeForm/FileUploadField";
+import DialogBox from "src/components/common/DialogBox";
+import useDatabase from "src/hooks/useDatabase";
+import { useStore } from "src/store/rootStore";
 
 const DetailsForm = () => {
   const {
     control,
     register,
+    setValue,
     formState: { errors },
   } = useFormContext();
+  const { getSettingsCollectionData } = useDatabase(SETTINGS_COLLECTION_NAME);
+  const categoryInputRef = useRef<HTMLInputElement>(null);
+  const appSettings = useStore((s) => s.appSettings);
+  const { categories, specialTags } = appSettings;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [customCategories, setCustomCategories] = useState<string[]>([]);
+  const availableCategories = [
+    ...categories,
+    ...customCategories,
+    "Categorie nouă",
+  ];
+
+  useEffect(() => {
+    const fetchAppSettings = async () => {
+      await getSettingsCollectionData();
+    };
+    fetchAppSettings();
+  }, []);
+
+  const handleOtherCategorySelect = (value: string) => {
+    if (value === "Categorie nouă") {
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleAddCategory = () => {
+    const trimmedCategory =
+      categoryInputRef.current?.value.trim().toLowerCase() || "";
+
+    if (!trimmedCategory) {
+      return;
+    }
+
+    if (!availableCategories.includes(trimmedCategory)) {
+      setCustomCategories((prev) => [...prev, trimmedCategory]);
+    }
+
+    setValue("category", trimmedCategory, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+    if (categoryInputRef.current) {
+      categoryInputRef.current.value = "";
+    }
+    setIsModalOpen(false);
+  };
 
   return (
     <Stack spacing={2} width={{ xs: "100%", md: "50%" }}>
@@ -58,8 +110,12 @@ const DetailsForm = () => {
               error={!!errors.category}
               {...field}
             >
-              {recipeCategories.map((category) => (
-                <MenuItem key={category} value={category}>
+              {availableCategories.map((category) => (
+                <MenuItem
+                  key={category}
+                  value={category}
+                  onClick={() => handleOtherCategorySelect(category)}
+                >
                   {category}
                 </MenuItem>
               ))}
@@ -196,6 +252,20 @@ const DetailsForm = () => {
         fileCollectionName={RECIPES_PHOTOS_COLLECTION_NAME}
         formFieldName="imageURL"
       />
+      <DialogBox
+        title="Adaugă o categorie nouă"
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        confirmLabel="Adaugă"
+        cancelLabel="Închide"
+        confirmAction={handleAddCategory}
+      >
+        <TextField
+          placeholder="Nume categorie"
+          fullWidth
+          inputRef={categoryInputRef}
+        />
+      </DialogBox>
     </Stack>
   );
 };

@@ -16,6 +16,7 @@ import { formatMinutesRo } from "src/utils/uiFunctions";
 import ChipInfo from "src/components/common/ChipInfo";
 import OwnerSection from "src/components/RecipeDetails/OwnerSection";
 import { complexityLevels } from "src/constants/appConfigValues";
+import TentIcon from "src/components/icons/TentIcon";
 
 import { recipeHeaderStyles as styles } from "../styles/recipeDetails.styles";
 
@@ -74,9 +75,15 @@ const RecipeHeader = ({
           specialTag.map((tag) => (
             <ChipInfo
               key={tag}
-              label={tag}
+              label={
+                tag.toLowerCase() === "camping friendly" ? (
+                  <TentIcon fill="#fff" />
+                ) : (
+                  tag
+                )
+              }
               variant="filled"
-              color={tag === "Picant" ? "error" : "success"}
+              color={tag.toLowerCase() === "picant" ? "error" : "success"}
               useCase="specialTag"
             />
           ))}
