@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["assets/pepperstorm_logo_black.svg"],
+      includeAssets: ["assets/pepperstorm_logo_black_sq.svg"],
       manifest: {
         name: "PepperStorm",
         short_name: "PepperStorm",
@@ -20,17 +20,17 @@ export default defineConfig({
         scope: "/",
         icons: [
           {
-            src: "/assets/pepperstorm_logo_black_png.png",
+            src: "/assets/pepperstorm_logo_black_sq.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/assets/pepperstorm_logo_black_png.png",
+            src: "/assets/pepperstorm_logo_black_sq.png",
             sizes: "512x512",
             type: "image/png",
           },
           {
-            src: "/assets/pepperstorm_logo_black_png.png",
+            src: "/assets/pepperstorm_logo_black_sq.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",

@@ -7,7 +7,7 @@ import { recipeMethodStyles as styles } from "../styles/recipeDetails.styles";
 const RecipeMethod = ({ prepSteps, spices }: IRecipeMethod) => {
   const { container, titleText, methodText, spicesText, methodContainer } =
     styles;
-  const spicesList = spices.split(/[,\s]+/);
+  const spicesList = spices.split(/,+/);
 
   return (
     <Box sx={container}>

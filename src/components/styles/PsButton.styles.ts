@@ -75,10 +75,16 @@ export const psButtonStyles = (
   contained: {},
   outlined: {
     border: "2px solid " + colors(theme)[color].label,
+    "&:hover": {
+      scale: "1.05",
+    },
   },
   basic: {
     padding: "0.5rem",
     border: "none",
+    "&:hover": {
+      scale: "1.2",
+    },
   },
   progressIcon: {
     color: colors(theme)[color].label,
