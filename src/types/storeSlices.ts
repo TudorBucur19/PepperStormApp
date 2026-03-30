@@ -34,6 +34,17 @@ export type IdeasSlice = {
   removeIdea: (id: string) => void;
 };
 
+export type toDoListSlice = {
+  toDoList: IToDoListItem[];
+  setToDoList: (list: IToDoListItem[]) => void;
+  removeItemFromList: (id: string) => void;
+};
+
+export interface IToDoListItem {
+  id: string;
+  item: string;
+}
+
 export type EditingIdeaSlice = {
   editingIdea: { id: string; idea: IRecipeIdea } | null;
   setEditingIdea: (idea: { id: string; idea: IRecipeIdea } | null) => void;
@@ -47,7 +58,9 @@ export type AppSettings = {
 
 export type SettingsSlice = {
   appSettings: AppSettings;
-  setAppSettings: (settings: AppSettings | ((prev: AppSettings) => AppSettings)) => void;
+  setAppSettings: (
+    settings: AppSettings | ((prev: AppSettings) => AppSettings),
+  ) => void;
 };
 
 export type RootState = ScreenSlice &
@@ -56,4 +69,5 @@ export type RootState = ScreenSlice &
   IdeasSlice &
   EditingIdeaSlice &
   ApiStatusSlice &
-  SettingsSlice;
+  SettingsSlice &
+  toDoListSlice;

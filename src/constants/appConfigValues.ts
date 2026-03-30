@@ -4,13 +4,13 @@ export const RECIPES_COLLECTION_NAME = "recipes";
 export const RECIPES_PHOTOS_COLLECTION_NAME = "images";
 export const IDEAS_COLLECTION_NAME = "recipesIdeas";
 export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotos";
+export const TO_DO_LIST_COLLECTION_NAME = "todoList";
+export const SETTINGS_COLLECTION_NAME = "appSettings";
 //----------------------------------------------//
 // export const RECIPES_COLLECTION_NAME = "recipesDEV";
 // export const RECIPES_PHOTOS_COLLECTION_NAME = "testPhotos";
 // export const IDEAS_COLLECTION_NAME = "recipesIdeasDEV";
 // export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotosDEV";
-
-export const SETTINGS_COLLECTION_NAME = "appSettings";
 
 export const APP_SETTINGS = {
   CATEGORIES: "categories",
@@ -30,9 +30,10 @@ export const authMenuLabels = {
 };
 
 export const menuPages = [
-  { label: "Acasă", link: URLS.HOME },
+  { label: "Rețete", link: URLS.HOME },
   { label: "Adaugă rețetă", link: URLS.ADD_RECIPE },
-  { label: "Idei", link: URLS.IDEAS },
+  { label: "Inspirații", link: URLS.IDEAS },
+  { label: "Planuri", link: URLS.TODO },
 ];
 
 export const userSettingsMenu = (isLoggedIn: boolean) => [

@@ -11,6 +11,7 @@ import {
 import { createRecipesSlice } from "src/store/slices/recipesSlice";
 import { createIdeasSlice } from "src/store/slices/ideasSlice";
 import { createAppSettingsSlice } from "src/store/slices/settingsSlice";
+import { createToDoListSlice } from "src/store/slices/toDoListSlice";
 
 export const useStore = create<RootState>()(
   devtools(
@@ -23,6 +24,7 @@ export const useStore = create<RootState>()(
       ...createIdeasSlice(set, get, store),
       ...createEditingIdeaSlice(set, get, store),
       ...createAppSettingsSlice(set, get, store),
+      ...createToDoListSlice(set, get, store),
     }),
     { name: "RootStore" },
     // )

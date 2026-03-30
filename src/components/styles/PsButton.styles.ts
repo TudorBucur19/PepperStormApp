@@ -45,7 +45,7 @@ export const psButtonStyles = (
     display: "flex",
     gap: "0.5rem",
     width: fullWidth ? "100%" : "fit-content",
-    padding: fitContentWidth ? 0 : "1rem 1rem 1rem 1rem",
+    padding: fitContentWidth ? 0 : "0.8rem",
     borderRadius: "0.25rem",
     maxHeight: "3.5rem",
     fontSize: "1.125rem",
@@ -69,7 +69,7 @@ export const psButtonStyles = (
       : colors(theme)[color].label,
     "&:hover": {
       backgroundColor: "transparent",
-      color: colors(theme)[color].hover,
+      scale: "1.05",
     },
   },
   contained: {},

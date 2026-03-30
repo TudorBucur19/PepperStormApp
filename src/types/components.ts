@@ -141,3 +141,14 @@ export interface IPageTitle {
   children: string;
   size?: "small" | "medium" | "large";
 }
+
+export interface IListItemForm {
+  onAddItem: (item: string) => void;
+}
+
+export interface IListItem {
+  item: string;
+  isLast: boolean;
+  startIcon?: React.ReactNode;
+  onDelete: (id: string) => void;
+}

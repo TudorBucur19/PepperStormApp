@@ -6,7 +6,7 @@ const IdeasPage = () => {
   return (
     <GenericContainer>
       <>
-        <PageTitle>Idei de preparate</PageTitle>
+        <PageTitle>Idei rapide / ușor de preparat</PageTitle>
         <IdeeasList />
       </>
     </GenericContainer>

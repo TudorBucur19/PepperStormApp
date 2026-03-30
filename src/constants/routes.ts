@@ -4,6 +4,7 @@ import ErrorPage from "src/pages/ErrorPage";
 import IdeasPage from "src/pages/IdeasPage";
 import NewRecipePage from "src/pages/NewRecipePage";
 import RecipeDetailsPage from "src/pages/RecipeDetailsPage";
+import TodoListPage from "src/pages/TodoListPage";
 
 export const ROUTES = [
   {
@@ -25,6 +26,10 @@ export const ROUTES = [
   {
     path: URLS.IDEAS,
     element: IdeasPage,
+  },
+  {
+    path: URLS.TODO,
+    element: TodoListPage,
   },
   {
     path: "*",
