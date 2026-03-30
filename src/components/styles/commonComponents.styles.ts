@@ -25,7 +25,7 @@ export const chipInfoStyles = {
 export const genericContainerStyles = {
   container: {
     maxWidth: "900px",
-    margin: "0 auto",
+    margin: { xs: 0, sm: "0 auto" },
     paddingTop: "2rem",
   },
 };

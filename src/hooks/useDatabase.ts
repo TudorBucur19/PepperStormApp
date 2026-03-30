@@ -21,6 +21,7 @@ import {
 import { IDBAppSettings, IDbRecipe, IRecipe } from "src/types/recipes";
 import { useStore } from "src/store/rootStore";
 import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
+import { IToDoListItem } from "src/types/storeSlices";
 // import { recipesMock } from "src/mocks/recipesMock";
 // import { ideasMock } from "src/mocks/ideasMock";
 
@@ -124,6 +125,32 @@ const useDatabase = (collectionName: string) => {
     await addDoc(collectionRef, { idea: newDoc });
   };
 
+  const addItemToList = async (item: string) => {
+    const collectionRef = collection(dataBase, collectionName);
+    await addDoc(collectionRef, { item });
+  };
+
+  const getToDoList = async () => {
+    const toDoCollection = collection(dataBase, collectionName);
+    const q = query(toDoCollection, orderBy("item", "asc"));
+    const toDoSnapshot = await getDocs(q);
+    const list = toDoSnapshot.docs
+      .map((doc) => {
+        const item = doc.data()?.item;
+        if (typeof item !== "string") {
+          return null;
+        }
+
+        return {
+          id: doc.id,
+          item,
+        } as IToDoListItem;
+      })
+      .filter((listItem): listItem is IToDoListItem => listItem !== null);
+
+    return list;
+  };
+
   const removeDocumentFromCollection = async (
     collectionName: string,
     documentId: string,
@@ -197,6 +224,8 @@ const useDatabase = (collectionName: string) => {
     getIdeasCollectionData,
     getSettingsCollectionData,
     updateSettingsCollectionData,
+    addItemToList,
+    getToDoList,
   };
 };
 

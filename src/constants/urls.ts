@@ -5,4 +5,5 @@ export const URLS = {
   EDIT_RECIPE: (id: string) => `/modifica-reteta/${id}`,
   LOGIN: "/login",
   IDEAS: "/listadeidei",
+  TODO: "/todolist",
 };
