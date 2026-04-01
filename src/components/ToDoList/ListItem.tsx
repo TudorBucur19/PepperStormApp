@@ -7,7 +7,7 @@ import { capitalizeString } from "src/utils/helpers";
 import DialogBox from "src/components/common/DialogBox";
 import { IListItem } from "src/types/components";
 
-import { ingredientItemStyles as styles } from "../styles/recipeDetails.styles";
+import { itemListStyles as styles } from "../styles/toDoList.styles";
 
 const ListItem = ({ item, isLast, startIcon, onDelete }: IListItem) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);

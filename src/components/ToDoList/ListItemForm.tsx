@@ -31,7 +31,7 @@ const ListItemForm = ({ onAddItem }: IListItemForm) => {
     <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
       <Box sx={styles.form}>
         <TextField
-          label="Adaugă element"
+          label="Adaugă un to-do"
           fullWidth
           sx={styles.input}
           error={!!errors.listItem}
@@ -41,10 +41,10 @@ const ListItemForm = ({ onAddItem }: IListItemForm) => {
               : undefined
           }
           {...register("listItem", {
-            required: "Completează un element înainte să-l adaugi",
+            required: "Completează un to-do înainte să-l adaugi",
             validate: (value) =>
               value.trim().length > 0 ||
-              "Completează un element înainte să-l adaugi",
+              "Completează un to-do înainte să-l adaugi",
           })}
           slotProps={{
             formHelperText: { sx: { marginLeft: 0 } },
