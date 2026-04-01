@@ -10,8 +10,8 @@ import { useStore } from "src/store/rootStore";
 const TodoListPage = () => {
   const toDoList = useStore((s) => s.toDoList);
   const setToDoList = useStore((s) => s.setToDoList);
-  const removeItemFromList = useStore((s) => s.removeItemFromList);
-  const { addItemToList, getToDoList, removeDocumentFromCollection } =
+  const removeItemFromStore = useStore((s) => s.removeItemFromList);
+  const { addItemToList, getToDoList, removeItemFromList } =
     useDatabase(TO_DO_LIST_COLLECTION_NAME);
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const TodoListPage = () => {
 
   const handleDeleteItem = (id: string) => {
     void (async () => {
-      await removeDocumentFromCollection(TO_DO_LIST_COLLECTION_NAME, id);
-      removeItemFromList(id);
+      await removeItemFromList(id);
+      removeItemFromStore(id);
     })();
   };
 

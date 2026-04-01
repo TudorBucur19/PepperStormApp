@@ -36,10 +36,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const navigate = useNavigate();
   const [loggedUser, setLoggedUser] = useState<LoggedInUser | null>(null);
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setLoggedUser(mapFirebaseUser(firebaseUser));
+      setIsAuthInitialized(true);
     });
     return () => unsubscribe();
   }, []);
@@ -74,12 +76,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const contextValue = useMemo(
     () => ({
       loggedUser,
+      isAuthInitialized,
       handleGoogleLogin,
       handleLogout,
       isAdmin,
       checkOwnership,
     }),
-    [loggedUser, handleGoogleLogin, handleLogout, isAdmin, checkOwnership],
+    [
+      loggedUser,
+      isAuthInitialized,
+      handleGoogleLogin,
+      handleLogout,
+      isAdmin,
+      checkOwnership,
+    ],
   );
 
   return (

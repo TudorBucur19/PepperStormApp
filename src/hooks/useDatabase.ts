@@ -2,10 +2,12 @@ import {
   collection,
   doc,
   addDoc,
+  setDoc,
   getDocs,
   getDoc,
   updateDoc,
   deleteDoc,
+  deleteField,
   query,
   where,
   getCountFromServer,
@@ -13,7 +15,7 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 
-import { dataBase } from "src/api/firebase";
+import { auth, dataBase } from "src/api/firebase";
 import {
   DB_DOC_ROOT_KEYS,
   IDEAS_COLLECTION_NAME,
@@ -26,7 +28,7 @@ import { IToDoListItem } from "src/types/storeSlices";
 // import { ideasMock } from "src/mocks/ideasMock";
 
 const useDatabase = (collectionName: string) => {
-  // const isDevMode = false;
+  // const isDevMode = true;
 
   const documentRootKey =
     collectionName === IDEAS_COLLECTION_NAME
@@ -126,29 +128,75 @@ const useDatabase = (collectionName: string) => {
   };
 
   const addItemToList = async (item: string) => {
+    const userId = auth.currentUser?.uid;
+    if (!userId) {
+      throw new Error("User must be logged in to add list items.");
+    }
+
     const collectionRef = collection(dataBase, collectionName);
-    await addDoc(collectionRef, { item });
+    const userDocRef = doc(collectionRef, userId);
+    const itemId = doc(collectionRef).id;
+
+    await setDoc(
+      userDocRef,
+      {
+        items: {
+          [itemId]: item,
+        },
+      },
+      { merge: true },
+    );
   };
 
   const getToDoList = async () => {
-    const toDoCollection = collection(dataBase, collectionName);
-    const q = query(toDoCollection, orderBy("item", "asc"));
-    const toDoSnapshot = await getDocs(q);
-    const list = toDoSnapshot.docs
-      .map((doc) => {
-        const item = doc.data()?.item;
-        if (typeof item !== "string") {
+    const userId = auth.currentUser?.uid;
+    if (!userId) {
+      return [];
+    }
+
+    const userDocRef = doc(dataBase, collectionName, userId);
+    const userDocSnapshot = await getDoc(userDocRef);
+    const rawItems = userDocSnapshot.data()?.items;
+    if (!rawItems || typeof rawItems !== "object") {
+      return [];
+    }
+
+    const list = (
+      Array.isArray(rawItems)
+        ? rawItems.map((rawItem) => [rawItem?.itemId, rawItem?.item])
+        : Object.entries(rawItems)
+    )
+      .map(([itemId, item]) => {
+        if (typeof itemId !== "string" || typeof item !== "string") {
           return null;
         }
 
         return {
-          id: doc.id,
+          id: itemId,
           item,
         } as IToDoListItem;
       })
-      .filter((listItem): listItem is IToDoListItem => listItem !== null);
+      .filter((listItem): listItem is IToDoListItem => listItem !== null)
+      .sort((a, b) => a.item.localeCompare(b.item));
 
     return list;
+  };
+
+  const removeItemFromList = async (itemId: string) => {
+    const userId = auth.currentUser?.uid;
+    if (!userId) {
+      throw new Error("User must be logged in to remove list items.");
+    }
+
+    const userDocRef = doc(dataBase, collectionName, userId);
+    const userDocSnapshot = await getDoc(userDocRef);
+    if (!userDocSnapshot.exists()) {
+      return;
+    }
+
+    await updateDoc(userDocRef, {
+      [`items.${itemId}`]: deleteField(),
+    });
   };
 
   const removeDocumentFromCollection = async (
@@ -226,6 +274,7 @@ const useDatabase = (collectionName: string) => {
     updateSettingsCollectionData,
     addItemToList,
     getToDoList,
+    removeItemFromList,
   };
 };
 

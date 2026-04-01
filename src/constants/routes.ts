@@ -14,10 +14,12 @@ export const ROUTES = [
   {
     path: URLS.ADD_RECIPE,
     element: NewRecipePage,
+    requiresAuth: true,
   },
   {
     path: URLS.EDIT_RECIPE(":id"),
     element: NewRecipePage,
+    requiresAuth: true,
   },
   {
     path: URLS.LOGIN,
@@ -30,6 +32,7 @@ export const ROUTES = [
   {
     path: URLS.TODO,
     element: TodoListPage,
+    requiresAuth: true,
   },
   {
     path: "*",

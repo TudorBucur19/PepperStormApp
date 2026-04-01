@@ -22,17 +22,21 @@ const ItemsList = ({
     <Box sx={styles.pageContainer}>
       <PageTitle>Ce facem zilele următoare</PageTitle>
       <Box sx={styles.listcontainer}>
-        <Box>
-          {items.map((item, index) => (
-            <ListItem
-              key={item.id}
-              item={item.item}
-              startIcon={startIcon}
-              isLast={index === items.length - 1}
-              onDelete={() => onDeleteItem(item.id)}
-            />
-          ))}
-        </Box>
+        {items.length > 0 ? (
+          <Box>
+            {items.map((item, index) => (
+              <ListItem
+                key={item.id}
+                item={item.item}
+                startIcon={startIcon}
+                isLast={index === items.length - 1}
+                onDelete={() => onDeleteItem(item.id)}
+              />
+            ))}
+          </Box>
+        ) : (
+          <Box>Încă nu ai planificat nimic</Box>
+        )}
         <ListItemForm onAddItem={onAddItem} />
       </Box>
     </Box>
