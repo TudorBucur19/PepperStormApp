@@ -3,16 +3,15 @@ import { useEffect } from "react";
 import ItemsList from "src/components/ToDoList/ItemsList";
 import GenericContainer from "src/components/common/GenericContainer";
 import { PushPinIcon } from "src/components/icons";
-import { TO_DO_LIST_COLLECTION_NAME } from "src/constants/appConfigValues";
-import useDatabase from "src/hooks/useDatabase";
+import useTodoListDatabase from "src/hooks/useTodoListDatabase";
 import { useStore } from "src/store/rootStore";
 
 const TodoListPage = () => {
   const toDoList = useStore((s) => s.toDoList);
   const setToDoList = useStore((s) => s.setToDoList);
   const removeItemFromStore = useStore((s) => s.removeItemFromList);
-  const { addItemToList, getToDoList, removeItemFromList } =
-    useDatabase(TO_DO_LIST_COLLECTION_NAME);
+  const { addItemToList, getToDoList, removeItemFromList, shareToDoListWith } =
+    useTodoListDatabase();
 
   useEffect(() => {
     const loadToDoList = async () => {
@@ -23,19 +22,19 @@ const TodoListPage = () => {
     void loadToDoList();
   }, []);
 
-  const handleAddItem = (item: string) => {
-    void (async () => {
-      await addItemToList(item);
-      const list = await getToDoList();
-      setToDoList(list);
-    })();
+  const handleAddItem = async (item: string) => {
+    await addItemToList(item);
+    const list = await getToDoList();
+    setToDoList(list);
   };
 
-  const handleDeleteItem = (id: string) => {
-    void (async () => {
-      await removeItemFromList(id);
-      removeItemFromStore(id);
-    })();
+  const handleDeleteItem = async (id: string) => {
+    await removeItemFromList(id);
+    removeItemFromStore(id);
+  };
+
+  const handleShareList = async (email: string) => {
+    await shareToDoListWith(email);
   };
 
   return (
@@ -44,6 +43,7 @@ const TodoListPage = () => {
         items={toDoList}
         onAddItem={handleAddItem}
         onDeleteItem={handleDeleteItem}
+        onShareList={handleShareList}
         startIcon={<PushPinIcon color="primary" />}
       />
     </GenericContainer>

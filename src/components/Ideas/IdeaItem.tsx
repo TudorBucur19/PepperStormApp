@@ -11,11 +11,8 @@ import { IIdeaItem } from "src/types/components";
 import PsButton from "src/components/common/PsButton";
 import { DeleteOutlinedIcon, EditNoteIcon } from "src/components/icons";
 import DialogBox from "src/components/common/DialogBox";
-import {
-  IDEAS_COLLECTION_NAME,
-  IDEAS_PHOTOS_COLLECTION_NAME,
-} from "src/constants/appConfigValues";
-import useDatabase from "src/hooks/useDatabase";
+import { IDEAS_PHOTOS_COLLECTION_NAME } from "src/constants/appConfigValues";
+import useIdeasDatabase from "src/hooks/useIdeasDatabase";
 import TentIcon from "src/components/icons/TentIcon";
 import { useStore } from "src/store/rootStore";
 import useUploadFiles from "src/hooks/useUploadFiles";
@@ -29,14 +26,14 @@ const IdeaItem = ({ ideaItem }: IIdeaItem) => {
   const removeIdea = useStore((state) => state.removeIdea);
   const isEditingIdea = useStore((state) => state.editingIdea);
   const setEditingIdea = useStore((state) => state.setEditingIdea);
-  const { removeDocumentFromCollection } = useDatabase(IDEAS_COLLECTION_NAME);
+  const { removeIdea: removeIdeaFromDatabase } = useIdeasDatabase();
   const { deleteFileHandler } = useUploadFiles(IDEAS_PHOTOS_COLLECTION_NAME);
   const idea = ideaItem.idea;
   const isOwner = checkOwnership(idea.author.userID);
   const isEditMode = isEditingIdea?.id === ideaItem.id;
 
   const deleteIdeaHandler = async (docId: string) => {
-    await removeDocumentFromCollection(IDEAS_COLLECTION_NAME, docId);
+    await removeIdeaFromDatabase(docId);
     removeIdea(docId); //efficiently updates the UI after an item is deleted from the database
     deleteFileHandler(idea.imageURL[0].name); //delete the associated image from storage
     setIsDeleteDialogOpen(false);

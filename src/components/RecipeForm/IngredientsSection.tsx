@@ -1,4 +1,5 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 
@@ -25,14 +26,16 @@ const IngredientsSection = () => {
           remove={remove}
         />
       ))}
-      <PsButton
-        variant="outlined"
-        color="transparent"
-        startIcon={<AddIcon />}
-        onClick={() => append({ ingredient: "", quantity: 0, measure: "" })}
-      >
-        Adaugă ingredient
-      </PsButton>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <PsButton
+          variant="outlined"
+          color="transparent"
+          startIcon={<AddIcon />}
+          onClick={() => append({ ingredient: "", quantity: "", measure: "" })}
+        >
+          Adaugă ingredient
+        </PsButton>
+      </Box>
     </Stack>
   );
 };

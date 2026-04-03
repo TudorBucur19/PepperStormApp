@@ -10,19 +10,15 @@ import IngredientsSection from "src/components/RecipeForm/IngredientsSection";
 import PsButton from "src/components/common/PsButton";
 import { FormValues, recipeDetailsSchema } from "src/schemas/newRecipeSchemas";
 import { currentUserMock } from "src/mocks/userMock";
-import useDatabase from "src/hooks/useDatabase";
-import {
-  APP_SETTINGS,
-  RECIPES_COLLECTION_NAME,
-  SETTINGS_COLLECTION_NAME,
-} from "src/constants/appConfigValues";
+import useRecipesDatabase from "src/hooks/useRecipesDatabase";
+import useSettingsDatabase from "src/hooks/useSettingsDatabase";
+import { APP_SETTINGS } from "src/constants/appConfigValues";
 import { LibraryAddOutlinedIcon } from "src/components/icons";
 import { useStore } from "src/store/rootStore";
 import { pickDirtyFields } from "src/utils/helpers";
 import { useAuthContext } from "src/hooks/AuthContext";
 import { URLS } from "src/constants/urls";
 import PageTitle from "src/components/common/PageTitle";
-import { IRecipe } from "src/types/recipes";
 
 import { newRecipeFormStyles as styles } from "src/components/styles/recipeForm.styles";
 
@@ -32,12 +28,8 @@ const NewRecipeForm = () => {
   const isMobile = useStore((state) => state.screen.isMobile);
   const displayedRecipe = useStore((state) => state.displayedRecipe);
   const defaultCategories = useStore((s) => s.appSettings.categories);
-  const { addDocumentToCollection, updateDocument } = useDatabase(
-    RECIPES_COLLECTION_NAME,
-  );
-  const { updateSettingsCollectionData } = useDatabase(
-    SETTINGS_COLLECTION_NAME,
-  );
+  const { addRecipeToCollection, updateRecipe } = useRecipesDatabase();
+  const { updateSettingsCollectionData } = useSettingsDatabase();
   const { loggedUser: currentUser } = useAuthContext();
   const isEditMode = globalThis.location.pathname
     .split("/")
@@ -133,12 +125,12 @@ const NewRecipeForm = () => {
         author: displayedRecipe?.recipe.author || currentUserMock,
       };
 
-      await updateDocument<IRecipe>(displayedRecipe?.id || "", payload);
+      await updateRecipe(displayedRecipe?.id || "", payload);
       navigate(`${URLS.RECIPE_DETAILS(displayedRecipe?.id || "")}`);
       return;
     }
 
-    await addDocumentToCollection(payload);
+    await addRecipeToCollection(payload);
     console.log("Submitting:", payload);
     methods.reset();
     navigate(URLS.HOME);

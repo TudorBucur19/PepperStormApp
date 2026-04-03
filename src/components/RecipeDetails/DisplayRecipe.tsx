@@ -7,8 +7,7 @@ import IngredientsList from "src/components/RecipeDetails/IngredientsList";
 import RecipeHeader from "src/components/RecipeDetails/RecipeHeader";
 import RecipeMethod from "src/components/RecipeDetails/RecipeMethod";
 import ImageCarousel from "src/components/common/ImageCarousel";
-import useDatabase from "src/hooks/useDatabase";
-import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
+import useRecipesDatabase from "src/hooks/useRecipesDatabase";
 import LoadingPlaceholder from "src/components/common/LoadingPlaceholder";
 import ErrorFallback from "src/components/common/ErrorFallback";
 import { IDbRecipe } from "src/types/recipes";
@@ -17,7 +16,7 @@ import { useStore } from "src/store/rootStore";
 import { recipeDisplayStyles as styles } from "src/components/styles/recipeDetails.styles";
 
 const DisplayRecipe = () => {
-  const { getRecipeById } = useDatabase(RECIPES_COLLECTION_NAME);
+  const { getRecipeById } = useRecipesDatabase();
   const { id } = useParams();
   const [displayedRecipe, setDisplayedRecipe] = useState<IDbRecipe | null>(
     null,

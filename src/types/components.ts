@@ -8,6 +8,7 @@ import {
   RecipeAuthor,
   RecipeComplexity,
 } from "src/types/recipes";
+import { IToDoListItem } from "src/types/storeSlices";
 
 export interface ICatLogo {
   onClick?: () => void;
@@ -148,7 +149,20 @@ export interface IListItemForm {
 
 export interface IListItem {
   item: string;
-  isLast: boolean;
+  isLast?: boolean;
   startIcon?: React.ReactNode;
+  canDelete?: boolean;
   onDelete: (id: string) => void;
+}
+
+export interface IShareListForm {
+  onShareList: (email: string) => Promise<void> | void;
+}
+
+export interface IItemsList {
+  items: IToDoListItem[];
+  onAddItem: (item: string) => void;
+  onDeleteItem: (id: string) => void;
+  onShareList: (email: string) => Promise<void> | void;
+  startIcon?: React.ReactNode;
 }

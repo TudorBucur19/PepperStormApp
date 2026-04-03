@@ -5,26 +5,25 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 
 import { HighlightOffIcon, SearchIcon } from "src/components/icons";
-import useDatabase from "src/hooks/useDatabase";
-import { RECIPES_COLLECTION_NAME } from "src/constants/appConfigValues";
+import useRecipesDatabase from "src/hooks/useRecipesDatabase";
 
 import { searchInputStyles as styles } from "../styles/commonComponents.styles";
 
 const SearchInput = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { searchByTitle } = useDatabase(RECIPES_COLLECTION_NAME);
+  const { searchRecipesByTitle } = useRecipesDatabase();
   const handleSearch = () => {
     if (inputRef.current) {
       const query = inputRef.current.value.toLowerCase();
       console.log("Searching for:", query);
-      searchByTitle(query);
+      searchRecipesByTitle(query);
     }
   };
   const clearSearch = () => {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-    searchByTitle("");
+    searchRecipesByTitle("");
   };
 
   return (
