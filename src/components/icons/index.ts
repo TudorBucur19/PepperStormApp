@@ -20,3 +20,7 @@ export { default as SignalCellular2BarIcon } from "@mui/icons-material/SignalCel
 export { default as SignalCellular4BarIcon } from "@mui/icons-material/SignalCellular4Bar";
 export { default as RemoveIcon } from "@mui/icons-material/Remove";
 export { default as PushPinIcon } from "@mui/icons-material/PushPin";
+export { default as ExpandMoreIcon } from "@mui/icons-material/ExpandMore";
+export { default as ShareIcon } from "@mui/icons-material/Share";
+export { default as SendIcon } from "@mui/icons-material/Send";
+export { default as AddTaskIcon } from "@mui/icons-material/AddTask";

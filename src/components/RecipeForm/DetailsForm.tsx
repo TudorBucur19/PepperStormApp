@@ -14,11 +14,10 @@ import Typography from "@mui/material/Typography";
 import {
   complexityLevels,
   RECIPES_PHOTOS_COLLECTION_NAME,
-  SETTINGS_COLLECTION_NAME,
 } from "src/constants/appConfigValues";
 import FileUploadField from "src/components/RecipeForm/FileUploadField";
 import DialogBox from "src/components/common/DialogBox";
-import useDatabase from "src/hooks/useDatabase";
+import useSettingsDatabase from "src/hooks/useSettingsDatabase";
 import { useStore } from "src/store/rootStore";
 
 const DetailsForm = () => {
@@ -28,7 +27,7 @@ const DetailsForm = () => {
     setValue,
     formState: { errors },
   } = useFormContext();
-  const { getSettingsCollectionData } = useDatabase(SETTINGS_COLLECTION_NAME);
+  const { getSettingsCollectionData } = useSettingsDatabase();
   const categoryInputRef = useRef<HTMLInputElement>(null);
   const appSettings = useStore((s) => s.appSettings);
   const { categories, specialTags } = appSettings;

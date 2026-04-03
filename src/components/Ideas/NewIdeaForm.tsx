@@ -8,13 +8,11 @@ import Typography from "@mui/material/Typography";
 import PsButton from "src/components/common/PsButton";
 import { LibraryAddOutlinedIcon } from "src/components/icons";
 import IdeaFormFields from "src/components/Ideas/IdeaFormFields";
-import { IDEAS_COLLECTION_NAME } from "src/constants/appConfigValues";
 import { useAuthContext } from "src/hooks/AuthContext";
-import useDatabase from "src/hooks/useDatabase";
+import useIdeasDatabase from "src/hooks/useIdeasDatabase";
 import { newIdeaSchema, NewIdeaValues } from "src/schemas/ideasSchemas";
 import { useStore } from "src/store/rootStore";
 import { pickDirtyFields } from "src/utils/helpers";
-import { IRecipeIdea } from "src/types/ideas";
 
 const EMPTY_IDEA_VALUES: NewIdeaValues = {
   title: "",
@@ -24,11 +22,9 @@ const EMPTY_IDEA_VALUES: NewIdeaValues = {
 };
 
 const NewIdeaForm = () => {
-  const { addIdeaToCollection, getIdeasCollectionData } = useDatabase(
-    IDEAS_COLLECTION_NAME,
-  );
+  const { addIdeaToCollection, getIdeasCollectionData, updateIdea } =
+    useIdeasDatabase();
   const { loggedUser: currentUser } = useAuthContext();
-  const { updateDocument } = useDatabase(IDEAS_COLLECTION_NAME);
   const isLoading = useStore((state) => state.apiCallStatus.isLoading);
   const editedIdea = useStore((state) => state.editingIdea);
   const setEditingIdea = useStore((state) => state.setEditingIdea);
@@ -58,7 +54,7 @@ const NewIdeaForm = () => {
       );
       console.log("updated fields idea", dirtyFields);
 
-      await updateDocument<IRecipeIdea>(editedIdea.id, updatedFields);
+      await updateIdea(editedIdea.id, updatedFields);
       await getIdeasCollectionData();
       setEditingIdea(null);
       methods.reset(EMPTY_IDEA_VALUES);

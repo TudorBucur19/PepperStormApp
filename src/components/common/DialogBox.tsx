@@ -38,7 +38,7 @@ const DialogBox = ({
     >
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ padding: "1rem" }}>
         <PsButton variant="text" color="transparent" onClick={handleClose}>
           {cancelLabel}
         </PsButton>

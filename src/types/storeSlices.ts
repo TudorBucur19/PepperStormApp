@@ -43,6 +43,8 @@ export type toDoListSlice = {
 export interface IToDoListItem {
   id: string;
   item: string;
+  ownerId: string;
+  isOwnedByCurrentUser: boolean;
 }
 
 export type EditingIdeaSlice = {

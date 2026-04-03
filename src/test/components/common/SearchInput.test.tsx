@@ -3,11 +3,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import SearchInput from "src/components/common/SearchInput";
 
-const searchByTitleMock = vi.fn();
+const searchRecipesByTitleMock = vi.fn();
 
-vi.mock("src/hooks/useDatabase", () => ({
+vi.mock("src/hooks/useRecipesDatabase", () => ({
   default: () => ({
-    searchByTitle: searchByTitleMock,
+    searchRecipesByTitle: searchRecipesByTitleMock,
   }),
 }));
 
@@ -26,7 +26,7 @@ describe("SearchInput", () => {
 
     fireEvent.click(screen.getByLabelText("search"));
 
-    expect(searchByTitleMock).toHaveBeenCalledWith("supa");
+    expect(searchRecipesByTitleMock).toHaveBeenCalledWith("supa");
   });
 
   it("clears input and runs empty search", () => {
@@ -40,6 +40,6 @@ describe("SearchInput", () => {
     fireEvent.click(screen.getByLabelText("clear search input"));
 
     expect(input.value).toBe("");
-    expect(searchByTitleMock).toHaveBeenCalledWith("");
+    expect(searchRecipesByTitleMock).toHaveBeenCalledWith("");
   });
 });

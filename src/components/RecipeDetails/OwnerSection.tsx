@@ -4,11 +4,8 @@ import { useNavigate } from "react-router";
 
 import PsButton from "src/components/common/PsButton";
 import { DeleteOutlinedIcon, EditNoteIcon } from "src/components/icons";
-import {
-  RECIPES_PHOTOS_COLLECTION_NAME,
-  RECIPES_COLLECTION_NAME,
-} from "src/constants/appConfigValues";
-import useDatabase from "src/hooks/useDatabase";
+import { RECIPES_PHOTOS_COLLECTION_NAME } from "src/constants/appConfigValues";
+import useRecipesDatabase from "src/hooks/useRecipesDatabase";
 import { IOwnerSection } from "src/types/components";
 import { useAuthContext } from "src/hooks/AuthContext";
 import { useStore } from "src/store/rootStore";
@@ -19,7 +16,7 @@ import useUploadFiles from "src/hooks/useUploadFiles";
 import { ownerSectionStyles as styles } from "src/components/styles/recipeDetails.styles";
 
 const OwnerSection = ({ owner, documentId, imageURL }: IOwnerSection) => {
-  const { removeDocumentFromCollection } = useDatabase(RECIPES_COLLECTION_NAME);
+  const { removeRecipe } = useRecipesDatabase();
   const { deleteFileHandler } = useUploadFiles(RECIPES_PHOTOS_COLLECTION_NAME);
   const { checkOwnership } = useAuthContext();
   const setModalOpen = useStore((state) => state.setModalOpen);
@@ -28,7 +25,7 @@ const OwnerSection = ({ owner, documentId, imageURL }: IOwnerSection) => {
     navigate(URLS.EDIT_RECIPE(documentId));
   };
   const deleteRecipeHandler = () => {
-    removeDocumentFromCollection(RECIPES_COLLECTION_NAME, documentId);
+    removeRecipe(documentId);
     if (imageURL && imageURL.length > 0) {
       imageURL.forEach((image) => {
         deleteFileHandler(image.name);

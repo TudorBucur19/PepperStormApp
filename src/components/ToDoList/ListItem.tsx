@@ -9,38 +9,49 @@ import { IListItem } from "src/types/components";
 
 import { itemListStyles as styles } from "../styles/toDoList.styles";
 
-const ListItem = ({ item, isLast, startIcon, onDelete }: IListItem) => {
+const ListItem = ({
+  item,
+  isLast,
+  startIcon,
+  canDelete = true,
+  onDelete,
+}: IListItem) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const deleteHandler = () => {
     onDelete(item);
     setIsDeleteDialogOpen(false);
   };
-  const { listItem, lastListItem } = styles;
+  const { listItem, listItemAction, lastListItem } = styles;
 
   return (
     <>
       <Box sx={isLast ? { ...listItem, ...lastListItem } : { ...listItem }}>
         {startIcon}
         {capitalizeString(item)}
-        <PsButton
-          variant="basic"
-          color="transparent"
-          startIcon={<DeleteOutlinedIcon />}
-          onClick={() => setIsDeleteDialogOpen(true)}
-          sx={{ color: "error.main" }}
-          ariaLabel={`Șterge elementul ${capitalizeString(item)} din listă`}
-        />
+        <Box sx={listItemAction}>
+          <PsButton
+            variant="basic"
+            color="transparent"
+            startIcon={<DeleteOutlinedIcon />}
+            onClick={() => setIsDeleteDialogOpen(true)}
+            sx={{ color: "error.main", "&:disabled": { color: "#737373" } }}
+            ariaLabel={`Șterge elementul ${capitalizeString(item)} din listă`}
+            disabled={!canDelete}
+          />
+        </Box>
       </Box>
-      <DialogBox
-        open={isDeleteDialogOpen}
-        onClose={() => setIsDeleteDialogOpen(false)}
-        title="Confirmare ștergere"
-        confirmLabel="Șterge"
-        cancelLabel="Anulează"
-        confirmAction={deleteHandler}
-      >
-        Ești sigur că vrei să ștergi acest element?
-      </DialogBox>
+      {canDelete && (
+        <DialogBox
+          open={isDeleteDialogOpen}
+          onClose={() => setIsDeleteDialogOpen(false)}
+          title="Confirmare ștergere"
+          confirmLabel="Șterge"
+          cancelLabel="Anulează"
+          confirmAction={deleteHandler}
+        >
+          Ești sigur că vrei să ștergi acest element?
+        </DialogBox>
+      )}
     </>
   );
 };

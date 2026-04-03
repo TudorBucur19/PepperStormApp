@@ -1,9 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 import PsButton from "src/components/common/PsButton";
-import { AddIcon } from "src/components/icons";
+import { AddTaskIcon } from "src/components/icons";
+import { listItemSchema } from "src/schemas/todoListSchemas";
 import { IListItemForm } from "src/types/components";
 import { ListItemFormValues } from "src/types/toDoList";
 
@@ -16,6 +18,7 @@ const ListItemForm = ({ onAddItem }: IListItemForm) => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ListItemFormValues>({
+    resolver: zodResolver(listItemSchema),
     defaultValues: {
       listItem: "",
     },
@@ -40,12 +43,7 @@ const ListItemForm = ({ onAddItem }: IListItemForm) => {
               ? errors.listItem.message
               : undefined
           }
-          {...register("listItem", {
-            required: "Completează un to-do înainte să-l adaugi",
-            validate: (value) =>
-              value.trim().length > 0 ||
-              "Completează un to-do înainte să-l adaugi",
-          })}
+          {...register("listItem")}
           slotProps={{
             formHelperText: { sx: { marginLeft: 0 } },
           }}
@@ -56,7 +54,7 @@ const ListItemForm = ({ onAddItem }: IListItemForm) => {
           color="primary"
           disabled={isSubmitting}
           isLoading={isSubmitting}
-          startIcon={<AddIcon />}
+          startIcon={<AddTaskIcon />}
           sx={{ minWidth: { xs: "100%", sm: "fit-content" } }}
         ></PsButton>
       </Box>
