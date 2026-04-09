@@ -1,14 +1,14 @@
 import { URLS } from "src/constants/urls";
 //----------------------------------------------//
-export const RECIPES_COLLECTION_NAME = "recipes";
-export const RECIPES_PHOTOS_COLLECTION_NAME = "images";
+// export const RECIPES_COLLECTION_NAME = "recipes";
+// export const RECIPES_PHOTOS_COLLECTION_NAME = "images";
 export const IDEAS_COLLECTION_NAME = "recipesIdeas";
 export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotos";
 export const TO_DO_LIST_COLLECTION_NAME = "todoList";
 export const SETTINGS_COLLECTION_NAME = "appSettings";
 //----------------------------------------------//
-// export const RECIPES_COLLECTION_NAME = "recipesDEV";
-// export const RECIPES_PHOTOS_COLLECTION_NAME = "testPhotos";
+export const RECIPES_COLLECTION_NAME = "recipesDEV";
+export const RECIPES_PHOTOS_COLLECTION_NAME = "testPhotos";
 // export const IDEAS_COLLECTION_NAME = "recipesIdeasDEV";
 // export const IDEAS_PHOTOS_COLLECTION_NAME = "ideaPhotosDEV";
 
@@ -45,6 +45,13 @@ export const complexityLevels = {
   easy: "ușor",
   medium: "mediu",
   hard: "complex",
+};
+
+export const QUERY_KEYS = {
+  ALL_RECIPES_QUERY_KEY: ["allRecipes"],
+  IDEAS_QUERY_KEY: ["ideas"],
+  TODO_LIST_QUERY_KEY: ["todoList"],
+  APP_SETTINGS_QUERY_KEY: ["appSettings"],
 };
 
 // moved to appSettings in db, keep here as default values for backup

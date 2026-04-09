@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Container from "@mui/material/Container";
@@ -8,28 +9,33 @@ import Box from "@mui/material/Box";
 import DetailsForm from "src/components/RecipeForm/DetailsForm";
 import IngredientsSection from "src/components/RecipeForm/IngredientsSection";
 import PsButton from "src/components/common/PsButton";
+import LoadingPlaceholder from "src/components/common/LoadingPlaceholder";
+import ErrorFallback from "src/components/common/ErrorFallback";
 import { FormValues, recipeDetailsSchema } from "src/schemas/newRecipeSchemas";
-import { currentUserMock } from "src/mocks/userMock";
 import useRecipesDatabase from "src/hooks/useRecipesDatabase";
 import useSettingsDatabase from "src/hooks/useSettingsDatabase";
-import { APP_SETTINGS } from "src/constants/appConfigValues";
+import { APP_SETTINGS, QUERY_KEYS } from "src/constants/appConfigValues";
 import { LibraryAddOutlinedIcon } from "src/components/icons";
 import { useStore } from "src/store/rootStore";
-import { pickDirtyFields } from "src/utils/helpers";
 import { useAuthContext } from "src/hooks/AuthContext";
 import { URLS } from "src/constants/urls";
 import PageTitle from "src/components/common/PageTitle";
+import { IDbRecipe, IRecipe } from "src/types/recipes";
+import { pickDirtyFields } from "src/utils/helpers";
+import { DEFAULT_RECIPE_VALUES } from "src/constants/formsValues";
 
 import { newRecipeFormStyles as styles } from "src/components/styles/recipeForm.styles";
 
 const NewRecipeForm = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const setDisplayedRecipe = useStore((s) => s.setDisplayedRecipe);
   const isMobile = useStore((state) => state.screen.isMobile);
   const displayedRecipe = useStore((state) => state.displayedRecipe);
   const defaultCategories = useStore((s) => s.appSettings.categories);
   const { addRecipeToCollection, updateRecipe } = useRecipesDatabase();
-  const { updateSettingsCollectionData } = useSettingsDatabase();
+  const { appSettingsQuery, updateSettingsCollectionData } =
+    useSettingsDatabase();
   const { loggedUser: currentUser } = useAuthContext();
   const isEditMode = globalThis.location.pathname
     .split("/")
@@ -39,24 +45,65 @@ const NewRecipeForm = () => {
     ? `Modifică rețeta  ${displayedRecipe?.recipe.title || ""}`
     : "Adaugă o rețetă nouă";
 
+  const createRecipeMutation = useMutation({
+    mutationFn: addRecipeToCollection,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.ALL_RECIPES_QUERY_KEY,
+      });
+      methods.reset();
+      navigate(URLS.HOME);
+    },
+  });
+
+  const updateRecipeMutation = useMutation({
+    mutationFn: ({
+      recipeId,
+      payload,
+    }: {
+      recipeId: string;
+      payload: Partial<IRecipe>;
+    }) => updateRecipe(recipeId, payload),
+    onSuccess: async (_, variables) => {
+      queryClient.setQueryData<IDbRecipe[]>(
+        QUERY_KEYS.ALL_RECIPES_QUERY_KEY,
+        (currentRecipes) => {
+          if (!currentRecipes) {
+            return currentRecipes;
+          }
+
+          return currentRecipes.map((recipe) =>
+            recipe.id === variables.recipeId
+              ? {
+                  ...recipe,
+                  recipe: {
+                    ...recipe.recipe,
+                    ...variables.payload,
+                  },
+                }
+              : recipe,
+          );
+        },
+      );
+
+      navigate(`${URLS.RECIPE_DETAILS(variables.recipeId)}`);
+    },
+  });
+  const isSubmitting =
+    createRecipeMutation.isPending || updateRecipeMutation.isPending;
+  const isSettingsLoading = appSettingsQuery.isLoading;
+  const hasSettingsError = appSettingsQuery.isError;
+
   const methods = useForm<FormValues>({
     resolver: zodResolver(recipeDetailsSchema),
-    defaultValues: {
-      title: "",
-      category: "",
-      servings: 1,
-      preparationTime: 10,
-      prepSteps: "",
-      recipeIngredients: [],
-      specialTag: [],
-      imageURL: [],
-      complexity: "medium",
-    },
+    defaultValues: DEFAULT_RECIPE_VALUES,
     mode: "onBlur",
   });
+  const dirtyFields = methods.formState.dirtyFields;
 
   useEffect(() => {
     if (!displayedRecipe || !isEditMode) return;
+
     const {
       title,
       category,
@@ -90,8 +137,6 @@ const NewRecipeForm = () => {
     };
   }, [setDisplayedRecipe]);
 
-  const dirtyFields = methods.formState.dirtyFields;
-
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
     const recipeCategory = data.category;
     const updatedAuthor = {
@@ -106,7 +151,11 @@ const NewRecipeForm = () => {
       author: updatedAuthor,
     };
 
-    if (recipeCategory && !defaultCategories.includes(recipeCategory)) {
+    if (
+      recipeCategory &&
+      dirtyFields.category &&
+      !defaultCategories.includes(recipeCategory)
+    ) {
       await updateSettingsCollectionData(
         APP_SETTINGS.CATEGORIES,
         data.category,
@@ -114,27 +163,30 @@ const NewRecipeForm = () => {
     }
 
     if (isEditMode) {
-      const updatedFields = pickDirtyFields<FormValues>(
+      const payload = pickDirtyFields<FormValues>(
         data,
         dirtyFields as Partial<Record<keyof FormValues, boolean>>,
-      );
-      console.log("DIRTY IN UPDATE", updatedFields);
-      const payload = {
-        ...data,
-        createdAt: displayedRecipe?.recipe.createdAt || new Date(),
-        author: displayedRecipe?.recipe.author || currentUserMock,
-      };
+      ) as Partial<IRecipe>;
 
-      await updateRecipe(displayedRecipe?.id || "", payload);
-      navigate(`${URLS.RECIPE_DETAILS(displayedRecipe?.id || "")}`);
+      if (!Object.keys(payload).length) {
+        navigate(URLS.RECIPE_DETAILS(displayedRecipe?.id || ""));
+        return;
+      }
+
+      await updateRecipeMutation.mutateAsync({
+        recipeId: displayedRecipe?.id || "",
+        payload,
+      });
       return;
     }
 
-    await addRecipeToCollection(payload);
-    console.log("Submitting:", payload);
-    methods.reset();
-    navigate(URLS.HOME);
+    await createRecipeMutation.mutateAsync(payload);
   };
+
+  if (isSettingsLoading) return <LoadingPlaceholder />;
+  if (hasSettingsError) {
+    return <ErrorFallback errorMessage="Error fetching app settings" />;
+  }
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -156,6 +208,8 @@ const NewRecipeForm = () => {
             variant="contained"
             startIcon={<LibraryAddOutlinedIcon />}
             fullWidth={isMobile}
+            disabled={isSubmitting}
+            isLoading={isSubmitting}
           >
             {submitLabel}
           </PsButton>

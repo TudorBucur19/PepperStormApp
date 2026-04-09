@@ -1,10 +1,14 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
 
 import PsButton from "src/components/common/PsButton";
 import { DeleteOutlinedIcon, EditNoteIcon } from "src/components/icons";
-import { RECIPES_PHOTOS_COLLECTION_NAME } from "src/constants/appConfigValues";
+import {
+  RECIPES_PHOTOS_COLLECTION_NAME,
+  QUERY_KEYS,
+} from "src/constants/appConfigValues";
 import useRecipesDatabase from "src/hooks/useRecipesDatabase";
 import { IOwnerSection } from "src/types/components";
 import { useAuthContext } from "src/hooks/AuthContext";
@@ -21,18 +25,27 @@ const OwnerSection = ({ owner, documentId, imageURL }: IOwnerSection) => {
   const { checkOwnership } = useAuthContext();
   const setModalOpen = useStore((state) => state.setModalOpen);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const editRecipeHandler = () => {
     navigate(URLS.EDIT_RECIPE(documentId));
   };
-  const deleteRecipeHandler = () => {
-    removeRecipe(documentId);
-    if (imageURL && imageURL.length > 0) {
-      imageURL.forEach((image) => {
-        deleteFileHandler(image.name);
+  const deleteRecipeHandler = async () => {
+    try {
+      await removeRecipe(documentId);
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.ALL_RECIPES_QUERY_KEY,
       });
+      if (imageURL && imageURL.length > 0) {
+        imageURL.forEach((image) => {
+          deleteFileHandler(image.name);
+        });
+      }
+      setModalOpen(false);
+      navigate(URLS.HOME);
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+      // Handle error, maybe show a toast or something
     }
-    setModalOpen(false);
-    navigate(URLS.HOME);
   };
   const haveFullAccess = checkOwnership(owner.userID);
 

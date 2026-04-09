@@ -1,36 +1,39 @@
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Box from "@mui/material/Box";
 
 import PreviewItem from "src/components/RecipesList/PreviewItem";
+import useRecipesDatabase from "src/hooks/useRecipesDatabase";
+import LoadingPlaceholder from "src/components/common/LoadingPlaceholder";
+import { IDbRecipe } from "src/types/recipes";
+import ErrorFallback from "src/components/common/ErrorFallback";
+import { QUERY_KEYS } from "src/constants/appConfigValues";
+// import { Pagination, Stack } from "@mui/material";
 
 import { recipesListStyles as styles } from "src/components/styles/recipesList.styles";
-import useRecipesDatabase from "src/hooks/useRecipesDatabase";
-import { useStore } from "src/store/rootStore";
-import LoadingPlaceholder from "src/components/common/LoadingPlaceholder";
-// import { Pagination, Stack } from "@mui/material";
 
 const RecipesList = () => {
   const { recipesContainer } = styles;
   const { getRecipesCollectionData } = useRecipesDatabase();
-  const allRecipes = useStore((state) => state.recipes);
-  const isLoading = useStore((state) => state.apiCallStatus.isLoading);
-  const setApiCallStatus = useStore((state) => state.setApiCallStatus);
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      setApiCallStatus(true);
-      await getRecipesCollectionData();
-      setApiCallStatus(false);
-    };
-    fetchRecipes();
-  }, []);
+  const {
+    data: allRecipes = [],
+    isLoading,
+    isError,
+  } = useQuery<IDbRecipe[]>({
+    queryKey: QUERY_KEYS.ALL_RECIPES_QUERY_KEY,
+    queryFn: async () => (await getRecipesCollectionData()) ?? [],
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 30,
+    refetchOnWindowFocus: false,
+  });
 
   if (isLoading) return <LoadingPlaceholder />;
+  if (isError) return <ErrorFallback errorMessage="Error fetching recipes" />;
 
   return (
     <>
       <Box sx={recipesContainer}>
-        {allRecipes &&
+        {allRecipes.length > 0 &&
           allRecipes.map((recipe) => (
             <PreviewItem key={recipe.id} recipe={recipe} />
           ))}

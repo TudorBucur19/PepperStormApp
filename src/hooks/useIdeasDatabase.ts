@@ -10,25 +10,20 @@ import {
   removeDocumentFromCollection,
   updateNestedDocument,
 } from "src/hooks/database/database.utils";
-import { useStore } from "src/store/rootStore";
 import { IDBRecipeIdea, IRecipeIdea } from "src/types/ideas";
 
 const useIdeasDatabase = () => {
-  const setExistingIdeas = useStore((state) => state.setExistingIdeas);
-
   const getIdeasCollectionData = async () => {
     const ideasCollection = collection(dataBase, IDEAS_COLLECTION_NAME);
     const ideasQuery = query(ideasCollection, orderBy("idea.title", "asc"));
     const ideasSnapshot = await getDocs(ideasQuery);
-    const ideasList = ideasSnapshot.docs.map(
+    return ideasSnapshot.docs.map(
       (ideaDoc) =>
         ({
           id: ideaDoc.id,
           ...ideaDoc.data(),
         }) as IDBRecipeIdea,
     );
-
-    setExistingIdeas(ideasList);
   };
 
   const addIdeaToCollection = async (newIdea: IRecipeIdea) =>
