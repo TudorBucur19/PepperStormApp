@@ -47,6 +47,13 @@ export const complexityLevels = {
   hard: "complex",
 };
 
+export const QUERY_KEYS = {
+  ALL_RECIPES_QUERY_KEY: ["allRecipes"],
+  IDEAS_QUERY_KEY: ["ideas"],
+  TODO_LIST_QUERY_KEY: ["todoList"],
+  APP_SETTINGS_QUERY_KEY: ["appSettings"],
+};
+
 // moved to appSettings in db, keep here as default values for backup
 export const specialTags = ["Vegetarian", "Vegan", "Picant"];
 export const recipeCategories = [

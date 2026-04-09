@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,17 +14,12 @@ import useIdeasDatabase from "src/hooks/useIdeasDatabase";
 import { newIdeaSchema, NewIdeaValues } from "src/schemas/ideasSchemas";
 import { useStore } from "src/store/rootStore";
 import { pickDirtyFields } from "src/utils/helpers";
-
-const EMPTY_IDEA_VALUES: NewIdeaValues = {
-  title: "",
-  description: "",
-  campingFriendly: false,
-  imageURL: [],
-};
+import { QUERY_KEYS } from "src/constants/appConfigValues";
+import { EMPTY_IDEA_VALUES } from "src/constants/formsValues";
 
 const NewIdeaForm = () => {
-  const { addIdeaToCollection, getIdeasCollectionData, updateIdea } =
-    useIdeasDatabase();
+  const queryClient = useQueryClient();
+  const { addIdeaToCollection, updateIdea } = useIdeasDatabase();
   const { loggedUser: currentUser } = useAuthContext();
   const isLoading = useStore((state) => state.apiCallStatus.isLoading);
   const editedIdea = useStore((state) => state.editingIdea);
@@ -55,7 +51,9 @@ const NewIdeaForm = () => {
       console.log("updated fields idea", dirtyFields);
 
       await updateIdea(editedIdea.id, updatedFields);
-      await getIdeasCollectionData();
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.IDEAS_QUERY_KEY,
+      });
       setEditingIdea(null);
       methods.reset(EMPTY_IDEA_VALUES);
 
@@ -75,7 +73,9 @@ const NewIdeaForm = () => {
     };
     console.log("Submitting:", payload);
     await addIdeaToCollection(payload);
-    await getIdeasCollectionData();
+    await queryClient.invalidateQueries({
+      queryKey: QUERY_KEYS.IDEAS_QUERY_KEY,
+    });
     methods.reset(EMPTY_IDEA_VALUES);
   };
 

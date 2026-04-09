@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 import PsButton from "src/components/common/PsButton";
-import { AddTaskIcon } from "src/components/icons";
+import { LibraryAddOutlinedIcon } from "src/components/icons";
 import { listItemSchema } from "src/schemas/todoListSchemas";
 import { IListItemForm } from "src/types/components";
 import { ListItemFormValues } from "src/types/toDoList";
@@ -54,7 +54,7 @@ const ListItemForm = ({ onAddItem }: IListItemForm) => {
           color="primary"
           disabled={isSubmitting}
           isLoading={isSubmitting}
-          startIcon={<AddTaskIcon />}
+          startIcon={<LibraryAddOutlinedIcon />}
           sx={{ minWidth: { xs: "100%", sm: "fit-content" } }}
         ></PsButton>
       </Box>

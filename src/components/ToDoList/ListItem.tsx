@@ -2,7 +2,7 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 
 import PsButton from "src/components/common/PsButton";
-import { DeleteOutlinedIcon } from "src/components/icons";
+import { HighlightOffIcon } from "src/components/icons";
 import { capitalizeString } from "src/utils/helpers";
 import DialogBox from "src/components/common/DialogBox";
 import { IListItem } from "src/types/components";
@@ -32,7 +32,7 @@ const ListItem = ({
           <PsButton
             variant="basic"
             color="transparent"
-            startIcon={<DeleteOutlinedIcon />}
+            startIcon={<HighlightOffIcon />}
             onClick={() => setIsDeleteDialogOpen(true)}
             sx={{ color: "error.main", "&:disabled": { color: "#737373" } }}
             ariaLabel={`Șterge elementul ${capitalizeString(item)} din listă`}

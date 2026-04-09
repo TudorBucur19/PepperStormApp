@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -11,19 +12,23 @@ import { IIdeaItem } from "src/types/components";
 import PsButton from "src/components/common/PsButton";
 import { DeleteOutlinedIcon, EditNoteIcon } from "src/components/icons";
 import DialogBox from "src/components/common/DialogBox";
-import { IDEAS_PHOTOS_COLLECTION_NAME } from "src/constants/appConfigValues";
+import {
+  IDEAS_PHOTOS_COLLECTION_NAME,
+  QUERY_KEYS,
+} from "src/constants/appConfigValues";
 import useIdeasDatabase from "src/hooks/useIdeasDatabase";
 import TentIcon from "src/components/icons/TentIcon";
 import { useStore } from "src/store/rootStore";
 import useUploadFiles from "src/hooks/useUploadFiles";
 import { useAuthContext } from "src/hooks/AuthContext";
+import { IDBRecipeIdea } from "src/types/ideas";
 
 import { ideaItemStyles } from "src/components/styles/ideas.styles";
 
 const IdeaItem = ({ ideaItem }: IIdeaItem) => {
+  const queryClient = useQueryClient();
   const { checkOwnership } = useAuthContext();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const removeIdea = useStore((state) => state.removeIdea);
   const isEditingIdea = useStore((state) => state.editingIdea);
   const setEditingIdea = useStore((state) => state.setEditingIdea);
   const { removeIdea: removeIdeaFromDatabase } = useIdeasDatabase();
@@ -34,7 +39,10 @@ const IdeaItem = ({ ideaItem }: IIdeaItem) => {
 
   const deleteIdeaHandler = async (docId: string) => {
     await removeIdeaFromDatabase(docId);
-    removeIdea(docId); //efficiently updates the UI after an item is deleted from the database
+    queryClient.setQueryData<IDBRecipeIdea[]>(
+      QUERY_KEYS.IDEAS_QUERY_KEY,
+      (ideas = []) => ideas.filter((ideaEntry) => ideaEntry.id !== docId),
+    );
     deleteFileHandler(idea.imageURL[0].name); //delete the associated image from storage
     setIsDeleteDialogOpen(false);
   };

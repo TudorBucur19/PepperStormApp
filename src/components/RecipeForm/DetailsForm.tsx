@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -17,7 +17,6 @@ import {
 } from "src/constants/appConfigValues";
 import FileUploadField from "src/components/RecipeForm/FileUploadField";
 import DialogBox from "src/components/common/DialogBox";
-import useSettingsDatabase from "src/hooks/useSettingsDatabase";
 import { useStore } from "src/store/rootStore";
 
 const DetailsForm = () => {
@@ -27,7 +26,6 @@ const DetailsForm = () => {
     setValue,
     formState: { errors },
   } = useFormContext();
-  const { getSettingsCollectionData } = useSettingsDatabase();
   const categoryInputRef = useRef<HTMLInputElement>(null);
   const appSettings = useStore((s) => s.appSettings);
   const { categories, specialTags } = appSettings;
@@ -39,13 +37,6 @@ const DetailsForm = () => {
     ...customCategories,
     "Categorie nouă",
   ];
-
-  useEffect(() => {
-    const fetchAppSettings = async () => {
-      await getSettingsCollectionData();
-    };
-    fetchAppSettings();
-  }, []);
 
   const handleOtherCategorySelect = (value: string) => {
     if (value === "Categorie nouă") {

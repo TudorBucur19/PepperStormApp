@@ -40,7 +40,7 @@ const useRecipesDatabase = () => {
         }) as IDbRecipe,
     );
 
-    setExistingRecipes(recipesList);
+    return recipesList;
   };
 
   const getRecipeById = async (id: string) => {

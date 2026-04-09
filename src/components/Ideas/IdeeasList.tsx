@@ -1,35 +1,40 @@
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Box from "@mui/material/Box";
 
 import NewIdeaForm from "src/components/Ideas/NewIdeaForm";
 import IdeaItem from "src/components/Ideas/IdeaItem";
 import LoadingPlaceholder from "src/components/common/LoadingPlaceholder";
+import ErrorFallback from "src/components/common/ErrorFallback";
 import useIdeasDatabase from "src/hooks/useIdeasDatabase";
-import { useStore } from "src/store/rootStore";
 import { useAuthContext } from "src/hooks/AuthContext";
+import { IDBRecipeIdea } from "src/types/ideas";
+import { QUERY_KEYS } from "src/constants/appConfigValues";
 
 import { ideasListStyles as styles } from "src/components/styles/ideas.styles";
 
 const IdeeasList = () => {
   const { getIdeasCollectionData } = useIdeasDatabase();
-  const isLoading = useStore((state) => state.apiCallStatus.isLoading);
-  const setApiCallStatus = useStore((state) => state.setApiCallStatus);
-  const ideas = useStore((state) => state.ideas);
   const { loggedUser } = useAuthContext();
+  const {
+    data: ideas = [],
+    isLoading,
+    isError,
+  } = useQuery<IDBRecipeIdea[]>({
+    queryKey: QUERY_KEYS.IDEAS_QUERY_KEY,
+    queryFn: async () => (await getIdeasCollectionData()) ?? [],
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 30,
+    refetchOnWindowFocus: false,
+  });
 
-  useEffect(() => {
-    const fetchIdeas = async () => {
-      setApiCallStatus(true);
-      await getIdeasCollectionData();
-      setApiCallStatus(false);
-    };
-    fetchIdeas();
-  }, []);
+  if (isLoading) return <LoadingPlaceholder />;
+  if (isError) return <ErrorFallback errorMessage="Error fetching ideas" />;
 
   return (
     <Box sx={styles.container}>
-      {isLoading && <LoadingPlaceholder />}
-      {ideas && ideas.map((idea) => <IdeaItem key={idea.id} ideaItem={idea} />)}
+      {ideas.map((idea) => (
+        <IdeaItem key={idea.id} ideaItem={idea} />
+      ))}
       {loggedUser && <NewIdeaForm />}
     </Box>
   );
