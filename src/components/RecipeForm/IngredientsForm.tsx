@@ -92,6 +92,7 @@ const IngredientsForm = ({ index, remove }: IIngredientsForm) => {
           color="danger"
           startIcon={<DeleteOutlinedIcon />}
           onClick={() => remove(index)}
+          ariaLabel="Sterge ingredient"
         />
       </Box>
     </Stack>
