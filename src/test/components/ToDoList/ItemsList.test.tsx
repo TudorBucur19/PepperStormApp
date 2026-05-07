@@ -35,7 +35,7 @@ describe("ItemsList", () => {
     ).not.toBeInTheDocument();
 
     await user.click(
-      screen.getByRole("button", { name: /arată formularul de adăugare/i }),
+      screen.getByRole("button", { name: /adaugă un element în listă/i }),
     );
 
     expect(
@@ -59,7 +59,7 @@ describe("ItemsList", () => {
     );
 
     await user.click(
-      screen.getByRole("button", { name: /arată formularul de partajare/i }),
+      screen.getByRole("button", { name: /partajează lista cu altcineva/i }),
     );
 
     expect(
@@ -83,7 +83,7 @@ describe("ItemsList", () => {
     );
 
     await user.click(
-      screen.getByRole("button", { name: /arată formularul de adăugare/i }),
+      screen.getByRole("button", { name: /adaugă un element în listă/i }),
     );
 
     const listItemInput = screen.getByRole("textbox", {
@@ -140,7 +140,7 @@ describe("ItemsList", () => {
     );
 
     await user.click(
-      screen.getByRole("button", { name: /arată formularul de partajare/i }),
+      screen.getByRole("button", { name: /partajează lista cu altcineva/i }),
     );
     await user.type(
       screen.getByRole("textbox", { name: /email pentru partajare/i }),
@@ -168,7 +168,7 @@ describe("ItemsList", () => {
     );
 
     await user.click(
-      screen.getByRole("button", { name: /arată formularul de partajare/i }),
+      screen.getByRole("button", { name: /partajează lista cu altcineva/i }),
     );
 
     const input = screen.getByRole("textbox", {

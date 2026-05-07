@@ -16,7 +16,8 @@ const RecipesList = () => {
   const { getRecipesCollectionData } = useRecipesDatabase();
 
   const {
-    data: allRecipes = [],
+    // data: allRecipes = [],
+    data: fetchedRecipes = [],
     isLoading,
     isError,
   } = useQuery<IDbRecipe[]>({
@@ -27,6 +28,10 @@ const RecipesList = () => {
     refetchOnWindowFocus: false,
   });
 
+  //temporary filter out the recipes without a cover photo.
+  const allRecipes = fetchedRecipes.filter(
+    (recipe) => recipe.recipe.author.userID !== "W1fu8umk2OP3joZ1w9Ip3POHnVM2",
+  );
   if (isLoading) return <LoadingPlaceholder />;
   if (isError) return <ErrorFallback errorMessage="Error fetching recipes" />;
 

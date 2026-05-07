@@ -21,6 +21,10 @@ import { AuthContextType } from "src/types/context";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+type E2EWindow = Window & {
+  __E2E_AUTH_USER__?: LoggedInUser | null;
+};
+
 const mapFirebaseUser = (firebaseUser: User | null): LoggedInUser | null => {
   if (!firebaseUser) return null;
   return {
@@ -39,6 +43,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
 
   useEffect(() => {
+    const e2eUser = (window as E2EWindow).__E2E_AUTH_USER__;
+    if (e2eUser !== undefined) {
+      setLoggedUser(e2eUser);
+      setIsAuthInitialized(true);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setLoggedUser(mapFirebaseUser(firebaseUser));
       setIsAuthInitialized(true);
