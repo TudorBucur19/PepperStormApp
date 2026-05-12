@@ -30,7 +30,7 @@ const RecipesList = () => {
 
   //temporary filter out the recipes without a cover photo.
   const allRecipes = fetchedRecipes.filter(
-    (recipe) => recipe.recipe.author.userID !== "W1fu8umk2OP3joZ1w9Ip3POHnVM2",
+    (recipe) => recipe.recipe.author.userID !== "UcrmOYwtisWpjKYqVrkFWxPBWwg2",
   );
   if (isLoading) return <LoadingPlaceholder />;
   if (isError) return <ErrorFallback errorMessage="Error fetching recipes" />;
