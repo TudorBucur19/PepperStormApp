@@ -32,6 +32,8 @@ const RecipesList = () => {
   const allRecipes = fetchedRecipes.filter(
     (recipe) => recipe.recipe.author.userID !== "UcrmOYwtisWpjKYqVrkFWxPBWwg2",
   );
+  //
+
   if (isLoading) return <LoadingPlaceholder />;
   if (isError) return <ErrorFallback errorMessage="Error fetching recipes" />;
 

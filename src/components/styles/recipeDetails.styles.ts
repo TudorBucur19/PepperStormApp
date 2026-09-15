@@ -34,6 +34,7 @@ export const recipeDisplayStyles = {
   },
   bottomContainer: {
     backgroundColor: "#f4f6f7",
+    paddingBottom: { xs: "4rem", sm: 0 },
   },
   gridVariant: {
     display: "grid",
