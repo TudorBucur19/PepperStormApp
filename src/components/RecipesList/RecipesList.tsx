@@ -9,7 +9,7 @@ import ErrorFallback from "src/components/common/ErrorFallback";
 import { QUERY_KEYS } from "src/constants/appConfigValues";
 // import { Pagination, Stack } from "@mui/material";
 
-import { recipesListStyles as styles } from "src/components/styles/recipesList.styles";
+import { recipesListStyles as styles } from "src/components/styles/RecipesList.styles";
 
 const RecipesList = () => {
   const { recipesContainer } = styles;
