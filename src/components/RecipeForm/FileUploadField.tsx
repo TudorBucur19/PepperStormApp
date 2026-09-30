@@ -29,7 +29,7 @@ const FileUploadField = ({
         url: file.url,
       }));
       const newFilesData = [...filesData, ...urlData];
-      setValue(formFieldName, newFilesData);
+      setValue(formFieldName, newFilesData, { shouldDirty: true });
     }
   }, [uploadedFilesData]);
 
