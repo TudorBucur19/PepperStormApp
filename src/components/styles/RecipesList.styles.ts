@@ -1,4 +1,10 @@
 export const recipesListStyles = {
+  filterToolbar: {
+    padding: "0 1rem 2rem 1rem",
+    display: "flex",
+    justifyContent: "flex-end",
+    gap: "1rem",
+  },
   recipesContainer: {
     display: "grid",
     gridTemplateColumns: {
@@ -9,6 +15,13 @@ export const recipesListStyles = {
     columnGap: { xs: "1.2rem", sm: "1.6rem", md: "2rem" },
     rowGap: { xs: "2rem", sm: "2rem", md: "3rem" },
     padding: "1rem",
+  },
+  emptyState: {
+    gridColumn: "1 / -1",
+    alignItems: "center",
+    gap: "1rem",
+    padding: "3rem 1rem",
+    textAlign: "center",
   },
 };
 

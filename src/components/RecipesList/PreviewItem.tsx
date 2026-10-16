@@ -12,7 +12,7 @@ import { formatMinutesRo } from "src/utils/uiFunctions";
 import { useStore } from "src/store/rootStore";
 import TentIcon from "src/components/icons/TentIcon";
 
-import { previewItemStyles as styles } from "src/components/styles/recipesList.styles";
+import { previewItemStyles as styles } from "src/components/styles/RecipesList.styles";
 
 const RecipeCard = ({ recipe }: IPreviewItem) => {
   const navigate = useNavigate();

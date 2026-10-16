@@ -1,5 +1,6 @@
 import { NewIdeaValues } from "src/schemas/ideasSchemas";
 import { FormValues } from "src/schemas/newRecipeSchemas";
+import { RecipeFiltersState } from "src/types/components";
 
 export const EMPTY_IDEA_VALUES: NewIdeaValues = {
   title: "",
@@ -18,4 +19,10 @@ export const DEFAULT_RECIPE_VALUES: FormValues = {
   specialTag: [],
   imageURL: [],
   complexity: "medium",
+};
+
+export const emptyRecipesFilters: RecipeFiltersState = {
+  category: "",
+  authorId: "",
+  specialTags: [],
 };
