@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { filterRecipes } from "src/components/RecipesList/RecipesList";
+import { filterRecipes } from "src/utils/helpers";
 import { IDbRecipe } from "src/types/recipes";
 
 const recipes: IDbRecipe[] = [
@@ -55,7 +55,7 @@ describe("filterRecipes", () => {
     const recipeWithoutTags = {
       ...recipes[0],
       recipe: { ...recipes[0].recipe, specialTag: false },
-    } as IDbRecipe;
+    } as unknown as IDbRecipe;
 
     expect(
       filterRecipes([recipeWithoutTags], {
