@@ -3,7 +3,7 @@ import GenericContainer from "src/components/common/GenericContainer";
 
 const AllRecipesPage = () => {
   return (
-    <GenericContainer>
+    <GenericContainer sx={{ paddingTop: { xs: "1rem", sm: "2rem" } }}>
       <RecipesList />
     </GenericContainer>
   );

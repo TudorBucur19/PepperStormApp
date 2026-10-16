@@ -20,6 +20,7 @@ export interface IPreviewItem {
 
 export interface IGenericContainer {
   children: JSX.Element;
+  sx?: SxProps<Theme>;
 }
 
 export interface IIngredientsList {
@@ -165,4 +166,18 @@ export interface IItemsList {
   onDeleteItem: (id: string) => void;
   onShareList: (email: string) => Promise<void> | void;
   startIcon?: React.ReactNode;
+}
+
+export interface RecipeFiltersState {
+  category: string;
+  authorId: string;
+  specialTags: string[];
+}
+
+export interface IRecipeFilters {
+  value: RecipeFiltersState;
+  categories: string[];
+  authors: { id: string; name: string }[];
+  specialTags: string[];
+  onApply: (filters: RecipeFiltersState) => void;
 }

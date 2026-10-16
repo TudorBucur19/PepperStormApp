@@ -74,7 +74,7 @@ export const psButtonStyles = (
   },
   contained: {},
   outlined: {
-    border: "2px solid " + colors(theme)[color].label,
+    border: "1px solid " + colors(theme)[color].label,
     "&:hover": {
       scale: "1.05",
     },

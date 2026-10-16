@@ -1,3 +1,6 @@
+import { RecipeFiltersState } from "src/types/components";
+import { IDbRecipe } from "src/types/recipes";
+
 export const capitalizeString = (string: string) => {
   return string[0].toUpperCase() + string.slice(1).toLowerCase();
 };
@@ -23,3 +26,34 @@ export const pickDirtyFields = <T extends Record<string, unknown>>(
   }
   return out;
 };
+
+export const getRecipeTags = (specialTag: unknown): string[] => {
+  if (Array.isArray(specialTag)) {
+    return specialTag.filter((tag): tag is string => typeof tag === "string");
+  }
+
+  return typeof specialTag === "string" ? [specialTag] : [];
+};
+
+export const filterRecipes = (
+  recipes: IDbRecipe[],
+  filters: RecipeFiltersState,
+) =>
+  recipes.filter(({ recipe }) => {
+    const normalizedCategory = recipe.category.trim().toLowerCase();
+    const selectedCategory = filters.category.trim().toLowerCase();
+    const matchesCategory =
+      !selectedCategory || normalizedCategory === selectedCategory;
+    const matchesAuthor =
+      !filters.authorId || recipe.author.userID === filters.authorId;
+    const normalizedTags = new Set(
+      getRecipeTags(recipe.specialTag).map((tag) => tag.trim().toLowerCase()),
+    );
+    const matchesSpecialTags =
+      filters.specialTags.length === 0 ||
+      filters.specialTags.some((tag) =>
+        normalizedTags.has(tag.trim().toLowerCase()),
+      );
+
+    return matchesCategory && matchesAuthor && matchesSpecialTags;
+  });
