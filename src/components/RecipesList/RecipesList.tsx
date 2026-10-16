@@ -15,10 +15,10 @@ import { QUERY_KEYS } from "src/constants/appConfigValues";
 import { useStore } from "src/store/rootStore";
 import { RecipeFiltersState } from "src/types/components";
 import { emptyRecipesFilters } from "src/constants/formsValues";
+import { filterRecipes, getRecipeTags } from "src/utils/helpers";
 // import { Pagination, Stack } from "@mui/material";
 
 import { recipesListStyles as styles } from "src/components/styles/RecipesList.styles";
-import { filterRecipes, getRecipeTags } from "src/utils/helpers";
 
 const RecipesList = () => {
   const { recipesContainer, filterToolbar, emptyState } = styles;

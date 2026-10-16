@@ -32,12 +32,12 @@ const ImagePreview = ({
     const updatedFiles = files.filter((file) => file.name !== fileTitle);
     console.log("FILTERED FILE", updatedFiles);
 
-    setValue(fieldName, updatedFiles);
+    setValue(fieldName, updatedFiles, { shouldDirty: true });
   };
 
   const onChangeMainImage = (imageIndex: number) => {
     const reorderedFiles = reorderList<ImageURL>(files, imageIndex);
-    setValue(fieldName, reorderedFiles);
+    setValue(fieldName, reorderedFiles, { shouldDirty: true });
   };
 
   const favIcon = index === 0 ? <FavoriteIcon /> : <FavoriteBorderIcon />;
